@@ -1,0 +1,39 @@
+﻿<mah:MetroWindow x:Class="AutoServicePlus.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:AutoServicePlus"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:mah="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+        mc:Ignorable="d"
+        Title="" Height="430" Width="340" WindowStartupLocation="CenterScreen" WindowTitleBrush="#FFE5801C" FontFamily="/AutoServicePlus;component/media/fonts/#Gilroy Light">
+
+    <Window.Resources>
+        <Color x:Key="ColorForm_Dark">#FF333333</Color>
+        <Color x:Key="ColoCon_White">#DDDDDA</Color>
+    </Window.Resources>
+    <Window.BorderBrush>
+        <SolidColorBrush Color="{DynamicResource ColorForm_Dark}"/>
+    </Window.BorderBrush>
+    <Window.Foreground>
+        <SolidColorBrush Color="{DynamicResource ColoCon_White}"/>
+    </Window.Foreground>
+    <Window.Background>
+        <SolidColorBrush Color="#FF333333"/>
+    </Window.Background>
+
+    <mah:MetroWindow.LeftWindowCommands>
+        <mah:WindowCommands>
+            <!--<Button ToolTip="Twidibot">-->
+            <!--<Image Width="20" Height="20" Margin="4" Source="/media\img\logo\def.ico" ToolTip="Twidibot"/>-->
+            <!--</Button>-->
+        </mah:WindowCommands>
+    </mah:MetroWindow.LeftWindowCommands>
+
+
+
+    <Grid>
+
+    </Grid>
+</mah:MetroWindow>
