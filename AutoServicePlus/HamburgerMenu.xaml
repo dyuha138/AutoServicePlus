@@ -1,0 +1,153 @@
+﻿<UserControl
+    x:Class="AutoServicePlus.HamburgerMenu"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:AutoServicePlus"
+    xmlns:Pages="clr-namespace:AutoServicePlus.Pages"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+    xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    mc:Ignorable="d">
+
+
+    <UserControl.Resources>
+        <DataTemplate x:Key="HamburgerMenuItem" DataType="{x:Type mah:HamburgerMenuGlyphItem}">
+            <Grid
+                x:Name="IconPart"
+                Width="{Binding RelativeSource={RelativeSource AncestorType={x:Type mah:HamburgerMenu}}, Path=CompactPaneLength}">
+                <Image
+                    Margin="12"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Source="{Binding Glyph}" />
+                <TextBlock
+                    x:Name="TextPart"
+                    VerticalAlignment="Center"
+                    FontSize="16"
+                    Text="{Binding Label}" />
+            </Grid>
+            <DataTemplate.Triggers>
+                <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType={x:Type mah:HamburgerMenu}}, Path=PanePlacement}" Value="Right">
+                    <Setter TargetName="IconPart" Property="DockPanel.Dock" Value="Right" />
+                    <Setter TargetName="TextPart" Property="Margin" Value="8,0,0,0" />
+                </DataTrigger>
+            </DataTemplate.Triggers>
+        </DataTemplate>
+
+        <!--  This is the template for the option menu item  -->
+        <DataTemplate x:Key="HamburgerOptionsMenuItem" DataType="{x:Type mah:HamburgerMenuGlyphItem}">
+            <Grid Height="48">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="{Binding RelativeSource={RelativeSource AncestorType={x:Type mah:HamburgerMenu}}, Path=CompactPaneLength}" />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <Image
+                    Margin="12"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Source="{Binding Glyph}" />
+                <TextBlock
+                    Grid.Column="1"
+                    VerticalAlignment="Center"
+                    FontSize="16"
+                    Text="{Binding Label}" />
+            </Grid>
+        </DataTemplate>
+    </UserControl.Resources>
+
+    <mah:HamburgerMenu
+        CanResizeOpenPane="True"
+        DisplayMode="CompactOverlay"
+        HamburgerWidth="48"
+        IsPaneOpen="{Binding IsHamburgerMenuPaneOpen, Mode=TwoWay}"
+        ItemInvoked="HamburgerMenu_OnItemInvoked"
+        MaximumOpenPaneLength="300"
+        MinimumOpenPaneLength="100"
+        OpenPaneLength="160"
+        PanePlacement="Left"
+        ItemTemplate="{StaticResource HamburgerMenuItem}"
+        OptionsItemTemplate="{StaticResource HamburgerOptionsMenuItem}"
+        SelectedIndex="{Binding SelectedPageIndex, Mode=TwoWay}"
+        ShowSelectionIndicator="False"
+        VerticalScrollBarOnLeftSide="False">
+        
+        <!--  Заголовок  -->
+        <mah:HamburgerMenu.HamburgerMenuHeaderTemplate>
+            <DataTemplate>
+                <TextBlock
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    FontSize="16"
+                    Foreground="{DynamicResource MahApps.Brushes.Selected.Foreground}"
+                    Text="Menu" />
+            </DataTemplate>
+        </mah:HamburgerMenu.HamburgerMenuHeaderTemplate>
+
+        <!--  Элементы  -->
+        <mah:HamburgerMenu.ItemsSource>
+            <mah:HamburgerMenuItemCollection>
+                <!--<mah:HamburgerMenuHeaderItem AutomationProperties.Name="The Pictures Header" Label="Pictures" />-->
+
+                <!--  Основной элемент, контент которого загрузится автоматом  -->
+                <mah:HamburgerMenuGlyphItem Glyph="/media/icons/Modern-3dCollada.png" Label="Склад">
+                    <mah:HamburgerMenuGlyphItem.Tag>
+                        <Pages:PageStorage />
+                    </mah:HamburgerMenuGlyphItem.Tag>
+                </mah:HamburgerMenuGlyphItem>
+
+                <mah:HamburgerMenuSeparatorItem />
+
+                <!--  Defer content  -->
+                <mah:HamburgerMenuGlyphItem
+                    local:MyHamburgerMenuProperies.DeferredContentType="{x:Type Pages:PageOrder}"
+                    Glyph="/media/icons/Modern-3dCollada.png"
+                    Label="Заказы"/>
+                <mah:HamburgerMenuGlyphItem
+                    local:MyHamburgerMenuProperies.DeferredContentType="{x:Type Pages:PageOrder}"
+                    Glyph="/media/icons/Modern-3dCollada.png"
+                    Label="Мда" />
+            </mah:HamburgerMenuItemCollection>
+        </mah:HamburgerMenu.ItemsSource>
+
+        <!--  Подвал  -->
+        <mah:HamburgerMenu.OptionsItemsSource>
+            <mah:HamburgerMenuItemCollection>
+                <mah:HamburgerMenuGlyphItem
+                    local:MyHamburgerMenuProperies.DeferredContentType="{x:Type Pages:PageAbout}"
+                    Glyph="/media/icons/Modern-3dCollada.png"
+                    Label="" />
+            </mah:HamburgerMenuItemCollection>
+        </mah:HamburgerMenu.OptionsItemsSource>
+
+        <!--  Content  -->
+        <mah:HamburgerMenu.ContentTemplate>
+            <DataTemplate>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <TextBlock FontSize="20" Text="{Binding Label, Mode=OneTime}" />
+                    <mah:TransitioningContentControl
+                        Grid.Row="1"
+                        Content="{Binding}"
+                        RestartTransitionOnContentChange="True"
+                        Transition="Default">
+                        <mah:TransitioningContentControl.Resources>
+                            <DataTemplate DataType="{x:Type mah:HamburgerMenuGlyphItem}">
+                                <ContentControl
+                                    Content="{Binding Tag, Mode=OneWay}"
+                                    Focusable="True"
+                                    IsTabStop="False" />
+                            </DataTemplate>
+                        </mah:TransitioningContentControl.Resources>
+                    </mah:TransitioningContentControl>
+                </Grid>
+            </DataTemplate>
+        </mah:HamburgerMenu.ContentTemplate>
+
+    </mah:HamburgerMenu>
+</UserControl>

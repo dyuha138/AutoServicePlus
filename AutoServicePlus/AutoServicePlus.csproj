@@ -9,6 +9,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="media\icons\Modern-_3dCollada.png" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="MahApps.Metro" Version="2.4.10" />
     <PackageReference Include="MaterialDesignColors" Version="3.0.0" />
     <PackageReference Include="MaterialDesignThemes" Version="5.0.0" />
@@ -20,6 +24,16 @@
 
   <ItemGroup>
     <Resource Include="media\fonts\Gilroy-Light.otf" />
+    <Resource Include="media\icons\Modern-_3dCollada.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Pages\PageAbout.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Pages\PageStorage.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
 
 </Project>

@@ -19,7 +19,7 @@
         <SolidColorBrush Color="{StaticResource ColorCon_White}"/>
     </Window.Foreground>
     <Window.Background>
-        <SolidColorBrush Color="#FF333333"/>
+        <SolidColorBrush Color="{StaticResource ColorCon_Dark}"/>
     </Window.Background>
 
     <mah:MetroWindow.LeftWindowCommands>

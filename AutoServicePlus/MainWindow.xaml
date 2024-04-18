@@ -7,7 +7,7 @@
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:mah="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
         mc:Ignorable="d"
-        Title="" Height="430" Width="340" WindowStartupLocation="CenterScreen" WindowTitleBrush="#FFE5801C" FontFamily="/AutoServicePlus;component/media/fonts/#Gilroy Light">
+        Title="" Height="400" Width="670" WindowStartupLocation="CenterScreen" WindowTitleBrush="#FFE5801C" FontFamily="/AutoServicePlus;component/media/fonts/#Gilroy Light">
 
     <Window.Resources>
         <Color x:Key="ColorForm_Dark">#FF333333</Color>
@@ -23,17 +23,32 @@
         <SolidColorBrush Color="#FF333333"/>
     </Window.Background>
 
-    <mah:MetroWindow.LeftWindowCommands>
+    <!--<mah:MetroWindow.LeftWindowCommands>
         <mah:WindowCommands>
-            <!--<Button ToolTip="Twidibot">-->
+            --><!--<Button ToolTip="Twidibot">-->
             <!--<Image Width="20" Height="20" Margin="4" Source="/media\img\logo\def.ico" ToolTip="Twidibot"/>-->
-            <!--</Button>-->
+            <!--</Button>--><!--
         </mah:WindowCommands>
-    </mah:MetroWindow.LeftWindowCommands>
+    </mah:MetroWindow.LeftWindowCommands>-->
 
+    <!--<mah:MetroWindow.LeftWindowCommands>
+        <mahApps:WindowCommands ShowSeparators="False">
+            <Button>
+                <Button.ContextMenu>
+                    <ContextMenu>
+                        <MenuItem Header="Menu Item 1"/>
+                        <MenuItem Header="Menu Item 2"/>
+                        <MenuItem Header="Menu Item 3"/>
+                    </ContextMenu>
+                </Button.ContextMenu>
+                <Rectangle Width="14" Height="14" Fill="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}">
+                    --><!--<Rectangle.OpacityMask>
+                        <VisualBrush Stretch="Fill" Visual="{StaticResource appbar_lines_horizontal_4}" />
+                    </Rectangle.OpacityMask>--><!--
+                </Rectangle>
+            </Button>
+        </mahApps:WindowCommands>
+    </mah:MetroWindow.LeftWindowCommands>-->
 
-
-    <Grid>
-
-    </Grid>
+    <local:HamburgerMenu/>
 </mah:MetroWindow>
