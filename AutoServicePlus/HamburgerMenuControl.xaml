@@ -1,5 +1,5 @@
 ﻿<UserControl
-    x:Class="AutoServicePlus.HamburgerMenu"
+    x:Class="AutoServicePlus.HamburgerMenuControl"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -14,21 +14,25 @@
 
 
     <UserControl.Resources>
+        <!--  This is the template for all menu items. In this sample we use the glyph items.  -->
         <DataTemplate x:Key="HamburgerMenuItem" DataType="{x:Type mah:HamburgerMenuGlyphItem}">
-            <Grid
+            <DockPanel Height="48" LastChildFill="True">
+                <Grid
                 x:Name="IconPart"
-                Width="{Binding RelativeSource={RelativeSource AncestorType={x:Type mah:HamburgerMenu}}, Path=CompactPaneLength}">
-                <Image
+                Width="{Binding RelativeSource={RelativeSource AncestorType={x:Type mah:HamburgerMenu}}, Path=CompactPaneLength}"
+                DockPanel.Dock="Left">
+                    <Image
                     Margin="12"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center"
                     Source="{Binding Glyph}" />
+                </Grid>
                 <TextBlock
-                    x:Name="TextPart"
-                    VerticalAlignment="Center"
-                    FontSize="16"
-                    Text="{Binding Label}" />
-            </Grid>
+                x:Name="TextPart"
+                VerticalAlignment="Center"
+                FontSize="16"
+                Text="{Binding Label}" />
+            </DockPanel>
             <DataTemplate.Triggers>
                 <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType={x:Type mah:HamburgerMenu}}, Path=PanePlacement}" Value="Right">
                     <Setter TargetName="IconPart" Property="DockPanel.Dock" Value="Right" />
@@ -45,20 +49,21 @@
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
                 <Image
-                    Margin="12"
-                    HorizontalAlignment="Center"
-                    VerticalAlignment="Center"
-                    Source="{Binding Glyph}" />
+                Margin="12"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Source="{Binding Glyph}" />
                 <TextBlock
-                    Grid.Column="1"
-                    VerticalAlignment="Center"
-                    FontSize="16"
-                    Text="{Binding Label}" />
+                Grid.Column="1"
+                VerticalAlignment="Center"
+                FontSize="16"
+                Text="{Binding Label}" />
             </Grid>
         </DataTemplate>
     </UserControl.Resources>
 
     <mah:HamburgerMenu
+        x:Name="hm_Menu"
         CanResizeOpenPane="True"
         DisplayMode="CompactOverlay"
         HamburgerWidth="48"
@@ -70,7 +75,6 @@
         PanePlacement="Left"
         ItemTemplate="{StaticResource HamburgerMenuItem}"
         OptionsItemTemplate="{StaticResource HamburgerOptionsMenuItem}"
-        SelectedIndex="{Binding SelectedPageIndex, Mode=TwoWay}"
         ShowSelectionIndicator="False"
         VerticalScrollBarOnLeftSide="False">
         
@@ -82,7 +86,7 @@
                     VerticalAlignment="Center"
                     FontSize="16"
                     Foreground="{DynamicResource MahApps.Brushes.Selected.Foreground}"
-                    Text="Menu" />
+                    Text="Меню" />
             </DataTemplate>
         </mah:HamburgerMenu.HamburgerMenuHeaderTemplate>
 
@@ -92,7 +96,7 @@
                 <!--<mah:HamburgerMenuHeaderItem AutomationProperties.Name="The Pictures Header" Label="Pictures" />-->
 
                 <!--  Основной элемент, контент которого загрузится автоматом  -->
-                <mah:HamburgerMenuGlyphItem Glyph="/media/icons/Modern-3dCollada.png" Label="Склад">
+                <mah:HamburgerMenuGlyphItem Glyph="/media/icons/BoxesSolid.png" Label="Склад">
                     <mah:HamburgerMenuGlyphItem.Tag>
                         <Pages:PageStorage />
                     </mah:HamburgerMenuGlyphItem.Tag>
@@ -102,13 +106,13 @@
 
                 <!--  Defer content  -->
                 <mah:HamburgerMenuGlyphItem
-                    local:MyHamburgerMenuProperies.DeferredContentType="{x:Type Pages:PageOrder}"
-                    Glyph="/media/icons/Modern-3dCollada.png"
+                    local:MyHamburgerMenuProperies.DeferredContentType="{x:Type Pages:PageOrders}"
+                    Glyph="/media/icons/TruckSolid.png"
                     Label="Заказы"/>
                 <mah:HamburgerMenuGlyphItem
-                    local:MyHamburgerMenuProperies.DeferredContentType="{x:Type Pages:PageOrder}"
-                    Glyph="/media/icons/Modern-3dCollada.png"
-                    Label="Мда" />
+                    local:MyHamburgerMenuProperies.DeferredContentType="{x:Type Pages:PageOrders}"
+                    Glyph="/media/icons/Modern3dCollada.png"
+                    Label="Мда"/>
             </mah:HamburgerMenuItemCollection>
         </mah:HamburgerMenu.ItemsSource>
 
@@ -117,13 +121,13 @@
             <mah:HamburgerMenuItemCollection>
                 <mah:HamburgerMenuGlyphItem
                     local:MyHamburgerMenuProperies.DeferredContentType="{x:Type Pages:PageAbout}"
-                    Glyph="/media/icons/Modern-3dCollada.png"
-                    Label="" />
+                    Glyph="/media/icons/QuestionCircleSolid.png"
+                    Label="О проге" />
             </mah:HamburgerMenuItemCollection>
         </mah:HamburgerMenu.OptionsItemsSource>
 
         <!--  Content  -->
-        <mah:HamburgerMenu.ContentTemplate>
+        <!--<mah:HamburgerMenu.ContentTemplate>
             <DataTemplate>
                 <Grid>
                     <Grid.RowDefinitions>
@@ -147,7 +151,7 @@
                     </mah:TransitioningContentControl>
                 </Grid>
             </DataTemplate>
-        </mah:HamburgerMenu.ContentTemplate>
+        </mah:HamburgerMenu.ContentTemplate>-->
 
     </mah:HamburgerMenu>
 </UserControl>

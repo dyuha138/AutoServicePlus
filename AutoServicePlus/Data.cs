@@ -2,7 +2,9 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -14,6 +16,53 @@ public class Data {
 	public static List<DBM_Запчасть> ЗапчастиList = new();
 
 
+	public static HamburgerMenuC HamburgerMenu = new();
+
+
+	public class HamburgerMenuC : INotifyPropertyChanged {
+
+		public event EventHandler<Twident_Int> Ev_IndexChanged;
+		public event EventHandler<Twident_Int> Ev_IndexOptionsChanged;
+		public event PropertyChangedEventHandler PropertyChanged;
+
+		public int SelectedIndex {
+			get { return _selectedIndex; }
+			set {
+				if (_selectedIndex != value) {
+					_selectedIndex = value;
+					PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("SelectedIndex"));
+					Ev_IndexChanged?.Invoke(null, new(value));
+				}
+				//SetProperty(ref _selectedIndex, value);
+				//Ev_IndexChanged?.Invoke(null, new(value));
+			}
+		}
+		private int _selectedIndex = -1;
+
+		public int SelectedOptionsIndex {
+			get { return _selectedOptionsIndex; }
+			set {
+				if (_selectedOptionsIndex != value) {
+					_selectedOptionsIndex = value;
+					PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("SelectedOptionsIndex"));
+					Ev_IndexOptionsChanged?.Invoke(null, new(value));
+				}
+				//SetProperty(ref _selectedOptionsIndex, value);
+				//Ev_IndexChanged?.Invoke(null, new(value));
+			}
+		}
+		private int _selectedOptionsIndex = -1;
+
+		//protected bool SetProperty<T>(ref T storage, T value, [CallerMemberName] string propertyName = null) {
+		//	if (object.Equals(storage, value)) return false;
+
+		//	storage = value;
+		//	PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+		//	return true;
+		//}
+	}
+
+	
 
 
 	public static string Server_IP = null;

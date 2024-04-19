@@ -15,7 +15,7 @@ using System.Windows.Shapes;
 
 namespace AutoServicePlus.Pages;
 
-public partial class PageAbout : Page {
+public partial class PageAbout : UserControl {
     public PageAbout() {
         InitializeComponent();
     }

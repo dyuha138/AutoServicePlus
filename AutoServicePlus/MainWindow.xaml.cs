@@ -14,7 +14,63 @@ namespace AutoServicePlus;
 
 
 public partial class MainWindow : MetroWindow {
+
+	public HamburgerMenu HambMenu = null;
+	private Pages.PageStorage PageStorage = null;
+	private Pages.PageOrders PageOrders = null;
+	private Pages.PageAbout PageAbout = null;
+
+
 	public MainWindow() {
+		Data.MainWin = this;
 		InitializeComponent();
+		Data.HamburgerMenu.Ev_IndexChanged += this.Data_Ev_HambMenuIndexChanged;
+		Data.HamburgerMenu.Ev_IndexOptionsChanged += this.Data_Ev_HambMenuOptionsIndexChanged;
+	}
+
+	public void SetHambMenu(HamburgerMenu hambmenu) {
+		if (HambMenu == null) {	HambMenu = hambmenu; }
+	}
+
+
+
+	private void Data_Ev_HambMenuIndexChanged(object sender, Twident_Int e) {
+		switch (e.Value) {
+			case 0:
+				this.Title = "АвтоСервис+: Склад";
+				if (this.PageStorage == null) {
+					this.PageStorage = new();
+				}
+				this.HambMenu.Content = this.PageStorage;
+			break;
+
+			case 2:
+				this.Title = "АвтоСервис+: Заказы запчастей";
+				if (this.PageOrders == null) {
+					this.PageOrders = new();
+				}
+				this.HambMenu.Content = this.PageOrders;
+			break;
+
+			case 3:
+				this.Title = "АвтоСервис+: Мда";
+				if (this.PageOrders == null) {
+					this.PageOrders = new();
+				}
+				this.HambMenu.Content = this.PageOrders;
+			break;
+		}
+	}
+
+	private void Data_Ev_HambMenuOptionsIndexChanged(object sender, Twident_Int e) {
+		switch (e.Value) {
+			case 0:
+				this.Title = "АвтоСервис+: О программе";
+				if (this.PageAbout == null) {
+					this.PageAbout = new();
+				}
+				this.HambMenu.Content = this.PageAbout;
+			break;
+		}
 	}
 }

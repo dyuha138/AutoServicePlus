@@ -15,8 +15,8 @@ using System.Windows.Shapes;
 
 namespace AutoServicePlus.Pages;
 
-public partial class PageOrder : Page {
-    public PageOrder() {
+public partial class PageOrders : UserControl {
+    public PageOrders() {
         InitializeComponent();
     }
 }

@@ -9,7 +9,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="media\icons\Modern-_3dCollada.png" />
+    <None Remove="media\icons\BoxesSolid.png" />
+    <None Remove="media\icons\Modern3dCollada.png" />
+    <None Remove="media\icons\Package.png" />
+    <None Remove="media\icons\QuestionCircleSolid.png" />
+    <None Remove="media\icons\TruckSolid.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -24,7 +28,11 @@
 
   <ItemGroup>
     <Resource Include="media\fonts\Gilroy-Light.otf" />
-    <Resource Include="media\icons\Modern-_3dCollada.png" />
+    <Resource Include="media\icons\BoxesSolid.png" />
+    <Resource Include="media\icons\Modern3dCollada.png" />
+    <Resource Include="media\icons\Package.png" />
+    <Resource Include="media\icons\QuestionCircleSolid.png" />
+    <Resource Include="media\icons\TruckSolid.png" />
   </ItemGroup>
 
   <ItemGroup>

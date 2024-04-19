@@ -50,5 +50,5 @@
         </mahApps:WindowCommands>
     </mah:MetroWindow.LeftWindowCommands>-->
 
-    <local:HamburgerMenu/>
+    <local:HamburgerMenuControl/>
 </mah:MetroWindow>

@@ -15,7 +15,7 @@ using System.Windows.Shapes;
 
 namespace AutoServicePlus.Pages;
 
-public partial class PageStorage : Page {
+public partial class PageStorage : UserControl {
     public PageStorage() {
         InitializeComponent();
     }
