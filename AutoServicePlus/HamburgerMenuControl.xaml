@@ -33,12 +33,12 @@
                 FontSize="16"
                 Text="{Binding Label}" />
             </DockPanel>
-            <DataTemplate.Triggers>
+            <!--<DataTemplate.Triggers>
                 <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType={x:Type mah:HamburgerMenu}}, Path=PanePlacement}" Value="Right">
                     <Setter TargetName="IconPart" Property="DockPanel.Dock" Value="Right" />
                     <Setter TargetName="TextPart" Property="Margin" Value="8,0,0,0" />
                 </DataTrigger>
-            </DataTemplate.Triggers>
+            </DataTemplate.Triggers>-->
         </DataTemplate>
 
         <!--  This is the template for the option menu item  -->
@@ -96,23 +96,21 @@
                 <!--<mah:HamburgerMenuHeaderItem AutomationProperties.Name="The Pictures Header" Label="Pictures" />-->
 
                 <!--  Основной элемент, контент которого загрузится автоматом  -->
-                <mah:HamburgerMenuGlyphItem Glyph="/media/icons/BoxesSolid.png" Label="Склад">
-                    <mah:HamburgerMenuGlyphItem.Tag>
-                        <Pages:PageStorage />
-                    </mah:HamburgerMenuGlyphItem.Tag>
-                </mah:HamburgerMenuGlyphItem>
+                <mah:HamburgerMenuGlyphItem Glyph="/media/icons/BoxesSolid.png" Label="Склад"/>
+                <!--<mah:HamburgerMenuGlyphItem.Tag>
+                    <Pages:PageStorage />
+                </mah:HamburgerMenuGlyphItem.Tag>-->
+
 
                 <mah:HamburgerMenuSeparatorItem />
 
                 <!--  Defer content  -->
                 <mah:HamburgerMenuGlyphItem
-                    local:MyHamburgerMenuProperies.DeferredContentType="{x:Type Pages:PageOrders}"
                     Glyph="/media/icons/TruckSolid.png"
                     Label="Заказы"/>
                 <mah:HamburgerMenuGlyphItem
-                    local:MyHamburgerMenuProperies.DeferredContentType="{x:Type Pages:PageOrders}"
-                    Glyph="/media/icons/Modern3dCollada.png"
-                    Label="Мда"/>
+                    Glyph="/media/icons/DatabaseSolid.png"
+                    Label="База данных"/>
             </mah:HamburgerMenuItemCollection>
         </mah:HamburgerMenu.ItemsSource>
 
@@ -120,7 +118,7 @@
         <mah:HamburgerMenu.OptionsItemsSource>
             <mah:HamburgerMenuItemCollection>
                 <mah:HamburgerMenuGlyphItem
-                    local:MyHamburgerMenuProperies.DeferredContentType="{x:Type Pages:PageAbout}"
+
                     Glyph="/media/icons/QuestionCircleSolid.png"
                     Label="О проге" />
             </mah:HamburgerMenuItemCollection>

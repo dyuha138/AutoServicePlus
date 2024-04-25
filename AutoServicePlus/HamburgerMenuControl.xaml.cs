@@ -28,26 +28,10 @@ public partial class HamburgerMenuControl : UserControl {
 
 
     void HamburgerMenu_OnItemInvoked(object sender, HamburgerMenuItemInvokedEventArgs e) {
-        //if (sender is not HamburgerMenu hamburgerMenu)
-        //    return;
 
-        //// If there is no content, create and set content.
-        //if (e.InvokedItem is HamburgerMenuItemBase item) {
-        //    if (item.Tag is null) {
-        //        var type = MyHamburgerMenuProperies.GetDeferredContentType(item);
-        //        item.Tag = Activator.CreateInstance(type);
-        //    }
-        //}
-        //hamburgerMenu.Content = e.InvokedItem;
 
-        HamburgerMenuGlyphItem hmfi = e.InvokedItem as HamburgerMenuGlyphItem;
-        int da = Data.HamburgerMenu.SelectedIndex;
+        //HamburgerMenuGlyphItem hmfi = e.InvokedItem as HamburgerMenuGlyphItem;
+        //int da = Data.HamburgerMenu.SelectedIndex;
 
-        //switch (Data.HamburgerMenu.SelectedIndex) {
-        //    case 0:
-
-        //}
-
-        //this.hm_Menu.Content = new Pages.PageAbout();
     }
 }

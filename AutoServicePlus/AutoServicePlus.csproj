@@ -10,6 +10,7 @@
 
   <ItemGroup>
     <None Remove="media\icons\BoxesSolid.png" />
+    <None Remove="media\icons\DatabaseSolid.png" />
     <None Remove="media\icons\Modern3dCollada.png" />
     <None Remove="media\icons\Package.png" />
     <None Remove="media\icons\QuestionCircleSolid.png" />
@@ -29,6 +30,7 @@
   <ItemGroup>
     <Resource Include="media\fonts\Gilroy-Light.otf" />
     <Resource Include="media\icons\BoxesSolid.png" />
+    <Resource Include="media\icons\DatabaseSolid.png" />
     <Resource Include="media\icons\Modern3dCollada.png" />
     <Resource Include="media\icons\Package.png" />
     <Resource Include="media\icons\QuestionCircleSolid.png" />
@@ -36,6 +38,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="Pages\PageDB.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Pages\PageAbout.xaml.cs">
       <SubType>Code</SubType>
     </Compile>

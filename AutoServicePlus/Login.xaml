@@ -43,6 +43,7 @@
         <PasswordBox x:Name="e_Pass" Style="{DynamicResource PBdef}" HorizontalAlignment="Center" HorizontalContentAlignment="Center" Margin="0,129,0,0" materialDesign:HintAssist.Hint="Пароль" VerticalAlignment="Top" VerticalContentAlignment="Center" Width="260" FontSize="18" Height="36"/>
         <mah:ProgressRing x:Name="pr_Ring" IsActive="False" Margin="0,180,0,0" Height="60" Width="60" VerticalAlignment="Top"/>
         <Button x:Name="b_Login" Style="{DynamicResource Bdef}" Content="Войти" Click="b_Login_Click" HorizontalAlignment="Center" Margin="0,255,0,0" VerticalAlignment="Top" FontWeight="Bold" Width="112" Height="28" FontSize="18" Padding="2,2,2,2"/>
+        <CheckBox Content="CheckBox" HorizontalAlignment="Left" Margin="-63,326,0,0" VerticalAlignment="Top"/>
 
 
     </Grid>

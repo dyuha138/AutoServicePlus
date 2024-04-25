@@ -19,6 +19,7 @@ public partial class MainWindow : MetroWindow {
 	private Pages.PageStorage PageStorage = null;
 	private Pages.PageOrders PageOrders = null;
 	private Pages.PageAbout PageAbout = null;
+	private Pages.PageDB PageDB = null;
 
 
 	public MainWindow() {
@@ -53,11 +54,11 @@ public partial class MainWindow : MetroWindow {
 			break;
 
 			case 3:
-				this.Title = "АвтоСервис+: Мда";
-				if (this.PageOrders == null) {
-					this.PageOrders = new();
+				this.Title = "АвтоСервис+: База данных";
+				if (this.PageDB == null) {
+					this.PageDB = new();
 				}
-				this.HambMenu.Content = this.PageOrders;
+				this.HambMenu.Content = this.PageDB;
 			break;
 		}
 	}

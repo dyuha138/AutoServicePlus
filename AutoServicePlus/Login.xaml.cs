@@ -27,7 +27,7 @@ public partial class Login : MetroWindow {
 	}
 
 
-	private void StatusSet(object? sender, EventMsg e) {
+	private void StatusSet(object? sender, Twident_Msg e) {
 		this.Dispatcher.Invoke(new Action(() => { this.l_Out.Content = e.Message; }));
 	}
 
@@ -37,10 +37,18 @@ public partial class Login : MetroWindow {
 
 		Data.Server_Login = this.e_Login.Text;
 		Data.Server_Pass = this.e_Pass.Password;
+		//Data.MainWin = new();
+		//Data.MainWin.Show();
 
 		Task.Factory.StartNew(() => {
 			if (DB.Open()) {
+				Data.SaveSettings();
 
+				this.Dispatcher.Invoke(() => {
+					Data.MainWin = new();
+					Data.MainWin.Show();
+					this.Close();
+				});
 			} else {
 				this.Dispatcher.Invoke(() => {
 					this.pr_Ring.IsActive = false;
