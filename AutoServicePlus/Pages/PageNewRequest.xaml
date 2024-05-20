@@ -1,0 +1,36 @@
+﻿<UserControl x:Class="AutoServicePlus.Pages.PageNewRequest"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:AutoServicePlus.Pages"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+             mc:Ignorable="d" 
+             d:DesignHeight="595" d:DesignWidth="800">
+    <Grid Background="{DynamicResource Color_Dark}" Height="595" VerticalAlignment="Center">
+        <DataGrid Margin="195,225,10,208"/>
+        <TextBox Style="{DynamicResource TBdef}" HorizontalAlignment="Left" Margin="195,195,0,0" materialDesign:HintAssist.Hint="Поиск" VerticalAlignment="Top" Width="281"/>
+        <Button Style="{DynamicResource Bdef}" Content="Подтвердить" HorizontalAlignment="Left" Margin="194,556,0,0" VerticalAlignment="Top" Background="{StaticResource Color_Green}"/>
+        <Button Style="{DynamicResource Bdef}" Content="Отменить заявку" HorizontalAlignment="Center" Margin="0,556,0,0" VerticalAlignment="Top" Background="{StaticResource Color_Red}"/>
+        <Button Style="{DynamicResource Bdef}" HorizontalAlignment="Left" Margin="50,342,0,0" VerticalAlignment="Top" Background="{StaticResource Color_Green}" Height="28" Width="28" Padding="0,0,0,0">
+            <Image Source="/media/icons/CheckSolid.png" Height="20" Width="20"/>
+        </Button>
+        <Button Style="{DynamicResource Bdef}" HorizontalAlignment="Left" Margin="116,342,0,0" VerticalAlignment="Top" Background="{StaticResource Color_Red}" Height="28" Width="28" Padding="0,0,0,0" >
+            <Image Source="/media/icons/Cancel.png" Height="20" Width="20"/>
+        </Button>
+        <mah:NumericUpDown Style="{DynamicResource NUDdef}" HorizontalAlignment="Left" Margin="37,269,0,0" materialDesign:HintAssist.Hint="Количество" Width="121" BorderBrush="{StaticResource Color_Orange}"/>
+        <DataGrid Margin="195,39,206,415"/>
+        <ComboBox Style="{DynamicResource CBdef}" materialDesign:HintAssist.Hint="Категория" HorizontalAlignment="Left" Margin="488,194,0,0" VerticalAlignment="Top" Width="120" Height="25"/>
+        <ComboBox Style="{DynamicResource CBdef}" materialDesign:HintAssist.Hint="Марка" HorizontalAlignment="Left" Margin="621,194,0,0" VerticalAlignment="Top" Width="120" Height="25"/>
+        <Button Style="{DynamicResource Bdef}" Content="Изменить" HorizontalAlignment="Left" Margin="98,39,0,0" VerticalAlignment="Top" Background="{StaticResource Color_Orange}"/>
+        <Button Style="{DynamicResource Bdef}" Content="Удалить" HorizontalAlignment="Left" Margin="111,83,0,0" VerticalAlignment="Top" Background="{StaticResource Color_Red}"/>
+        <ComboBox Style="{DynamicResource CBdef}" materialDesign:HintAssist.Hint="Поставщик" HorizontalAlignment="Left" Margin="10,296,0,0" VerticalAlignment="Top" Width="180" Height="25"/>
+        <mah:NumericUpDown Style="{DynamicResource NUDdef}" HorizontalAlignment="Left" Margin="66,87,0,0" materialDesign:HintAssist.Hint="Количество" Width="120" BorderBrush="{StaticResource Color_Orange}"/>
+        <Button Style="{DynamicResource Bdef}" Content="Очистить" HorizontalAlignment="Left" Margin="702,5,0,0" VerticalAlignment="Top" Background="{StaticResource Color_Orange}"/>
+        <DataGrid Margin="195,408,10,55"/>
+        <Button Style="{DynamicResource Bdef}" Content="Выбрать" HorizontalAlignment="Left" Margin="82,460,0,0" VerticalAlignment="Top" Background="{StaticResource Color_Orange}"/>
+        <DataGrid Margin="613,39,14,415"/>
+
+    </Grid>
+</UserControl>

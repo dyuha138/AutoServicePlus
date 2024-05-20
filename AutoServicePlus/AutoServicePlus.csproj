@@ -10,11 +10,14 @@
 
   <ItemGroup>
     <None Remove="media\icons\BoxesSolid.png" />
+    <None Remove="media\icons\Cancel.png" />
+    <None Remove="media\icons\CheckSolid.png" />
     <None Remove="media\icons\DatabaseSolid.png" />
     <None Remove="media\icons\Modern3dCollada.png" />
     <None Remove="media\icons\Package.png" />
     <None Remove="media\icons\QuestionCircleSolid.png" />
     <None Remove="media\icons\TruckSolid.png" />
+    <None Remove="media\img\Fon.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -30,11 +33,14 @@
   <ItemGroup>
     <Resource Include="media\fonts\Gilroy-Light.otf" />
     <Resource Include="media\icons\BoxesSolid.png" />
+    <Resource Include="media\icons\Cancel.png" />
+    <Resource Include="media\icons\CheckSolid.png" />
     <Resource Include="media\icons\DatabaseSolid.png" />
     <Resource Include="media\icons\Modern3dCollada.png" />
     <Resource Include="media\icons\Package.png" />
     <Resource Include="media\icons\QuestionCircleSolid.png" />
     <Resource Include="media\icons\TruckSolid.png" />
+    <Resource Include="media\img\Fon.png" />
   </ItemGroup>
 
   <ItemGroup>

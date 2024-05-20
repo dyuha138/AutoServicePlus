@@ -5,7 +5,7 @@
              xmlns:materialDesignMahApps="http://materialdesigninxaml.net/winfx/xaml/themes" 
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:mah="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
-             StartupUri="Login.xaml">
+             StartupUri="MainWindow.xaml">
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -46,6 +46,18 @@
                 <Setter Property="BorderBrush" Value="#E5801C"/>
                 <Setter Property="Foreground" Value="#DDDDDA"/>
                 <Setter Property="FontWeight" Value="Bold"/>
+            </Style>
+
+            <Style TargetType="mah:NumericUpDown" x:Key="NUDdef" BasedOn="{StaticResource MahApps.Styles.NumericUpDown.DataGrid}">
+                <Setter Property="Background" Value="#292929"/>
+                <Setter Property="BorderBrush" Value="#E5801C"/>
+                <Setter Property="Foreground" Value="#DDDDDA"/>
+            </Style>
+
+            <Style TargetType="ComboBox" x:Key="CBdef" BasedOn="{StaticResource MaterialDesignFloatingHintComboBox}">
+                <Setter Property="Background" Value="#292929"/>
+                <Setter Property="BorderBrush" Value="#E5801C"/>
+                <Setter Property="Foreground" Value="#DDDDDA"/>
             </Style>
 
             <Color x:Key="ColorCon_Orange">#E5801C</Color>

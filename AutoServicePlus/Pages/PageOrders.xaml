@@ -9,7 +9,18 @@
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800">
 
-    <Grid>
-        <TextBlock Text="заказ запчастей" FontSize="18" Foreground="{StaticResource Color_White}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+    <Grid Background="{DynamicResource Color_Dark}">
+        <DataGrid Margin="130,35,10,115"/>
+        <TextBox Style="{DynamicResource TBdef}" HorizontalAlignment="Left" Margin="130,5,0,0" materialDesign:HintAssist.Hint="Поиск" VerticalAlignment="Top" Width="400"/>
+        <Button Style="{DynamicResource Bdef}" Content="Отмена заказа" HorizontalAlignment="Left" Margin="368,0,0,78" Background="{StaticResource Color_Red}" Height="29" VerticalAlignment="Bottom"/>
+        <Button Style="{DynamicResource Bdef}" Content="Создать заказ" HorizontalAlignment="Left" Margin="133,0,0,78" Background="{StaticResource Color_Orange}" Height="29" VerticalAlignment="Bottom"/>
+        <Button Style="{DynamicResource Bdef}" Content="Изменить" HorizontalAlignment="Left" Margin="261,0,0,78" Height="29" VerticalAlignment="Bottom"/>
+        <Button Style="{DynamicResource Bdef}" Visibility="Hidden" HorizontalAlignment="Left" Margin="321,0,0,8" Background="{StaticResource Color_Green}" Width="28" Padding="0,0,0,0" Height="28" VerticalAlignment="Bottom">
+            <Image Source="/media/icons/CheckSolid.png" Height="20" Width="20"/>
+        </Button>
+        <Button Style="{DynamicResource Bdef}" Visibility="Hidden" HorizontalAlignment="Left" Margin="383,0,0,8" Background="{StaticResource Color_Red}" Width="28" Padding="0,0,0,0" Height="28" VerticalAlignment="Bottom">
+            <Image Source="/media/icons/Cancel.png" Height="20" Width="20"/>
+        </Button>
+        <ComboBox Style="{DynamicResource CBdef}" Visibility="Hidden" HorizontalAlignment="Left" Margin="310,377,0,0" VerticalAlignment="Top" Width="120" Height="28"/>
     </Grid>
 </UserControl>

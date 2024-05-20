@@ -37,14 +37,18 @@
 
 
     <Grid>
-        <Label Content="Label" HorizontalAlignment="Left" Margin="135,29,0,0" VerticalAlignment="Top" Foreground="{StaticResource Color_White}" FontSize="22"/>
+        <Image HorizontalAlignment="Center" Height="335" VerticalAlignment="Top" Width="452" Source="/media/img/Fon.png" OpacityMask="#27000000"/>
+        <TextBlock Text="Вход" TextWrapping="Wrap" HorizontalAlignment="Center" Margin="0,23,0,0" VerticalAlignment="Top" Foreground="{StaticResource Color_White}" FontSize="22"/>
         <Label x:Name="l_Out" Visibility="Collapsed" Content="Label" HorizontalAlignment="Center" Margin="0,194,0,0" VerticalAlignment="Top" FontSize="18" Foreground="{StaticResource Color_Red}" Width="320" HorizontalContentAlignment="Center"/>
         <TextBox x:Name="e_Login" Style="{DynamicResource TBdef}" Margin="40,76,40,0" TextWrapping="NoWrap" HorizontalContentAlignment="Center" materialDesign:HintAssist.Hint="Логин" VerticalAlignment="Top" VerticalContentAlignment="Center" FontSize="18" Height="36"/>
         <PasswordBox x:Name="e_Pass" Style="{DynamicResource PBdef}" HorizontalAlignment="Center" HorizontalContentAlignment="Center" Margin="0,129,0,0" materialDesign:HintAssist.Hint="Пароль" VerticalAlignment="Top" VerticalContentAlignment="Center" Width="260" FontSize="18" Height="36"/>
         <mah:ProgressRing x:Name="pr_Ring" IsActive="False" Margin="0,180,0,0" Height="60" Width="60" VerticalAlignment="Top"/>
-        <Button x:Name="b_Login" Style="{DynamicResource Bdef}" Content="Войти" Click="b_Login_Click" HorizontalAlignment="Center" Margin="0,255,0,0" VerticalAlignment="Top" FontWeight="Bold" Width="112" Height="28" FontSize="18" Padding="2,2,2,2"/>
-        <CheckBox Content="CheckBox" HorizontalAlignment="Left" Margin="-63,326,0,0" VerticalAlignment="Top"/>
-
+        <Button x:Name="b_Login" Style="{DynamicResource Bdef}" Click="b_Login_Click" HorizontalAlignment="Center" Margin="0,255,0,0" VerticalAlignment="Top" FontWeight="Bold" Width="112" Height="28" FontSize="18" Padding="0,0,0,0">
+            <Grid Width="112" Height="Auto">
+                <Image Source="/media/icons/BoxesSolid.png" HorizontalAlignment="Left" Margin="2,0,0,0"></Image>
+                <Label Content="Войти" HorizontalAlignment="Left" Margin="35,0,0,0" Foreground="{StaticResource Color_White}" ></Label>
+            </Grid>
+        </Button>
 
     </Grid>
 </mah:MetroWindow>
