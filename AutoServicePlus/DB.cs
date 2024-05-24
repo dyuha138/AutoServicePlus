@@ -16,9 +16,9 @@ class DB {
 
 	public static void UpdateStringConnection(bool isTest) {
 		if (isTest) {
-			constr = $"Data Source={Data.Server_IP},{Data.Server_Port}";
+			constr = $"Data Source={Data.DB.DataConnect.Server_IP},{Data.DB.DataConnect.Server_Port}";
 		} else {
-			constr = $"Data Source={Data.Server_IP};Port={Data.Server_Port};Database={Data.DB_Name};User ID={Data.Server_Login};Password={Data.Server_Pass};Persist Security Info=True";
+			constr = $"Data Source={Data.DB.DataConnect.Server_IP};Port={Data.DB.DataConnect.Server_Port};Database={Data.DB.DataConnect.DB_Name};User ID={Data.DB.DataConnect.Server_Login};Password={Data.DB.DataConnect.Server_Pass};Persist Security Info=True";
 		}
 	}
 
@@ -109,7 +109,7 @@ class DB {
 
 		public static int Add(DBM_Заказ l) {
 			SQLResultTable R = DB.SQLQuery($"INSERT INTO Заказы (Дата, Контрагент_id, Статус_id, Сотрудник_id) VALUES ({l.Дата}, {l.Контрагент_id}, {l.Статус_id}, {l.Сотрудник_id}); SELECT LAST_INSERT_ID();");
-			Data.ЗаказыList.Add(new DBM_Заказ(R.GetInt(0), l.Дата, l.Контрагент_id, l.Статус_id, l.Сотрудник_id, l.Запчасти));
+			Data.DB.ЗаказыList.Add(new DBM_Заказ(R.GetInt(0), l.Дата, l.Контрагент_id, l.Статус_id, l.Сотрудник_id, l.Запчасти));
 
 			int idl = R.GetInt(0);
 
@@ -125,7 +125,7 @@ class DB {
 		public static bool Remove(int id) {
 			int R = DB.SQLQueryNon($"DELETE FROM Заказы WHERE id = {id};");
 			if (R > 0) {
-				Data.ЗаказыList.RemoveAt(Data.ЗаказыList.FindIndex(x => x.id == id));
+				Data.DB.ЗаказыList.RemoveAt(Data.DB.ЗаказыList.FindIndex(x => x.id == id));
 				return true;
 			} else {
 				return false;
@@ -133,13 +133,13 @@ class DB {
 		}
 
 		public static bool RowUpdate(DBM_Заказ l) {
-			int i = Data.ЗаказыList.FindIndex(x => x.id == l.id);
-			DBM_Заказ ll = Data.ЗаказыList.ElementAt(i);
+			int i = Data.DB.ЗаказыList.FindIndex(x => x.id == l.id);
+			DBM_Заказ ll = Data.DB.ЗаказыList.ElementAt(i);
 			if (ll != null) {
 				DB.SQLQuery($"UPDATE Заказы SET Дата = {l.Дата}, Контрагент_id = {l.Контрагент_id}, Статус_id = {l.Дата}, Сотрудник_id = {l.Сотрудник_id} WHERE id = {l.id};");
 
-				Data.ЗаказыList.RemoveAt(i);
-				Data.ЗаказыList.Insert(i, l);
+				Data.DB.ЗаказыList.RemoveAt(i);
+				Data.DB.ЗаказыList.Insert(i, l);
 				return true;
 			} else {
 				return false;
@@ -160,7 +160,7 @@ class DB {
 
 			R = DB.SQLQuery("SELECT * FROM Заказы;");
 			if (R != null) {
-				Data.ЗаказыList.Clear();
+				Data.DB.ЗаказыList.Clear();
 				while (R.NextRow()) {
 					ll2.Clear();
 					llt = ll.FindAll(x => x.Заказ_id == R.GetInt(0));
@@ -170,7 +170,7 @@ class DB {
 					}
 					ll.RemoveAll(x => x.Заказ_id == R.GetInt(0));
 
-					Data.ЗаказыList.Add(new DBM_Заказ(R.GetInt(0), R.GetLong(1), R.GetInt(2), R.GetInt(3), R.GetInt(4), ll2));
+					Data.DB.ЗаказыList.Add(new DBM_Заказ(R.GetInt(0), R.GetLong(1), R.GetInt(2), R.GetInt(3), R.GetInt(4), ll2));
 				}
 			}
 		}
@@ -181,7 +181,7 @@ class DB {
 
 		public static int Add(DBM_Запчасть l) {
 			SQLResultTable R = DB.SQLQuery($"INSERT INTO Запчасти (Название, Категория_id) VALUES ({l.Название}, {l.Категория_id}); SELECT LAST_INSERT_ID();");
-			Data.ЗапчастиList.Add(new DBM_Запчасть(R.GetInt(0), l.Название, l.Категория_id, l.Автомобиль_id, l.Статус_id));
+			Data.DB.ЗапчастиList.Add(new DBM_Запчасть(R.GetInt(0), l.Название, l.Категория_id, l.Автомобиль_id, l.Статус_id));
 			int idl = R.GetInt(0);
 			R = DB.SQLQuery($"INSERT INTO АвтомобильЗапчасть (Автомобиль_id, Запчасть_id) VALUES ({l.Автомобиль_id}, {idl});");
 			return idl;
@@ -191,7 +191,7 @@ class DB {
 			int R = DB.SQLQueryNon($"DELETE FROM Запчасти WHERE id = {id};");
 			if (R > 0) {
 				DB.SQLQueryNon($"DELETE FROM АвтомобильЗапчасть WHERE Запчасть_id = {id};");
-				Data.ЗапчастиList.RemoveAt(Data.ЗапчастиList.FindIndex(x => x.id == id));
+				Data.DB.ЗапчастиList.RemoveAt(Data.DB.ЗапчастиList.FindIndex(x => x.id == id));
 				return true;
 			} else {
 				return false;
@@ -199,14 +199,14 @@ class DB {
 		}
 
 		public static bool RowUpdate(DBM_Запчасть l) {
-			int i = Data.ЗапчастиList.FindIndex(x => x.id == l.id);
-			DBM_Запчасть ll = Data.ЗапчастиList.ElementAt(i);
+			int i = Data.DB.ЗапчастиList.FindIndex(x => x.id == l.id);
+			DBM_Запчасть ll = Data.DB.ЗапчастиList.ElementAt(i);
 			if (ll != null) {
 				DB.SQLQuery($"UPDATE Запчасти SET Название = {l.Название}, Категория = {l.Категория_id} WHERE id = {l.id};");
 				DB.SQLQuery($"UPDATE АвтомобильЗапчасть SET Автомобиль_id = {l.Автомобиль_id} WHERE Запчасть_id = {l.id};");
 
-				Data.ЗапчастиList.RemoveAt(i);
-				Data.ЗапчастиList.Insert(i, l);
+				Data.DB.ЗапчастиList.RemoveAt(i);
+				Data.DB.ЗапчастиList.Insert(i, l);
 				return true;
 			} else {
 				return false;
@@ -216,9 +216,9 @@ class DB {
 		public static void UpdateListfromTable() {
 			SQLResultTable R = DB.SQLQuery("SELECT * FROM Запчасти;");
 			if (R != null) {
-				Data.ЗапчастиList.Clear();
+				Data.DB.ЗапчастиList.Clear();
 				while (R.NextRow()) {
-					Data.ЗапчастиList.Add(new DBM_Запчасть(R.GetInt(0), R.GetStr(1), R.GetInt(2), R.GetInt(3), R.GetInt(4)));
+					Data.DB.ЗапчастиList.Add(new DBM_Запчасть(R.GetInt(0), R.GetStr(1), R.GetInt(2), R.GetInt(3), R.GetInt(4)));
 				}
 			}
 		}
@@ -229,14 +229,14 @@ class DB {
 
 		public static int Add(DBM_РегистрЗапчасть l) {
 			SQLResultTable R = DB.SQLQuery($"INSERT INTO РегистрЗапчастей (Запчасть_id, Количество, Дата, Операция_id, Статус_id, Сотрудник_id) VALUES ({l.Запчасть_id}, {l.Количество}, {l.Дата}, {l.Операция_id}, {l.Статус_id}, {l.Сотрудник_id}); SELECT LAST_INSERT_ID();");
-			Data.РегистрЗапчастейList.Add(new DBM_РегистрЗапчасть(R.GetInt(0), l.Запчасть_id, l.Количество, l.Дата, l.Операция_id, l.Статус_id, l.Сотрудник_id));
+			Data.DB.РегистрЗапчастейList.Add(new DBM_РегистрЗапчасть(R.GetInt(0), l.Запчасть_id, l.Количество, l.Дата, l.Операция_id, l.Статус_id, l.Сотрудник_id));
 			return R.GetInt(0);
 		}
 
 		//public static bool Remove(int id) {
 		//	int R = DB.SQLQueryNon($"DELETE FROM РегистрЗапчастей WHERE id = {id};");
 		//	if (R > 0) {
-		//		Data.ЗаказыList.RemoveAt(Data.ЗаказыList.FindIndex(x => x.id == id));
+		//		Data.DB.ЗаказыList.RemoveAt(Data.DB.ЗаказыList.FindIndex(x => x.id == id));
 		//		return true;
 		//	} else {
 		//		return false;
@@ -244,13 +244,13 @@ class DB {
 		//}
 
 		public static bool RowUpdate(DBM_РегистрЗапчасть l) {
-			int i = Data.РегистрЗапчастейList.FindIndex(x => x.id == l.id);
-			DBM_РегистрЗапчасть ll = Data.РегистрЗапчастейList.ElementAt(i);
+			int i = Data.DB.РегистрЗапчастейList.FindIndex(x => x.id == l.id);
+			DBM_РегистрЗапчасть ll = Data.DB.РегистрЗапчастейList.ElementAt(i);
 			if (ll != null) {
 				DB.SQLQuery($"UPDATE РегистрЗапчастей SET Запчасть_id = {l.Запчасть_id}, Количество = {l.Количество}, Дата = {l.Дата}, Операция_id = {l.Операция_id}, Статус_id = {l.Статус_id}, Сотрудник_id = {l.Сотрудник_id} WHERE id = {l.id};");
 
-				Data.РегистрЗапчастейList.RemoveAt(i);
-				Data.РегистрЗапчастейList.Insert(i, l);
+				Data.DB.РегистрЗапчастейList.RemoveAt(i);
+				Data.DB.РегистрЗапчастейList.Insert(i, l);
 				return true;
 			} else {
 				return false;
@@ -260,9 +260,9 @@ class DB {
 		public static void UpdateListfromTable() {
 			SQLResultTable R = DB.SQLQuery("SELECT * FROM РегистрЗапчастей;");
 			if (R != null) {
-				Data.РегистрЗапчастейList.Clear();
+				Data.DB.РегистрЗапчастейList.Clear();
 				while (R.NextRow()) {
-					Data.РегистрЗапчастейList.Add(new DBM_РегистрЗапчасть(R.GetInt(0), R.GetInt(1), R.GetInt(2), R.GetLong(3), R.GetInt(4), R.GetInt(5), R.GetInt(6)));
+					Data.DB.РегистрЗапчастейList.Add(new DBM_РегистрЗапчасть(R.GetInt(0), R.GetInt(1), R.GetInt(2), R.GetLong(3), R.GetInt(4), R.GetInt(5), R.GetInt(6)));
 				}
 			}
 		}

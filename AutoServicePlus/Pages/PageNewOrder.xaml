@@ -8,27 +8,39 @@
              xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <Grid Background="{DynamicResource Color_Dark}">
-        <DataGrid Margin="195,225,10,64"/>
-        <TextBox Style="{DynamicResource TBdef}" HorizontalAlignment="Left" Margin="195,195,0,0" materialDesign:HintAssist.Hint="Поиск" VerticalAlignment="Top" Width="281"/>
-        <Button Style="{DynamicResource Bdef}" Content="Подтвердить" HorizontalAlignment="Left" Margin="194,402,0,0" VerticalAlignment="Top" Background="{StaticResource Color_Green}"/>
-        <Button Style="{DynamicResource Bdef}" Content="Отменить заказ" HorizontalAlignment="Center" Margin="0,402,0,0" VerticalAlignment="Top" Background="{StaticResource Color_Red}"/>
-        <Button Style="{DynamicResource Bdef}" HorizontalAlignment="Left" Margin="50,342,0,0" VerticalAlignment="Top" Background="{StaticResource Color_Green}" Height="28" Width="28" Padding="0,0,0,0">
-            <Image Source="/media/icons/CheckSolid.png" Height="20" Width="20"/>
-        </Button>
-        <Button Style="{DynamicResource Bdef}" HorizontalAlignment="Left" Margin="116,342,0,0" VerticalAlignment="Top" Background="{StaticResource Color_Red}" Height="28" Width="28" Padding="0,0,0,0" >
-            <Image Source="/media/icons/Cancel.png" Height="20" Width="20"/>
-        </Button>
-        <mah:NumericUpDown Style="{DynamicResource NUDdef}" HorizontalAlignment="Left" Margin="37,269,0,0" materialDesign:HintAssist.Hint="Количество" Width="121" BorderBrush="{StaticResource Color_Orange}"/>
-        <DataGrid Margin="195,39,10,270"/>
-        <ComboBox Style="{DynamicResource CBdef}" materialDesign:HintAssist.Hint="Категория" HorizontalAlignment="Left" Margin="488,194,0,0" VerticalAlignment="Top" Width="120" Height="25"/>
-        <ComboBox Style="{DynamicResource CBdef}" materialDesign:HintAssist.Hint="Марка" HorizontalAlignment="Left" Margin="621,194,0,0" VerticalAlignment="Top" Width="120" Height="25"/>
-        <Button Style="{DynamicResource Bdef}" Content="Изменить" HorizontalAlignment="Left" Margin="98,39,0,0" VerticalAlignment="Top" Background="{StaticResource Color_Orange}"/>
-        <Button Style="{DynamicResource Bdef}" Content="Удалить" HorizontalAlignment="Left" Margin="111,83,0,0" VerticalAlignment="Top" Background="{StaticResource Color_Red}"/>
-        <ComboBox Style="{DynamicResource CBdef}" materialDesign:HintAssist.Hint="Поставщик" HorizontalAlignment="Left" Margin="10,296,0,0" VerticalAlignment="Top" Width="180" Height="25"/>
-        <mah:NumericUpDown Style="{DynamicResource NUDdef}" HorizontalAlignment="Left" Margin="66,87,0,0" materialDesign:HintAssist.Hint="Количество" Width="120" BorderBrush="{StaticResource Color_Orange}"/>
-        <Button Style="{DynamicResource Bdef}" Content="Очистить" HorizontalAlignment="Left" Margin="702,5,0,0" VerticalAlignment="Top" Background="{StaticResource Color_Orange}"/>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="201*" MinWidth="140" MaxWidth="200"/>
+            <ColumnDefinition Width="329*"/>
+            <ColumnDefinition Width="270"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="37*"/>
+            <RowDefinition Height="53*"/>
+        </Grid.RowDefinitions>
 
+        <DataGrid x:Name="dg_Заказ" Style="{DynamicResource DGdef}" Margin="0,10,10,5" Grid.ColumnSpan="2" Grid.Column="1"/>
+        <Button x:Name="b_Edit" Style="{DynamicResource Bdef}" Content="Изменить" Margin="0,10,8,0" VerticalAlignment="Top" Click="b_Edit_Click" HorizontalAlignment="Right" Width="92"/>
+        <Button x:Name="b_Del" Style="{DynamicResource Bdef_red}" Content="Удалить" Margin="0,50,8,0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="92"/>
+        <Button x:Name="b_Clear" Style="{DynamicResource Bdef}" Content="Очистить" Margin="0,0,8,5" HorizontalAlignment="Right" Width="92" Height="32" VerticalAlignment="Bottom"/>
+        <mah:NumericUpDown x:Name="nud_NumЗаказ" Style="{DynamicResource NUDdef}" Visibility="Hidden" Margin="0,55,8,0" materialDesign:HintAssist.Hint="Количество" BorderBrush="{StaticResource Color_Orange}" HorizontalAlignment="Right" Width="120"/>
+
+        <DataGrid x:Name="dg_Запчасти" Style="{DynamicResource DGdef}" Margin="0,39,10,54" Grid.Row="1" Grid.ColumnSpan="2" Grid.Column="1"/>
+        <TextBox x:Name="e_Search" Style="{DynamicResource TBdef}" Margin="0,8,0,0" materialDesign:HintAssist.Hint="Поиск" Grid.Row="1" Height="26" VerticalAlignment="Top" Grid.Column="1"/>
+        <ComboBox x:Name="cb_Категория" Style="{DynamicResource CBdef}" materialDesign:HintAssist.Hint="Категория" Margin="0,8,135,0" Grid.Row="1" Height="26" VerticalAlignment="Top" Grid.Column="2" HorizontalAlignment="Right" Width="120"/>
+        <ComboBox x:Name="cb_Марка" Style="{DynamicResource CBdef}" materialDesign:HintAssist.Hint="Марка" Margin="0,8,10,0" HorizontalAlignment="Right" Width="120" Grid.Row="1" Height="26" VerticalAlignment="Top" Grid.Column="2"/>
+        <Button x:Name="b_Done" Style="{DynamicResource Bdef_green}" Content="Подтвердить" HorizontalAlignment="Left" Margin="0,0,0,20" Height="29" VerticalAlignment="Bottom" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Width="120"/>
+        <Button x:Name="b_Cancel" Style="{DynamicResource Bdef_red}" Content="Отменить заказ" HorizontalAlignment="Left" Margin="125,0,0,20" Height="29" VerticalAlignment="Bottom" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Width="138"/>
+        <mah:NumericUpDown x:Name="nud_NumЗап" Style="{DynamicResource NUDdef}" HorizontalAlignment="Center" Margin="0,39,0,0" materialDesign:HintAssist.Hint="Количество" Width="122" Grid.Row="1" Height="22"/>
+        <ComboBox x:Name="cb_Поставщик" Style="{DynamicResource CBdef}" materialDesign:HintAssist.Hint="Поставщик" Margin="10,66,10,0" Grid.Row="1" Height="25" VerticalAlignment="Top"/>
+        <Grid Margin="0,100,0,0" Grid.Row="1" Height="28" Width="80" MinWidth="80" HorizontalAlignment="Center" VerticalAlignment="Top">
+            <Button x:Name="b_Add" Style="{DynamicResource Bdef_green_icon}" Width="28" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="0,0,0,0" Height="28">
+                <Image Source="/media/icons/Plus.png" Height="20" Width="20"/>
+            </Button>
+            <Button x:Name="b_Cancelmini" Style="{DynamicResource Bdef_red_icon}" Margin="0,0,0,0" VerticalAlignment="Center" Height="28" Width="28" HorizontalAlignment="Right" >
+                <Image Source="/media/icons/Cancel.png" Height="20" Width="20"/>
+            </Button>
+        </Grid>
     </Grid>
 
 </UserControl>

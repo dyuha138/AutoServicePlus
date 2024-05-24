@@ -19,14 +19,14 @@ public partial class PageDB : UserControl {
     public PageDB() {
         InitializeComponent();
 
-        DB.DB_Заказы.UpdateListfromTable();
+        //DB.DB_Заказы.UpdateListfromTable();
 
         
-        DBM_Заказ да = Data.ЗаказыList.ElementAt(0);
+        //DBM_Заказ да = Data.DB.ЗаказыList.ElementAt(0);
 
 
-        List<DBM_Заказ.Запчасть> ll = new();
-        ll.Add(new(1, 5));
+        //List<DBM_Заказ.Запчасть> ll = new();
+        //ll.Add(new(1, 5));
 
         //DB.DB_Заказы.Add(new(0, 54813, 1, 1, 2, ll));
 

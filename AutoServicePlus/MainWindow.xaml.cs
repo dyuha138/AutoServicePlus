@@ -16,10 +16,13 @@ namespace AutoServicePlus;
 public partial class MainWindow : MetroWindow {
 
 	public HamburgerMenu HambMenu = null;
-	private Pages.PageStorage PageStorage = null;
-	private Pages.PageOrders PageOrders = null;
-	private Pages.PageAbout PageAbout = null;
-	private Pages.PageDB PageDB = null;
+	public Pages.PageStorage PageStorage = null;
+	public Pages.PageOrders PageOrders = null;
+	public Pages.PageNewOrder PageNewOrder = null;
+	public Pages.PageRequests PageRequests = null;
+	public Pages.PageNewRequest PageNewRequest = null;
+	public Pages.PageAbout PageAbout = null;
+	public Pages.PageDB PageDB = null;
 
 
 	public MainWindow() {
@@ -27,6 +30,7 @@ public partial class MainWindow : MetroWindow {
 		InitializeComponent();
 		Data.HamburgerMenu.Ev_IndexChanged += this.Data_Ev_HambMenuIndexChanged;
 		Data.HamburgerMenu.Ev_IndexOptionsChanged += this.Data_Ev_HambMenuOptionsIndexChanged;
+		//Data.MainWin.SetBinding(MinHeightProperty, "WinHeight");
 	}
 
 	public void SetHambMenu(HamburgerMenu hambmenu) {
@@ -54,6 +58,14 @@ public partial class MainWindow : MetroWindow {
 			break;
 
 			case 3:
+				this.Title = "АвтоСервис+: Заявки на отгрузку";
+				if (this.PageRequests == null) {
+					this.PageRequests = new();
+				}
+				this.HambMenu.Content = this.PageRequests;
+			break;
+
+			case 4:
 				this.Title = "АвтоСервис+: База данных";
 				if (this.PageDB == null) {
 					this.PageDB = new();

@@ -7,19 +7,19 @@
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="382.486">
+             d:DesignHeight="450" d:DesignWidth="800" FontFamily="/Twidibot;component/media/fonts/#Gilroy Light">
     <Grid Background="{DynamicResource Color_Dark}">
-        <DataGrid Margin="11,34,11,116"/>
-        <TextBox Style="{DynamicResource TBdef}" HorizontalAlignment="Left" Margin="11,4,0,0" materialDesign:HintAssist.Hint="Поиск" VerticalAlignment="Top" Width="120"/>
-        <Button Style="{DynamicResource Bdef}" Content="Отмена заявки" HorizontalAlignment="Left" Margin="249,342,0,0" VerticalAlignment="Top" Background="{StaticResource Color_Red}"/>
-        <Button Style="{DynamicResource Bdef}" Content="Создать заявку" HorizontalAlignment="Left" Margin="14,342,0,0" VerticalAlignment="Top" Background="{StaticResource Color_Orange}"/>
-        <Button Style="{DynamicResource Bdef}" Content="Изменить" HorizontalAlignment="Left" Margin="151,342,0,0" VerticalAlignment="Top"/>
-        <Button Style="{DynamicResource Bdef}" HorizontalAlignment="Left" Margin="137,413,0,0" VerticalAlignment="Top" Background="{StaticResource Color_Green}" Height="28" Width="28" Padding="0,0,0,0">
-            <Image Source="/media/icons/CheckSolid.png" Height="20" Width="20"/>
+        <DataGrid x:Name="dg_Tbl" Style="{DynamicResource DGdef}" Margin="130,35,10,69"/>
+        <TextBox x:Name="e_Search" Style="{DynamicResource TBdef}" Margin="130,5,270,0" materialDesign:HintAssist.Hint="Поиск" VerticalAlignment="Top"/>
+        <Button x:Name="b_Cancel" Style="{DynamicResource Bdef_red}" Content="Отмена заявки" HorizontalAlignment="Left" Margin="402,0,0,35" Height="29" VerticalAlignment="Bottom"/>
+        <Button x:Name="b_Add" Style="{DynamicResource Bdef}" Content="Создать заявку" HorizontalAlignment="Left" Margin="133,0,0,35" Height="29" VerticalAlignment="Bottom" FontSize="16" Click="b_Add_Click"/>
+        <Button x:Name="b_Edit" Style="{DynamicResource Bdef}" Content="Изменить" HorizontalAlignment="Left" Margin="277,0,0,35" Height="29" VerticalAlignment="Bottom"/>
+        <Button x:Name="b_Done" Style="{DynamicResource Bdef_green}" Visibility="Hidden" HorizontalAlignment="Left" Margin="263,0,0,10" Background="{StaticResource Color_Green}" Width="28" Padding="0,0,0,0" Height="28" VerticalAlignment="Bottom">
+            <Image Source="/media/icons/Check.png" Height="20" Width="20"/>
         </Button>
-        <Button Style="{DynamicResource Bdef}" HorizontalAlignment="Left" Margin="199,413,0,0" VerticalAlignment="Top" Background="{StaticResource Color_Red}" Height="28" Width="28" Padding="0,0,0,0">
+        <Button x:Name="b_Cancelmini" Style="{DynamicResource Bdef_red}" Visibility="Hidden" HorizontalAlignment="Left" Margin="325,0,0,10" Width="28" Padding="0,0,0,0" Height="28" VerticalAlignment="Bottom">
             <Image Source="/media/icons/Cancel.png" Height="20" Width="20"/>
         </Button>
-        <ComboBox HorizontalAlignment="Left" Margin="126,376,0,0" VerticalAlignment="Top" Width="120"/>
+        <ComboBox x:Name="cb_Status" Style="{DynamicResource CBdef}" Visibility="Hidden" HorizontalAlignment="Left" Margin="252,0,0,47" Width="120" Height="28" VerticalAlignment="Bottom" materialDesign:HintAssist.Hint="Статус"/>
     </Grid>
 </UserControl>

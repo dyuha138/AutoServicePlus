@@ -45,7 +45,7 @@
         <mah:ProgressRing x:Name="pr_Ring" IsActive="False" Margin="0,180,0,0" Height="60" Width="60" VerticalAlignment="Top"/>
         <Button x:Name="b_Login" Style="{DynamicResource Bdef}" Click="b_Login_Click" HorizontalAlignment="Center" Margin="0,255,0,0" VerticalAlignment="Top" FontWeight="Bold" Width="112" Height="28" FontSize="18" Padding="0,0,0,0">
             <Grid Width="112" Height="Auto">
-                <Image Source="/media/icons/BoxesSolid.png" HorizontalAlignment="Left" Margin="2,0,0,0"></Image>
+                <Image Source="/media/icons/Paw.png" HorizontalAlignment="Left" Margin="2,0,0,0"></Image>
                 <Label Content="Войти" HorizontalAlignment="Left" Margin="35,0,0,0" Foreground="{StaticResource Color_White}" ></Label>
             </Grid>
         </Button>

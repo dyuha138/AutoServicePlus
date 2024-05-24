@@ -20,8 +20,8 @@ public partial class Login : MetroWindow {
 	public Login() {
 		InitializeComponent();
 		Data.LoadSettings();
-		this.e_Login.Text = Data.Server_Login;
-		this.e_Pass.Password = Data.Server_Pass;
+		this.e_Login.Text = Data.DB.DataConnect.Server_Login;
+		this.e_Pass.Password = Data.DB.DataConnect.Server_Pass;
 
 		DB.Ev_Status += this.StatusSet;
 	}
@@ -35,8 +35,8 @@ public partial class Login : MetroWindow {
 		this.pr_Ring.IsActive = true;
 		this.l_Out.Visibility = Visibility.Collapsed;
 
-		Data.Server_Login = this.e_Login.Text;
-		Data.Server_Pass = this.e_Pass.Password;
+		Data.DB.DataConnect.Server_Login = this.e_Login.Text;
+		Data.DB.DataConnect.Server_Pass = this.e_Pass.Password;
 		//Data.MainWin = new();
 		//Data.MainWin.Show();
 
