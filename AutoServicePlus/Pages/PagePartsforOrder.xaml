@@ -27,7 +27,7 @@
             <ColumnDefinition Width="200*"/>
         </Grid.ColumnDefinitions>
         <DataGrid x:Name="dg_Запчасти" Style="{DynamicResource DGdef}" Margin="10,39,10,24" Grid.ColumnSpan="3"/>
-        <TextBox x:Name="e_Search" Style="{DynamicResource TBdef}" Margin="1,10,1,0" materialDesign:HintAssist.Hint="Поиск" VerticalAlignment="Top" Grid.Column="1"/>
+        <TextBox x:Name="e_Search" Style="{DynamicResource TBdef}" TextChanged="e_Search_TextChanged" Margin="1,10,1,0" materialDesign:HintAssist.Hint="Поиск" VerticalAlignment="Top" Grid.Column="1"/>
 
     </Grid>
 </mah:MetroWindow>

@@ -116,6 +116,7 @@ public class Data {
 		public static List<DBM_Заказ> ЗаказыList = new();
 		public static List<DBM_Запчасть> ЗапчастиList = new();
 		public static List<DBM_РегистрЗапчасть> РегистрЗапчастейList = new();
+		public static List<DBM_Статус> СтатусыList = new();
 
 		public static DBM_Заказ TMP_Заказ = null;
 	}

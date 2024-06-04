@@ -241,6 +241,19 @@ public class DBM_СвязьMtM_int {
 }
 
 
+public class DBM_Статус {
+	public int id { get; set; }
+	public string Статус { get; set; }
+	public string Тип { get; set; }
+
+	public DBM_Статус() { }
+	public DBM_Статус(int id, string Статус) {
+		this.id = id;
+		this.Статус = Статус;
+	}
+}
+
+
 
 public class ComboBoxDBData {
 	public int id { get; set; }

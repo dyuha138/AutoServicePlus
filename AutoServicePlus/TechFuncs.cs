@@ -17,5 +17,8 @@ namespace AutoServicePlus {
 			return DateTimeOffset.Now.ToUnixTimeSeconds();
 		}
 
+		public static long DateToUnix(DateTime dt) {
+			return (long)(dt.ToUniversalTime() - new DateTime(1970, 1, 1)).TotalSeconds;
+		}
 	}
 }

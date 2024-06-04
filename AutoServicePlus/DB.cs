@@ -147,6 +147,21 @@ class DB {
 			}
 		}
 
+		public static bool StatusUpdate(int id, int status) {
+			int i = Data.DB.ЗаказыList.FindIndex(x => x.id == id);
+			DBM_Заказ ll = Data.DB.ЗаказыList.ElementAt(i);
+			if (ll != null) {
+				DB.SQLQuery($"UPDATE Заказы SET Статус_id = {status} WHERE id = {id};");
+
+				Data.DB.ЗаказыList.RemoveAt(i);
+				ll.Статус_id = status;
+				Data.DB.ЗаказыList.Insert(i, ll);
+				return true;
+			} else {
+				return false;
+			}
+		}
+
 		public static void UpdateListfromTable() {
 			SQLResultTable R = null;
 			SQLResultTable R2 = null;
@@ -260,7 +275,6 @@ class DB {
 
 
 	public static class DB_Справочники {
-
 		public static void UpdateListfromTable(List<ComboBoxDBData> list, string Table) {
 			SQLResultTable R = DB.SQLQuery($"SELECT * FROM {Table};");
 			if (R != null) {
@@ -272,4 +286,16 @@ class DB {
 		}
 	}
 
+
+	public static class DB_Статусы {
+		public static void UpdateListfromTable() {
+			SQLResultTable R = DB.SQLQuery("SELECT * FROM Статусы;");
+			if (R != null) {
+				Data.DB.СтатусыList.Clear();
+				while (R.NextRow()) {
+					Data.DB.СтатусыList.Add(new(R.GetInt(0), R.GetStr(1)));
+				}
+			}
+		}
+	}
 }

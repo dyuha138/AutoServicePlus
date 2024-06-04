@@ -34,6 +34,7 @@ public partial class Login : MetroWindow {
 	private void b_Login_Click(object sender, RoutedEventArgs e) {
 		this.pr_Ring.IsActive = true;
 		this.l_Out.Visibility = Visibility.Collapsed;
+		this.b_Login.IsEnabled = false;
 
 		Data.DB.DataConnect.Server_Login = this.e_Login.Text;
 		Data.DB.DataConnect.Server_Pass = this.e_Pass.Password;

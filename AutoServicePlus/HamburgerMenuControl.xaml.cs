@@ -34,4 +34,5 @@ public partial class HamburgerMenuControl : UserControl {
         //int da = Data.HamburgerMenu.SelectedIndex;
 
     }
+
 }

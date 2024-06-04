@@ -98,13 +98,17 @@ public partial class PageNewOrder : UserControl {
 
 
 	private void cb_Категория_SelectionChanged(object sender, SelectionChangedEventArgs e) {
-		if (cb_Категории.SelectedIndex == -1) return;
+		if (cb_Категории.SelectedIndex == -1) {
+			UpdateTable_Зап(); return;
+		}
 		this.Категорияid = Data.КатегорииList[cb_Категории.SelectedIndex].id;
 		UpdateTable_Зап();
 	}
 
 	private void cb_Марка_SelectionChanged(object sender, SelectionChangedEventArgs e) {
-		if (cb_Марки.SelectedIndex == -1) return;
+		if (cb_Марки.SelectedIndex == -1) {
+			UpdateTable_Зап(); return;
+		}
 		this.Маркаid = Data.МаркиАвтоList[cb_Марки.SelectedIndex].id;
 		UpdateTable_Зап();
 	}
@@ -145,6 +149,7 @@ public partial class PageNewOrder : UserControl {
 		this.nud_NumЗап.Visibility = Visibility.Hidden;
 		this.cb_Поставщики.Visibility = Visibility.Hidden;
 		this.g_minibut.Visibility = Visibility.Hidden;
+		this.b_Clear.IsEnabled = true;
 	}
 
 
@@ -229,9 +234,12 @@ public partial class PageNewOrder : UserControl {
 	}
 
 	private void b_Clear_Click(object sender, RoutedEventArgs e) {
-		Data.TBL.TBLData_Запчасти2.Clear();
-		Data.DB.TMP_Заказ.Запчасти.Clear();
-		UpdateTable_Зак();
+		if (Data.DB.TMP_Заказ.Запчасти != null) {
+			Data.TBL.TBLData_Запчасти2.Clear();
+			Data.DB.TMP_Заказ.Запчасти.Clear();
+			this.b_Clear.IsEnabled = false;
+			UpdateTable_Зак();
+		}
 	}
 
 	private void b_Del_Click(object sender, RoutedEventArgs e) {
