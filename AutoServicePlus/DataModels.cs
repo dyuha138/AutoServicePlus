@@ -29,30 +29,79 @@ public class TblData : INotifyPropertyChanged {
 }
 
 
+public class TBL_Заказ : INotifyPropertyChanged {
+	public int id { get; set; }
+	public string Дата { get; set; }
+	public string Статус { get; set; }
+	public string Сотрудник { get; set; }
+
+	public TBL_Заказ() { }
+	public TBL_Заказ(int id, string Дата, string Статус, string Сотр_Фам, string Сотр_Имя, string Сотр_Отч) {
+		this.id = id;
+		this.Дата = Дата;
+		this.Статус = Статус;
+		this.Сотрудник = $"{Сотр_Фам} {Сотр_Имя[0]}. {Сотр_Отч[0]}.";
+	}
+
+	public event PropertyChangedEventHandler PropertyChanged;
+	protected virtual void OnPropertyChanged(string propertyName) {
+		PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+	}
+}
+
+
+public class TBL_Запчасть : INotifyPropertyChanged {
+	public int id { get; set; }
+	public string Название { get; set; }
+	public string Категория { get; set; }
+	public string Количество { get; set; }
+	public string Марка_Авто { get; set; }
+	public string Модель_Авто { get; set; }
+	public string Контрагент { get; set; }
+
+	public TBL_Запчасть() { }
+	public TBL_Запчасть(int id, string Название, string Категория, string Количество, string Марка_Авто, string Модель_Авто, string Контрагент) {
+		this.id = id;
+		this.Название = Название;
+		this.Категория = Категория;
+		this.Количество = Количество;
+		this.Марка_Авто = Марка_Авто;
+		this.Модель_Авто = Модель_Авто;
+		this.Контрагент = Контрагент;
+	}
+
+	public event PropertyChangedEventHandler PropertyChanged;
+	protected virtual void OnPropertyChanged(string propertyName) {
+		PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+	}
+}
+
+
+
 public class DBM_Заказ {
 	public class Запчасть {
 		public int id { get; set; }
 		public int Количество { get; set; }
-		
+		public int Контрагент_id { get; set; }
+
 		public Запчасть() { }
-		public Запчасть(int id, int Количество) {
+		public Запчасть(int id, int Количество, int Контрагент_id) {
 			this.id = id;
 			this.Количество = Количество;
+			this.Контрагент_id = Контрагент_id;
 		}
 	}
 
 	public int id { get; set; }
 	public long Дата { get; set; }
-	public int Контрагент_id { get; set; }
 	public int Статус_id { get; set; }
 	public int Сотрудник_id { get; set; }
 	public List<Запчасть> Запчасти { get; set; }
 
 	public DBM_Заказ() { }
-	public DBM_Заказ(int id, long Дата, int Контрагент_id, int Статус_id, int Сотрудник_id, List<Запчасть> Запчасти) {
+	public DBM_Заказ(int id, long Дата, int Статус_id, int Сотрудник_id, List<Запчасть> Запчасти) {
 		this.id = id;
 		this.Дата = Дата;
-		this.Контрагент_id = Контрагент_id;
 		this.Статус_id = Статус_id;
 		this.Сотрудник_id = Сотрудник_id;
 		this.Запчасти = Запчасти;

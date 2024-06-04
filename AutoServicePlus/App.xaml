@@ -5,7 +5,7 @@
              xmlns:materialDesignMahApps="http://materialdesigninxaml.net/winfx/xaml/themes" 
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:mah="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
-             StartupUri="MainWindow.xaml">
+             StartupUri="Login.xaml">
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -14,7 +14,7 @@
                 <!--<ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Colors.xaml"/>-->
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Themes/Dark.Orange.xaml"/>
 
-                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Light.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Dark.xaml"/>
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesign2.Defaults.xaml"/>
                 <!--<ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Primary/MaterialDesignColor.DeepPurple.xaml" />-->
                 <!--<ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Accent/MaterialDesignColor.Lime.xaml" />-->
@@ -55,9 +55,9 @@
                 <Setter Property="HorizontalContentAlignment" Value="Center"/>
             </Style>
 
-            <Style TargetType="Button" x:Key="Bdef_red" BasedOn="{StaticResource MaterialDesignFlatButton}">
+            <Style TargetType="Button" x:Key="Bdef_red" BasedOn="{StaticResource MaterialDesignRaisedButton}">
                 <Setter Property="Background" Value="#DE5A4A"/>
-                <Setter Property="BorderBrush" Value="#E5801C"/>
+                <Setter Property="BorderBrush" Value="#DE5A4A"/>
                 <Setter Property="Foreground" Value="#DDDDDA"/>
                 <Setter Property="FontWeight" Value="Bold"/>
                 <Setter Property="FontSize" Value="16"/>
@@ -73,9 +73,9 @@
                 <Setter Property="Padding" Value="0,0,0,0"/>
             </Style>
 
-            <Style TargetType="Button" x:Key="Bdef_green" BasedOn="{StaticResource MaterialDesignFlatButton}">
+            <Style TargetType="Button" x:Key="Bdef_green" BasedOn="{StaticResource MaterialDesignRaisedButton}">
                 <Setter Property="Background" Value="#33AA66"/>
-                <Setter Property="BorderBrush" Value="#E5801C"/>
+                <Setter Property="BorderBrush" Value="#33AA66"/>
                 <Setter Property="Foreground" Value="#DDDDDA"/>
                 <Setter Property="FontWeight" Value="Bold"/>
                 <Setter Property="FontSize" Value="16"/>
@@ -109,7 +109,13 @@
                 <Setter Property="Background" Value="#292929"/>
                 <Setter Property="BorderBrush" Value="#E5801C"/>
                 <Setter Property="Foreground" Value="#DDDDDA"/>
+                <Setter Property="CanUserResizeColumns" Value="True"/>
+                <Setter Property="IsReadOnly" Value="True"/>
             </Style>
+
+            <!--<Style TargetType="{x:Type DataGridColumnHeader}" BasedOn="{StaticResource MaterialDesignDataGridColumnHeader}">
+                <Setter Property="Foreground" Value="#DDDDDA" />
+            </Style>-->
 
             <Color x:Key="ColorCon_Orange">#E5801C</Color>
             <Color x:Key="ColorCon_Purple">#FF8601F3</Color>

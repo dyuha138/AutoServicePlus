@@ -90,12 +90,18 @@ public partial class PageNewRequest : UserControl {
 		//da2.Content = this.ActualHeight.ToString();
 	}
 
-	private void Page_isOpen(object sender, DependencyPropertyChangedEventArgs e) {
+	private void VisibilityChanged(object sender, DependencyPropertyChangedEventArgs e) {
 		if ((bool)e.NewValue) {
 			//da.Content = "yes";
 		} else {
 			//da.Content = "no";
 		}
+	}
+
+	private void b_Exit_Click(object sender, RoutedEventArgs e) {
+		Data.MainWin.Dispatcher.Invoke(() => {
+			Data.MainWin.HambMenu.Content = Data.MainWin.PageRequests;
+		});
 	}
 }
 

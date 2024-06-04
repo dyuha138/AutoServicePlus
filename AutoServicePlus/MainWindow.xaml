@@ -9,13 +9,8 @@
         mc:Ignorable="d"
         Title="" Height="450" Width="750" MinHeight="250" MinWidth="600" WindowStartupLocation="CenterScreen" WindowTitleBrush="#FFE5801C" FontFamily="/AutoServicePlus;component/media/fonts/#Gilroy Light">
 
-    <Window.Resources>
-        <!--<ObjectDataProvider x:Key="dataProvider" ObjectType="{x:Type local:Data}" MethodName="" />-->
-        <Color x:Key="ColorForm_Dark">#FF333333</Color>
-        <Color x:Key="ColorCon_White">#DDDDDA</Color>
-    </Window.Resources>
     <Window.BorderBrush>
-        <SolidColorBrush Color="{DynamicResource ColorForm_Dark}"/>
+        <SolidColorBrush Color="{DynamicResource ColorCon_Dark}"/>
     </Window.BorderBrush>
     <Window.Foreground>
         <SolidColorBrush Color="{DynamicResource ColorCon_White}"/>

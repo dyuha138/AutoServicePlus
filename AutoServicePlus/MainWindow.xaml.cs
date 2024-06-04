@@ -19,6 +19,7 @@ public partial class MainWindow : MetroWindow {
 	public Pages.PageStorage PageStorage = null;
 	public Pages.PageOrders PageOrders = null;
 	public Pages.PageNewOrder PageNewOrder = null;
+	public Pages.PagePartsforOrder PagePartsforOrder = null;
 	public Pages.PageRequests PageRequests = null;
 	public Pages.PageNewRequest PageNewRequest = null;
 	public Pages.PageAbout PageAbout = null;
@@ -31,6 +32,7 @@ public partial class MainWindow : MetroWindow {
 		Data.HamburgerMenu.Ev_IndexChanged += this.Data_Ev_HambMenuIndexChanged;
 		Data.HamburgerMenu.Ev_IndexOptionsChanged += this.Data_Ev_HambMenuOptionsIndexChanged;
 		//Data.MainWin.SetBinding(MinHeightProperty, "WinHeight");
+		//DB.Open();
 	}
 
 	public void SetHambMenu(HamburgerMenu hambmenu) {
@@ -53,7 +55,9 @@ public partial class MainWindow : MetroWindow {
 				this.Title = "АвтоСервис+: Заказы запчастей";
 				if (this.PageOrders == null) {
 					this.PageOrders = new();
+					//this.PageOrders.dg_Заказы.Columns[0].Visibility = Visibility.Hidden;
 				}
+				
 				this.HambMenu.Content = this.PageOrders;
 			break;
 
@@ -83,6 +87,11 @@ public partial class MainWindow : MetroWindow {
 					this.PageAbout = new();
 				}
 				this.HambMenu.Content = this.PageAbout;
+			break;
+			case 1:
+				DB.Close();
+				//this.Close();
+				Application.Current.Shutdown();
 			break;
 		}
 	}

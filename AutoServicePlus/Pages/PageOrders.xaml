@@ -5,13 +5,13 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:AutoServicePlus.Pages"
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-      xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+      xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls" xmlns:autoserviceplus="clr-namespace:AutoServicePlus" d:DataContext="{d:DesignInstance Type=autoserviceplus:TBL_Запчасти}"
       mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800" FontFamily="/Twidibot;component/media/fonts/#Gilroy Light">
+      d:DesignHeight="450" d:DesignWidth="800" Loaded="_Loaded" IsVisibleChanged="VisibilityChanged" FontFamily="/Twidibot;component/media/fonts/#Gilroy Light">
 
     <Grid Background="{DynamicResource Color_Dark}">
-        <DataGrid x:Name="dg_Tbl" Style="{DynamicResource DGdef}" Margin="130,35,10,69"/>
-        <TextBox x:Name="e_Search" Style="{DynamicResource TBdef}" Margin="130,5,270,0" materialDesign:HintAssist.Hint="Поиск" VerticalAlignment="Top"/>
+        <DataGrid x:Name="dg_Заказы" Style="{DynamicResource DGdef}" IsReadOnly="True" Margin="130,35,10,69" SelectionChanged="dg_Заказы_SelectionChanged" MouseDoubleClick="dg_Заказы_DoubleClick" HeadersVisibility="Column"/>
+        <TextBox x:Name="e_Search" Style="{DynamicResource TBdef}" Margin="130,5,270,0" materialDesign:HintAssist.Hint="Поиск" VerticalAlignment="Top" TextChanged="e_Search_Changed"/>
         <Button x:Name="b_Cancel" Style="{DynamicResource Bdef_red}" Content="Отмена заказа" HorizontalAlignment="Left" Margin="383,0,0,35" Height="29" VerticalAlignment="Bottom" Click="b_Cancel_Click"/>
         <Button x:Name="b_Add" Style="{DynamicResource Bdef}" Content="Создать заказ" HorizontalAlignment="Left" Margin="130,0,0,35" Height="29" VerticalAlignment="Bottom" Click="b_Add_Click"/>
         <Button x:Name="b_Edit" Style="{DynamicResource Bdef}" Content="Изменить" HorizontalAlignment="Left" Margin="263,0,0,35" Height="29" VerticalAlignment="Bottom" Click="b_Edit_Click"/>

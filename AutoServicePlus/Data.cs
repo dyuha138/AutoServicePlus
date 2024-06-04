@@ -21,6 +21,10 @@ public class Data {
 	//public PropertiesChangeC PropertiesChange2 = PropertiesChange;
 	public static List<ComboBoxDBData> TypeList = new();
 	public static List<ComboBoxDBData> StatusList = new();
+	public static List<ComboBoxDBData> АвтоFullList = new();
+	public static List<ComboBoxDBData> МаркиАвтоList = new();
+	public static List<ComboBoxDBData> КатегорииList = new();
+	public static List<ComboBoxDBData> КонтрагентыList = new();
 	public static MainWindow MainWin = null;
 
 	//public static PropertiesChangeC GetPropertiesChange() { return PropertiesChange; }
@@ -90,6 +94,12 @@ public class Data {
 
 
 
+	public static class TBL {
+		public static ObservableCollection<TBL_Заказ> TBLData_Заказы = new();
+		public static ObservableCollection<TBL_Запчасть> TBLData_Запчасти = new();
+		public static ObservableCollection<TBL_Запчасть> TBLData_Запчасти2 = new();
+	}
+
 
 	public static class DB {
 		public static class DataConnect {
@@ -106,6 +116,8 @@ public class Data {
 		public static List<DBM_Заказ> ЗаказыList = new();
 		public static List<DBM_Запчасть> ЗапчастиList = new();
 		public static List<DBM_РегистрЗапчасть> РегистрЗапчастейList = new();
+
+		public static DBM_Заказ TMP_Заказ = null;
 	}
 
 

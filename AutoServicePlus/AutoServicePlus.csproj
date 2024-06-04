@@ -19,6 +19,7 @@
     <None Remove="media\icons\Plus.png" />
     <None Remove="media\icons\QuestionCircle.png" />
     <None Remove="media\icons\ShoppingCart.png" />
+    <None Remove="media\icons\SignOutAlt.png" />
     <None Remove="media\icons\Truck.png" />
     <None Remove="media\img\Fon.png" />
   </ItemGroup>
@@ -29,6 +30,7 @@
     <PackageReference Include="MaterialDesignThemes" Version="5.0.0" />
     <PackageReference Include="MaterialDesignThemes.MahApps" Version="1.0.0" />
     <PackageReference Include="Microsoft.Win32.Registry" Version="5.0.0" />
+    <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.77" />
     <PackageReference Include="MySql.Data" Version="8.3.0" />
     <PackageReference Include="System.Drawing.Common" Version="8.0.4" />
   </ItemGroup>
@@ -45,6 +47,7 @@
     <Resource Include="media\icons\Plus.png" />
     <Resource Include="media\icons\QuestionCircle.png" />
     <Resource Include="media\icons\ShoppingCart.png" />
+    <Resource Include="media\icons\SignOutAlt.png" />
     <Resource Include="media\icons\Truck.png" />
     <Resource Include="media\img\Fon.png" />
   </ItemGroup>

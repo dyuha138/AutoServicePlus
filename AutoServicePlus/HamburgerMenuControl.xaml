@@ -123,10 +123,13 @@
         <mah:HamburgerMenu.OptionsItemsSource>
             <mah:HamburgerMenuItemCollection>
                 <mah:HamburgerMenuGlyphItem
-
                     Glyph="/media/icons/QuestionCircle.png"
                     Label="О проге" />
+                <mah:HamburgerMenuGlyphItem
+                    Glyph="/media/icons/SignOutAlt.png"
+                    Label="Выход" />
             </mah:HamburgerMenuItemCollection>
+            
         </mah:HamburgerMenu.OptionsItemsSource>
 
         <!--  Content  -->
