@@ -147,6 +147,7 @@ public partial class PageNewOrder : UserControl {
 		this.cb_Поставщики.Visibility = Visibility.Hidden;
 		this.g_minibut.Visibility = Visibility.Hidden;
 		this.b_Clear.IsEnabled = true;
+		this.b_Done.IsEnabled = true;
 		//this.b_Add.IsEnabled = false;
 	}
 
@@ -232,10 +233,13 @@ public partial class PageNewOrder : UserControl {
 	}
 
 	private void b_Clear_Click(object sender, RoutedEventArgs e) {
-		if (Data.DB.TMP_Заказ.Запчасти != null) {
+		if (Data.DB.TMP_Заказ != null) {
 			Data.TBL.TBLData_Запчасти2.Clear();
 			Data.DB.TMP_Заказ.Запчасти.Clear();
 			this.b_Clear.IsEnabled = false;
+			this.b_Done.IsEnabled = false;
+			this.b_Edit.IsEnabled = false;
+			this.b_Del.IsEnabled = false;
 			UpdateTable_Зак();
 		}
 	}
@@ -247,6 +251,31 @@ public partial class PageNewOrder : UserControl {
 		this.dg_Запчасти.SelectedIndex = -1;
 		this.b_Del.IsEnabled = false;
 		this.b_Edit.IsEnabled = false;
+
+		if (isOrdEdit) {
+			isOrdEdit = false;
+
+			int he = 90;
+			int he2 = 105;
+			this.Dispatcher.Invoke(() => { this.nud_NumЗаказ.Visibility = Visibility.Hidden; });
+			Task.Factory.StartNew(() => {
+				while (he > 49) {
+					this.Dispatcher.Invoke(() => { this.b_Del.Margin = new(0, he, 8, 0); });
+					Thread.Sleep(7);
+					he--;
+				}
+			});
+			if (isClearMoved) {
+				isClearMoved = false;
+				Task.Factory.StartNew(() => {
+					while (he2 > 7) {
+						this.Dispatcher.Invoke(() => { this.b_Clear.Margin = new(0, 0, he2, 5); });
+						Thread.Sleep(3);
+						he2--;
+					}
+				});
+			}
+		}
 	}
 
 	private void dg_Заказ_SelectionChanged(object sender, SelectionChangedEventArgs e) {
@@ -255,13 +284,13 @@ public partial class PageNewOrder : UserControl {
 	}
 
 	private void nud_NumЗап_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double?> e) {
-		if (this.nud_NumЗаказ.Value != 0 && this.cb_Поставщики.SelectedIndex != -1) {
+		if (this.nud_NumЗап.Value != null && this.cb_Поставщики.SelectedIndex != -1) {
 			this.b_Add.IsEnabled = true;
 		} else { this.b_Add.IsEnabled = false; }
     }
 
 	private void cb_Поставщики_SelectionChanged(object sender, SelectionChangedEventArgs e) {
-		if (this.nud_NumЗаказ.Value != 0 && this.cb_Поставщики.SelectedIndex != -1) {
+		if (this.nud_NumЗап.Value != null && this.cb_Поставщики.SelectedIndex != -1) {
 			this.b_Add.IsEnabled = true;
 		} else { this.b_Add.IsEnabled = false; }
 	}
