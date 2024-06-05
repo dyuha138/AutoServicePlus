@@ -57,7 +57,12 @@ class DB {
 		}
 		//Ev_Status?.Invoke(this, new Twident_Msg("Загрузка данных..."));
 		DB_Заказы.UpdateListfromTable();
+		DB_Статусы.UpdateListfromTable();
+		DB_Сотрудники.UpdateListfromTable();
 
+		DB_Справочники.UpdateListfromTable(Data.КатегорииList, "КатегорииЗап");
+		DB_Справочники.UpdateListfromTable(Data.МаркиАвтоList, "МаркиАвто");
+		DB_Справочники.UpdateListfromTable(Data.КонтрагентыList, "Контрагенты");
 
 		Ev_Status?.Invoke(null, new Twident_Msg(""));
 		return true;
@@ -294,6 +299,21 @@ class DB {
 				Data.DB.СтатусыList.Clear();
 				while (R.NextRow()) {
 					Data.DB.СтатусыList.Add(new(R.GetInt(0), R.GetStr(1)));
+				}
+			}
+		}
+	}
+
+
+	public static class DB_Сотрудники {
+
+
+		public static void UpdateListfromTable() {
+			SQLResultTable R = DB.SQLQuery("SELECT * FROM Сотрудники;");
+			if (R != null) {
+				Data.DB.СотрудникиList.Clear();
+				while (R.NextRow()) {
+					Data.DB.СотрудникиList.Add(new(R.GetInt(0), R.GetStr(1), R.GetStr(2), R.GetStr(3), R.GetStr(4)));
 				}
 			}
 		}

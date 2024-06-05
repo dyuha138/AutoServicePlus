@@ -31,10 +31,10 @@
         <ComboBox x:Name="cb_Марки" Style="{DynamicResource CBdef}" materialDesign:HintAssist.Hint="Марка" IsEditable="True" SelectionChanged="cb_Марка_SelectionChanged"  Margin="0,8,10,0" HorizontalAlignment="Right" Width="120" Grid.Row="1" Height="26" VerticalAlignment="Top" Grid.Column="2"/>
         <Button x:Name="b_Done" Style="{DynamicResource Bdef_green}" Content="Подтвердить" HorizontalAlignment="Left" Margin="0,0,0,20" Height="29" VerticalAlignment="Bottom" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Width="120" Click="b_Done_Click"/>
         <Button x:Name="b_Cancel" Style="{DynamicResource Bdef_red}" IsEnabled="False" Content="Отменить заказ" HorizontalAlignment="Left" Margin="125,0,0,20" Height="29" VerticalAlignment="Bottom" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Width="138"/>
-        <mah:NumericUpDown x:Name="nud_NumЗап" Style="{DynamicResource NUDdef}" Visibility="Hidden" HorizontalAlignment="Center" Margin="0,39,0,0" materialDesign:HintAssist.Hint="Количество" Width="122" Grid.Row="1" Height="22" Minimum="1"/>
-        <ComboBox x:Name="cb_Поставщики" Style="{DynamicResource CBdef}" Visibility="Hidden" materialDesign:HintAssist.Hint="Поставщик" Margin="10,66,10,0" Grid.Row="1" Height="25" VerticalAlignment="Top"/>
+        <mah:NumericUpDown x:Name="nud_NumЗап" Style="{DynamicResource NUDdef}" ValueChanged="nud_NumЗап_ValueChanged" Visibility="Hidden" HorizontalAlignment="Center" Margin="0,39,0,0" materialDesign:HintAssist.Hint="Количество" Width="122" Grid.Row="1" Height="22" Minimum="1"/>
+        <ComboBox x:Name="cb_Поставщики" Style="{DynamicResource CBdef}" SelectionChanged="cb_Поставщики_SelectionChanged" Visibility="Hidden" materialDesign:HintAssist.Hint="Поставщик" Margin="10,66,10,0" Grid.Row="1" Height="25" VerticalAlignment="Top"/>
         <Grid x:Name="g_minibut" Visibility="Hidden" Margin="0,100,0,0" Grid.Row="1" Height="28" Width="80" MinWidth="80" HorizontalAlignment="Center" VerticalAlignment="Top">
-            <Button x:Name="b_Add" Style="{DynamicResource Bdef_green_icon}" Click="b_Add_Click" Width="28" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="0,0,0,0" Height="28">
+            <Button x:Name="b_Add" Style="{DynamicResource Bdef_green_icon}" IsEnabled="False" Click="b_Add_Click" Width="28" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="0,0,0,0" Height="28">
                 <Image Source="/media/icons/Plus.png" Height="20" Width="20"/>
             </Button>
             <Button x:Name="b_Cancelmini" Style="{DynamicResource Bdef_red_icon}" Click="b_Cancelmini_Click" Margin="0,0,0,0" VerticalAlignment="Center" Height="28" Width="28" HorizontalAlignment="Right" >

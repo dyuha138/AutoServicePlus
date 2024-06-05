@@ -28,7 +28,6 @@ public partial class PageOrders : UserControl {
         InitializeComponent();
 		this.dg_Заказы.ItemsSource = Data.TBL.TBLData_Заказы;
 
-		DB.DB_Статусы.UpdateListfromTable();
 		for (int i = 0; i < Data.DB.СтатусыList.Count; i++) {
 			this.cb_Статусы.Items.Add(Data.DB.СтатусыList[i].Статус);
 		}

@@ -20,5 +20,10 @@ namespace AutoServicePlus {
 		public static long DateToUnix(DateTime dt) {
 			return (long)(dt.ToUniversalTime() - new DateTime(1970, 1, 1)).TotalSeconds;
 		}
+
+
+		public static int ПолучитьАйдиВхода() {
+			return Data.DB.СотрудникиList.Find(x => x.Логин == Data.DB.DataConnect.Server_Login).id;
+		}
 	}
 }

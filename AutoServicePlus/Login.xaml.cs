@@ -54,6 +54,7 @@ public partial class Login : MetroWindow {
 				this.Dispatcher.Invoke(() => {
 					this.pr_Ring.IsActive = false;
 					this.l_Out.Visibility = Visibility.Visible;
+					this.b_Login.IsEnabled = true;
 				});
 			}
 		});

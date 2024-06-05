@@ -8,25 +8,25 @@ using System.Threading.Tasks;
 
 namespace AutoServicePlus;
 
-public class TblData : INotifyPropertyChanged {
-	public string Название { get; set; }
-	public string Псевдоним { get; set; }
-	public string Тип { get; set; }
-	public string Статус { get; set; }
+//public class TblData : INotifyPropertyChanged {
+//	public string Название { get; set; }
+//	public string Псевдоним { get; set; }
+//	public string Тип { get; set; }
+//	public string Статус { get; set; }
 
-	public TblData() { }
-	public TblData(string Name, string Alias, string Type, string Status) {
-		this.Название = Name;
-		this.Псевдоним = Alias;
-		this.Тип = Type;
-		this.Статус = Status;
-	}
+//	public TblData() { }
+//	public TblData(string Name, string Alias, string Type, string Status) {
+//		this.Название = Name;
+//		this.Псевдоним = Alias;
+//		this.Тип = Type;
+//		this.Статус = Status;
+//	}
 
-	public event PropertyChangedEventHandler PropertyChanged;
-	protected virtual void OnPropertyChanged(string propertyName) {
-		PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-	}
-}
+//	public event PropertyChangedEventHandler PropertyChanged;
+//	protected virtual void OnPropertyChanged(string propertyName) {
+//		PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+//	}
+//}
 
 
 public class TBL_Заказ : INotifyPropertyChanged {
@@ -159,16 +159,19 @@ public class DBM_Сотрудник {
 	public string Фамилия { get; set; }
 	public string Имя { get; set; }
 	public string Отчество { get; set; }
+	public string Логин {  get; set; }
 
 	public DBM_Сотрудник() { }
-	public DBM_Сотрудник(int id, string Фамилия, string Имя, string Отчество) {
+	public DBM_Сотрудник(int id, string Фамилия, string Имя, string Отчество, string Логин) {
 		this.id = id;
 		this.Фамилия = Фамилия;
 		this.Имя = Имя;
 		this.Отчество = Отчество;
+		this.Логин = Логин;
 	}
 
 	public string ПолучитьФИО() { return $"{this.Фамилия} {this.Имя} {this.Отчество}"; }
+	public string ПолучитьИнициалы() { return $"{this.Фамилия} {this.Имя[0]}. {this.Отчество[0]}."; }
 }
 
 public class DBM_Контрагент {
