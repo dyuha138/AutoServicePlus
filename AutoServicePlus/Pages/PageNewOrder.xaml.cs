@@ -129,7 +129,7 @@ public partial class PageNewOrder : UserControl {
 	}
 
 
-	private void b_Add_Click(object sender, RoutedEventArgs e) {
+	private void b_Addmini_Click(object sender, RoutedEventArgs e) {
 		if (Data.DB.TMP_Заказ == null) {
 			Data.DB.TMP_Заказ = new(0, TechFuncs.GetUnixTime(), 7, TechFuncs.ПолучитьАйдиВхода(), new());
 		}
@@ -285,13 +285,13 @@ public partial class PageNewOrder : UserControl {
 
 	private void nud_NumЗап_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double?> e) {
 		if (this.nud_NumЗап.Value != null && this.cb_Поставщики.SelectedIndex != -1) {
-			this.b_Add.IsEnabled = true;
-		} else { this.b_Add.IsEnabled = false; }
+			this.b_Addmini.IsEnabled = true;
+		} else { this.b_Addmini.IsEnabled = false; }
     }
 
 	private void cb_Поставщики_SelectionChanged(object sender, SelectionChangedEventArgs e) {
 		if (this.nud_NumЗап.Value != null && this.cb_Поставщики.SelectedIndex != -1) {
-			this.b_Add.IsEnabled = true;
-		} else { this.b_Add.IsEnabled = false; }
+			this.b_Addmini.IsEnabled = true;
+		} else { this.b_Addmini.IsEnabled = false; }
 	}
 }
