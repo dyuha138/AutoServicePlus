@@ -34,7 +34,7 @@
         <mah:NumericUpDown x:Name="nud_NumЗап" Style="{DynamicResource NUDdef}" ValueChanged="nud_NumЗап_ValueChanged" Visibility="Hidden" HorizontalAlignment="Center" Margin="0,39,0,0" materialDesign:HintAssist.Hint="Количество" Width="122" Grid.Row="1" Height="22" Minimum="1"/>
         <ComboBox x:Name="cb_Поставщики" Style="{DynamicResource CBdef}" SelectionChanged="cb_Поставщики_SelectionChanged" Visibility="Hidden" materialDesign:HintAssist.Hint="Поставщик" Margin="10,66,10,0" Grid.Row="1" Height="25" VerticalAlignment="Top"/>
         <Grid x:Name="g_minibut" Visibility="Hidden" Margin="0,100,0,0" Grid.Row="1" Height="28" Width="80" MinWidth="80" HorizontalAlignment="Center" VerticalAlignment="Top">
-            <Button x:Name="b_Add" Style="{DynamicResource Bdef_green_icon}" IsEnabled="False" Click="b_Add_Click" Width="28" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="0,0,0,0" Height="28">
+            <Button x:Name="b_Addmini" Style="{DynamicResource Bdef_green_icon}" IsEnabled="False" Click="b_Addmini_Click" Width="28" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="0,0,0,0" Height="28">
                 <Image Source="/media/icons/Plus.png" Height="20" Width="20"/>
             </Button>
             <Button x:Name="b_Cancelmini" Style="{DynamicResource Bdef_red_icon}" Click="b_Cancelmini_Click" Margin="0,0,0,0" VerticalAlignment="Center" Height="28" Width="28" HorizontalAlignment="Right" >

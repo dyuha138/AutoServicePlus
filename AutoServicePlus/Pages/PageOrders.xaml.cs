@@ -72,50 +72,53 @@ public partial class PageOrders : UserControl {
 		Data.MainWin.HambMenu.Content = Data.MainWin.PageNewOrder;
     }
 
-	private void b_Edit_Click(object sender, RoutedEventArgs e) {
-		Task.Factory.StartNew(() => {
-			if (isOrdEdit) {
-				isOrdEdit = false;
-				this.Dispatcher.Invoke(() => {
-					TBL_Заказ Заказ = (TBL_Заказ)this.dg_Заказы.SelectedItem;
-					int статid = Data.DB.СтатусыList[this.cb_Статусы.SelectedIndex].id;
-					Data.TBL.TBLData_Заказы[Data.TBL.TBLData_Заказы.ToList().FindIndex(x => x.id == Заказ.id)].Статус = Data.DB.СтатусыList.Find(x => x.id == статid).Статус;
-					DB.DB_Заказы.StatusUpdate(Заказ.id, статid);
-					UpdateTable();
-				});
 
-				int we = 505;
+	private void AnimateButtons(bool Open) {
+		Task.Factory.StartNew(() => {
+			if (Open) {
+				int we = 370;
+				while (we < 506) {
+					this.Dispatcher.Invoke(() => { this.b_Cancel.Margin = new(we, 0, 0, 33); });
+					Thread.Sleep(2);
+					we++;
+				}
 				this.Dispatcher.Invoke(() => {
-					this.cb_Статусы.Visibility = Visibility.Hidden;
-					this.g_minibut.Visibility = Visibility.Hidden;
-				});
-				Task.Factory.StartNew(() => {
-					while (we > 369) {
-						this.Dispatcher.Invoke(() => { this.b_Cancel.Margin = new(we, 0, 0, 33); });
-						Thread.Sleep(2);
-						we--;
-					}
+					this.cb_Статусы.Visibility = Visibility.Visible;
+					//this.g_minibut.Visibility = Visibility.Visible;
 				});
 			} else {
-				isOrdEdit = true;
 				this.Dispatcher.Invoke(() => {
-					TBL_Заказ Заказ = (TBL_Заказ)this.dg_Заказы.SelectedItem;
-					this.cb_Статусы.SelectedIndex = Data.DB.СтатусыList.FindIndex(x => x.id == Data.DB.ЗаказыList.Find(x => x.id == Заказ.id).Статус_id);
+					this.cb_Статусы.Visibility = Visibility.Hidden;
+					//this.g_minibut.Visibility = Visibility.Hidden;
 				});
-				int we = 370;
-				Task.Factory.StartNew(() => {
-					while (we < 506) {
-						this.Dispatcher.Invoke(() => { this.b_Cancel.Margin = new(we, 0, 0, 33); });
-						Thread.Sleep(2);
-						we++;
-					}
-					this.Dispatcher.Invoke(() => {
-						this.cb_Статусы.Visibility = Visibility.Visible;
-						this.g_minibut.Visibility = Visibility.Visible;
-					});
-				});
+				int we = 505;
+				while (we > 369) {
+					this.Dispatcher.Invoke(() => { this.b_Cancel.Margin = new(we, 0, 0, 33); });
+					Thread.Sleep(2);
+					we--;
+				}
 			}
 		});
+	}
+
+
+	private void b_Edit_Click(object sender, RoutedEventArgs e) {
+		if (isOrdEdit) {
+			isOrdEdit = false;
+
+			TBL_Заказ Заказ = (TBL_Заказ)this.dg_Заказы.SelectedItem;
+			int статid = Data.DB.СтатусыList[this.cb_Статусы.SelectedIndex].id;
+			Data.TBL.TBLData_Заказы[Data.TBL.TBLData_Заказы.ToList().FindIndex(x => x.id == Заказ.id)].Статус = Data.DB.СтатусыList.Find(x => x.id == статid).Статус;
+			DB.DB_Заказы.StatusUpdate(Заказ.id, статid);
+			UpdateTable();
+			AnimateButtons(true);
+		} else {
+			isOrdEdit = true;
+
+			TBL_Заказ Заказ = (TBL_Заказ)this.dg_Заказы.SelectedItem;
+			this.cb_Статусы.SelectedIndex = Data.DB.СтатусыList.FindIndex(x => x.id == Data.DB.ЗаказыList.Find(x => x.id == Заказ.id).Статус_id);
+			AnimateButtons(false);
+		}
 	}
 
 	private void b_Cancel_Click(object sender, RoutedEventArgs e) {
@@ -123,22 +126,8 @@ public partial class PageOrders : UserControl {
 	}
 
 	private void b_Cancelmini_Click(object sender, RoutedEventArgs e) {
-		Task.Factory.StartNew(() => {
-			isOrdEdit = false;
-
-			int we = 505;
-			this.Dispatcher.Invoke(() => {
-				this.cb_Статусы.Visibility = Visibility.Hidden;
-				this.g_minibut.Visibility = Visibility.Hidden;
-			});
-			Task.Factory.StartNew(() => {
-				while (we > 369) {
-					this.Dispatcher.Invoke(() => { this.b_Cancel.Margin = new(we, 0, 0, 33); });
-					Thread.Sleep(2);
-					we--;
-				}
-			});
-		});
+		//isOrdEdit = false;
+		//AnimateButtons(false);		
 	}
 
 	private void b_Donemini_Click(object sender, RoutedEventArgs e) {
