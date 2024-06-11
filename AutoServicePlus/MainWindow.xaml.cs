@@ -22,8 +22,9 @@ public partial class MainWindow : MetroWindow {
 	public Pages.PagePartsforOrder PagePartsforOrder = null;
 	public Pages.PageRequests PageRequests = null;
 	public Pages.PageNewRequest PageNewRequest = null;
+	public Pages.PageNewParts PageNewParts = null;
 	public Pages.PageAbout PageAbout = null;
-	public Pages.PageDB PageDB = null;
+	//public Pages.PageDB PageDB = null;
 
 
 	public MainWindow() {
@@ -70,11 +71,11 @@ public partial class MainWindow : MetroWindow {
 			break;
 
 			case 4:
-				this.Title = "АвтоСервис+: База данных";
-				if (this.PageDB == null) {
-					this.PageDB = new();
-				}
-				this.HambMenu.Content = this.PageDB;
+				//this.Title = "АвтоСервис+: База данных";
+				//if (this.PageDB == null) {
+				//	this.PageDB = new();
+				//}
+				//this.HambMenu.Content = this.PageDB;
 			break;
 		}
 	}

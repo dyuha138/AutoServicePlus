@@ -50,7 +50,7 @@ public class TBL_Заказ : INotifyPropertyChanged {
 }
 
 
-public class TBL_Запчасть : INotifyPropertyChanged {
+public class TBL_ЗапчастьМодель : INotifyPropertyChanged {
 	public int id { get; set; }
 	public string Название { get; set; }
 	public string Категория { get; set; }
@@ -59,8 +59,8 @@ public class TBL_Запчасть : INotifyPropertyChanged {
 	public string Модель_Авто { get; set; }
 	public string Контрагент { get; set; }
 
-	public TBL_Запчасть() { }
-	public TBL_Запчасть(int id, string Название, string Категория, string Количество, string Марка_Авто, string Модель_Авто, string Контрагент) {
+	public TBL_ЗапчастьМодель() { }
+	public TBL_ЗапчастьМодель(int id, string Название, string Категория, string Количество, string Марка_Авто, string Модель_Авто, string Контрагент) {
 		this.id = id;
 		this.Название = Название;
 		this.Категория = Категория;
@@ -77,15 +77,37 @@ public class TBL_Запчасть : INotifyPropertyChanged {
 }
 
 
+public class TBL_Запчасть : INotifyPropertyChanged {
+	public int id { get; set; }
+	public string Название { get; set; }
+	public string Категория { get; set; }
+	public string Идентификатор { get; set; }
+
+	public TBL_Запчасть() { }
+	public TBL_Запчасть(int id, string Название, string Категория, string Идентификатор) {
+		this.id = id;
+		this.Название = Название;
+		this.Категория = Категория;
+		this.Идентификатор = Идентификатор;
+	}
+
+	public event PropertyChangedEventHandler PropertyChanged;
+	protected virtual void OnPropertyChanged(string propertyName) {
+		PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+	}
+}
+
+
+
 
 public class DBM_Заказ {
-	public class Запчасть {
+	public class ЗапчастьМодель {
 		public int id { get; set; }
 		public int Количество { get; set; }
 		public int Контрагент_id { get; set; }
 
-		public Запчасть() { }
-		public Запчасть(int id, int Количество, int Контрагент_id) {
+		public ЗапчастьМодель() { }
+		public ЗапчастьМодель(int id, int Количество, int Контрагент_id) {
 			this.id = id;
 			this.Количество = Количество;
 			this.Контрагент_id = Контрагент_id;
@@ -96,10 +118,10 @@ public class DBM_Заказ {
 	public long Дата { get; set; }
 	public int Статус_id { get; set; }
 	public int Сотрудник_id { get; set; }
-	public List<Запчасть> Запчасти { get; set; }
+	public List<ЗапчастьМодель> Запчасти { get; set; }
 
 	public DBM_Заказ() { }
-	public DBM_Заказ(int id, long Дата, int Статус_id, int Сотрудник_id, List<Запчасть> Запчасти) {
+	public DBM_Заказ(int id, long Дата, int Статус_id, int Сотрудник_id, List<ЗапчастьМодель> Запчасти) {
 		this.id = id;
 		this.Дата = Дата;
 		this.Статус_id = Статус_id;
@@ -122,15 +144,15 @@ public class DBMtmp_ЗаказЗапчасть {
 }
 
 
-public class DBM_Запчасть {
+public class DBM_ЗапчастьМодель {
 	public int id { get; set; }
 	public string Название { get; set; }
 	public int Категория_id { get; set; }
 	public int Автомобиль_id { get; set; }
 	public int Статус_id { get; set; }
 
-	public DBM_Запчасть() { }
-	public DBM_Запчасть(int id, string Название, int Категория_id, int Автомобиль_id, int Статус_id) {
+	public DBM_ЗапчастьМодель() { }
+	public DBM_ЗапчастьМодель(int id, string Название, int Категория_id, int Автомобиль_id, int Статус_id) {
 		this.id = id;
 		this.Название = Название;
 		this.Категория_id = Категория_id;
@@ -138,6 +160,22 @@ public class DBM_Запчасть {
 		this.Статус_id = Статус_id;
 	}
 }
+
+
+
+public class DBM_Запчасть {
+	public int id { get; set; }
+	public int Модель_id { get; set; }
+	public string Идентификатор { get; set; }
+
+	public DBM_Запчасть() { }
+	public DBM_Запчасть(int id, int Модель_id, string Идентификатор) {
+		this.id = id;
+		this.Модель_id = Модель_id;
+		this.Идентификатор = Идентификатор;
+	}
+}
+
 
 
 public class DBM_Автомобиль {
@@ -195,19 +233,15 @@ public class DBM_Контрагент {
 public class DBM_РегистрЗапчасть {
 	public int id { get; set; }
 	public int Запчасть_id { get; set; }
-	public int Количество { get; set; }
 	public long Дата { get; set; }
-	public int Операция_id { get; set; }
 	public int Статус_id { get; set; }
 	public int Сотрудник_id { get; set; }
 
 	public DBM_РегистрЗапчасть() { }
-	public DBM_РегистрЗапчасть(int id, int Запчасть_id, int Количество, long Дата, int Операция_id, int Статус_id, int Сотрудник_id) {
+	public DBM_РегистрЗапчасть(int id, int Запчасть_id, long Дата, int Статус_id, int Сотрудник_id) {
 		this.id = id;
 		this.Запчасть_id = Запчасть_id;
-		this.Количество = Количество;
 		this.Дата = Дата;
-		this.Операция_id = Операция_id;
 		this.Статус_id = Статус_id;
 		this.Сотрудник_id = Сотрудник_id;
 	}
@@ -311,7 +345,7 @@ public class SQLResultTable {
 	public int GetInt(int Column) {
 		try {
 			return Convert.ToInt32(Table.ElementAt(this.RowRead).Row.ElementAt(Column));
-		} catch (Exception ex) { return 0; }
+		} catch (Exception) { return 0; }
 	}
 	public long GetLong(int Column) {
 		try {

@@ -23,6 +23,8 @@ namespace AutoServicePlus.Pages;
 public partial class PageOrders : UserControl {
 
 	private bool isOrdEdit = false;
+	private int статусid = 0;
+	private int заказid = 0;
 
     public PageOrders() {
         InitializeComponent();
@@ -33,6 +35,11 @@ public partial class PageOrders : UserControl {
 		}
 	}
 
+	private void _Loaded(object sender, RoutedEventArgs e) {
+		//this.dg_Заказы.Columns[0].Visibility = Visibility.Hidden;
+		this.dg_Заказы.Columns[0].Header = "Номер";
+	}
+
 
 	private void UpdateTable() {
 		SQLResultTable ResTbl = null;
@@ -41,9 +48,9 @@ public partial class PageOrders : UserControl {
 		if (this.dp_Date.SelectedDate != null) {
 			unixtime = TechFuncs.DateToUnix(this.dp_Date.SelectedDate.Value).ToString();
 			unixtime2 = (Convert.ToInt32(unixtime) + 86400).ToString();
-			ResTbl = DB.SQLQuery($"SELECT Ord.id, Ord.Дата, Ст.Статус, Сотр.Фамилия, Сотр.Имя, Сотр.Отчество FROM AutoServicePlus.Заказы Ord\r\nLEFT JOIN AutoServicePlus.Статусы Ст ON Ord.Статус_id = Ст.id\r\nLEFT JOIN AutoServicePlus.Сотрудники Сотр ON Ord.Сотрудник_id = Сотр.id\r\nWHERE (Ord.id LIKE '%{this.e_Search.Text}%' OR Ст.Статус LIKE '%{this.e_Search.Text}%' OR Сотр.Фамилия LIKE '%{this.e_Search.Text}%' OR Сотр.Имя LIKE '%{this.e_Search.Text}%' OR Сотр.Отчество LIKE '%{this.e_Search.Text}%') AND (Ord.Дата >= '{unixtime}' AND Ord.Дата <= '{unixtime2}');");
+			ResTbl = DB.SQLQuery($"SELECT Ord.id, Ord.Дата, Ст.Статус, Сотр.Фамилия, Сотр.Имя, Сотр.Отчество FROM AutoServicePlus.Заказы Ord\r\nLEFT JOIN AutoServicePlus.Статусы Ст ON Ord.Статус_id = Ст.id\r\nLEFT JOIN AutoServicePlus.Сотрудники Сотр ON Ord.Сотрудник_id = Сотр.id\r\nWHERE (Ord.id LIKE '%{this.e_Search.Text}%' OR Ст.Статус LIKE '%{this.e_Search.Text}%' OR Сотр.Фамилия LIKE '%{this.e_Search.Text}%' OR Сотр.Имя LIKE '%{this.e_Search.Text}%' OR Сотр.Отчество LIKE '%{this.e_Search.Text}%') AND (Ord.Дата >= '{unixtime}' AND Ord.Дата <= '{unixtime2}')\r\nORDER BY Ord.Дата DESC;");
 		} else {
-			ResTbl = DB.SQLQuery($"SELECT Ord.id, Ord.Дата, Ст.Статус, Сотр.Фамилия, Сотр.Имя, Сотр.Отчество FROM AutoServicePlus.Заказы Ord\r\nLEFT JOIN AutoServicePlus.Статусы Ст ON Ord.Статус_id = Ст.id\r\nLEFT JOIN AutoServicePlus.Сотрудники Сотр ON Ord.Сотрудник_id = Сотр.id\r\nWHERE Ord.id LIKE '%{this.e_Search.Text}%' OR Ст.Статус LIKE '%{this.e_Search.Text}%' OR Сотр.Фамилия LIKE '%{this.e_Search.Text}%' OR Сотр.Имя LIKE '%{this.e_Search.Text}%' OR Сотр.Отчество LIKE '%{this.e_Search.Text}%';");
+			ResTbl = DB.SQLQuery($"SELECT Ord.id, Ord.Дата, Ст.Статус, Сотр.Фамилия, Сотр.Имя, Сотр.Отчество FROM AutoServicePlus.Заказы Ord\r\nLEFT JOIN AutoServicePlus.Статусы Ст ON Ord.Статус_id = Ст.id\r\nLEFT JOIN AutoServicePlus.Сотрудники Сотр ON Ord.Сотрудник_id = Сотр.id\r\nWHERE Ord.id LIKE '%{this.e_Search.Text}%' OR Ст.Статус LIKE '%{this.e_Search.Text}%' OR Сотр.Фамилия LIKE '%{this.e_Search.Text}%' OR Сотр.Имя LIKE '%{this.e_Search.Text}%' OR Сотр.Отчество LIKE '%{this.e_Search.Text}%'\r\nORDER BY Ord.Дата DESC;");
 		}
 
 		Data.TBL.TBLData_Заказы.Clear();
@@ -56,29 +63,16 @@ public partial class PageOrders : UserControl {
 	}
 
 
-	private void _Loaded(object sender, RoutedEventArgs e) {
-		//this.dg_Заказы.Columns[0].Visibility = Visibility.Hidden;
-		this.dg_Заказы.Columns[0].Header = "Номер";
-
-	}
-
-
 	public void VisibilityChanged(object sender, DependencyPropertyChangedEventArgs e) {
 		UpdateTable();
 	}
-
-	private void b_Add_Click(object sender, RoutedEventArgs e) {
-		Data.MainWin.PageNewOrder = new();
-		Data.MainWin.HambMenu.Content = Data.MainWin.PageNewOrder;
-    }
-
 
 	private void AnimateButtons(bool Open) {
 		Task.Factory.StartNew(() => {
 			if (Open) {
 				int we = 370;
 				while (we < 506) {
-					this.Dispatcher.Invoke(() => { this.b_Cancel.Margin = new(we, 0, 0, 33); });
+					this.Dispatcher.Invoke(() => { this.b_Cancel.Margin = new(we, 0, 0, 48); });
 					Thread.Sleep(2);
 					we++;
 				}
@@ -93,7 +87,7 @@ public partial class PageOrders : UserControl {
 				});
 				int we = 505;
 				while (we > 369) {
-					this.Dispatcher.Invoke(() => { this.b_Cancel.Margin = new(we, 0, 0, 33); });
+					this.Dispatcher.Invoke(() => { this.b_Cancel.Margin = new(we, 0, 0, 48); });
 					Thread.Sleep(2);
 					we--;
 				}
@@ -102,22 +96,39 @@ public partial class PageOrders : UserControl {
 	}
 
 
+	private void b_Add_Click(object sender, RoutedEventArgs e) {
+		Data.MainWin.PageNewOrder = new();
+		Data.MainWin.HambMenu.Content = Data.MainWin.PageNewOrder;
+    }
+
+	private void b_AddParts_Click(object sender, RoutedEventArgs e) {
+		int закid = ((TBL_Заказ)this.dg_Заказы.SelectedItem).id;
+		if (this.dg_Заказы.SelectedIndex != -1 && Data.MainWin.PageNewParts == null && закid != заказid) {
+			Data.MainWin.PageNewParts = new(закid);
+		}
+		Data.MainWin.HambMenu.Content = Data.MainWin.PageNewParts;
+		заказid = закid;
+	}
+
 	private void b_Edit_Click(object sender, RoutedEventArgs e) {
 		if (isOrdEdit) {
 			isOrdEdit = false;
 
 			TBL_Заказ Заказ = (TBL_Заказ)this.dg_Заказы.SelectedItem;
 			int статid = Data.DB.СтатусыList[this.cb_Статусы.SelectedIndex].id;
-			Data.TBL.TBLData_Заказы[Data.TBL.TBLData_Заказы.ToList().FindIndex(x => x.id == Заказ.id)].Статус = Data.DB.СтатусыList.Find(x => x.id == статid).Статус;
-			DB.DB_Заказы.StatusUpdate(Заказ.id, статid);
-			UpdateTable();
-			AnimateButtons(true);
+			if (статусid != статid) {
+				Data.TBL.TBLData_Заказы[Data.TBL.TBLData_Заказы.ToList().FindIndex(x => x.id == Заказ.id)].Статус = Data.DB.СтатусыList.Find(x => x.id == статid).Статус;
+				DB.DB_Заказы.StatusUpdate(Заказ.id, статid);
+				UpdateTable();
+			}
+			AnimateButtons(false);
 		} else {
 			isOrdEdit = true;
 
 			TBL_Заказ Заказ = (TBL_Заказ)this.dg_Заказы.SelectedItem;
-			this.cb_Статусы.SelectedIndex = Data.DB.СтатусыList.FindIndex(x => x.id == Data.DB.ЗаказыList.Find(x => x.id == Заказ.id).Статус_id);
-			AnimateButtons(false);
+			this.статусid = Data.DB.ЗаказыList.Find(x => x.id == Заказ.id).Статус_id;
+			this.cb_Статусы.SelectedIndex = Data.DB.СтатусыList.FindIndex(x => x.id == this.статусid);
+			AnimateButtons(true);
 		}
 	}
 
@@ -125,14 +136,6 @@ public partial class PageOrders : UserControl {
 		
 	}
 
-	private void b_Cancelmini_Click(object sender, RoutedEventArgs e) {
-		//isOrdEdit = false;
-		//AnimateButtons(false);		
-	}
-
-	private void b_Donemini_Click(object sender, RoutedEventArgs e) {
-
-	}
 
 	private void dg_Заказы_SelectionChanged(object sender, SelectionChangedEventArgs e) {
 		if (this.dg_Заказы.SelectedIndex == -1) {
@@ -144,6 +147,11 @@ public partial class PageOrders : UserControl {
 				this.b_Cancel.IsEnabled = true;
 			} else {
 				this.b_Cancel.IsEnabled = false;
+			}
+			if (Заказ.Статус == "Приход") {
+				this.b_AddParts.IsEnabled = true;
+			} else {
+				this.b_AddParts.IsEnabled = false;
 			}
 			this.b_Edit.IsEnabled = true;
 			if (isOrdEdit) {

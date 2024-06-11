@@ -27,7 +27,7 @@ public partial class Login : MetroWindow {
 	}
 
 
-	private void StatusSet(object? sender, Twident_Msg e) {
+	private void StatusSet(object sender, Twident_Msg e) {
 		this.Dispatcher.Invoke(new Action(() => { this.l_Out.Content = e.Message; }));
 	}
 

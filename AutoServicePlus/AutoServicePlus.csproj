@@ -59,6 +59,9 @@
     <Compile Update="Pages\PageAbout.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Pages\PageNewParts.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Pages\PageStorage.xaml.cs">
       <SubType>Code</SubType>
     </Compile>

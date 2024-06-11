@@ -8,6 +8,8 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
+using static AutoServicePlus.DB;
+
 namespace AutoServicePlus;
 
 
@@ -96,8 +98,9 @@ public class Data {
 
 	public static class TBL {
 		public static ObservableCollection<TBL_Заказ> TBLData_Заказы = new();
+		public static ObservableCollection<TBL_ЗапчастьМодель> TBLData_ЗапчастиМодель = new();
+		public static ObservableCollection<TBL_ЗапчастьМодель> TBLData_ЗапчастиМодель2 = new();
 		public static ObservableCollection<TBL_Запчасть> TBLData_Запчасти = new();
-		public static ObservableCollection<TBL_Запчасть> TBLData_Запчасти2 = new();
 	}
 
 
@@ -114,12 +117,14 @@ public class Data {
 		//public static ObservableCollection<TblData> tblDataList = new();
 
 		public static List<DBM_Заказ> ЗаказыList = new();
+		public static List<DBM_ЗапчастьМодель> ЗапчастиМоделиList = new();
 		public static List<DBM_Запчасть> ЗапчастиList = new();
 		public static List<DBM_РегистрЗапчасть> РегистрЗапчастейList = new();
 		public static List<DBM_Статус> СтатусыList = new();
 		public static List<DBM_Сотрудник> СотрудникиList = new();
 
 		public static DBM_Заказ TMP_Заказ = null;
+		public static List<DBM_Запчасть> TMP_Запчасти = null;
 	}
 
 
