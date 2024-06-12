@@ -59,7 +59,7 @@ public partial class PageNewOrder : UserControl {
 	private void UpdateTable_Зап() {
 		SQLResultTable ResTbl = null;
 		bool edit = false;
-		string sql = "SELECT Зап.id, Зап.Название, Кат.Название, 0, Marks.Марка, Cars.Модель, 0 FROM AutoServicePlus.ЗапчастиМодели Зап\r\nINNER JOIN AutoServicePlus.КатегорииЗап Кат ON Зап.Категория_id = Кат.id\r\nLEFT JOIN AutoServicePlus.АвтомобильЗапчасть AutoPart ON AutoPart.Запчасть_id = Зап.id\r\nLEFT JOIN AutoServicePlus.Автомобили Cars ON AutoPart.Автомобиль_id = Cars.id\r\nLEFT JOIN AutoServicePlus.МаркиАвто Marks ON Cars.Марка_id = Marks.id;";
+		string sql = "SELECT Зап.id, Зап.Название, Кат.Название, Marks.Марка, Cars.Модель FROM AutoServicePlus.ЗапчастиМодели Зап\r\nINNER JOIN AutoServicePlus.КатегорииЗап Кат ON Зап.Категория_id = Кат.id\r\nLEFT JOIN AutoServicePlus.АвтомобильЗапчасть AutoPart ON AutoPart.Запчасть_id = Зап.id\r\nLEFT JOIN AutoServicePlus.Автомобили Cars ON AutoPart.Автомобиль_id = Cars.id\r\nLEFT JOIN AutoServicePlus.МаркиАвто Marks ON Cars.Марка_id = Marks.id";
 
 		if (cb_Категории.SelectedIndex != -1 && cb_Марки.SelectedIndex != -1) {
 			sql += $"\r\nWHERE Зап.Категория_id = {this.Категорияid} AND Cars.Марка_id = {this.Маркаid}";
@@ -83,7 +83,7 @@ public partial class PageNewOrder : UserControl {
 
 		if (ResTbl != null) {
 			while (ResTbl.NextRow()) {
-				Data.TBL.ЗапчастиМодели.Add(new(ResTbl.GetInt(0), ResTbl.GetStr(1), ResTbl.GetStr(2), ResTbl.GetInt(3), ResTbl.GetStr(4), ResTbl.GetStr(5), ResTbl.GetStr(6)));
+				Data.TBL.ЗапчастиМодели.Add(new(ResTbl.GetInt(0), ResTbl.GetStr(1), ResTbl.GetStr(2), ResTbl.GetStr(3), ResTbl.GetStr(4)));
 			}
 		}
 		this.dg_Запчасти.Items.Refresh();
@@ -151,8 +151,14 @@ public partial class PageNewOrder : UserControl {
 		}
 
 		TBL_ЗапчастьМодель Запчасть = (TBL_ЗапчастьМодель)this.dg_Запчасти.SelectedItem;
-		TBL_ЗапчастьМодель Запчасть2 = Data.TBL.ЗапчастиМодели.ToList().Find(x => x.id == Запчасть.id);
+		TBL_ЗапчастьМодель Запчастьtmp = Data.TBL.ЗапчастиМодели.ToList().Find(x => x.id == Запчасть.id);
+		TBL_ЗапчастьМодель2 Запчасть2 = new();
+		Запчасть2.id = Запчастьtmp.id;
+		Запчасть2.Название = Запчастьtmp.Название;
+		Запчасть2.Категория = Запчастьtmp.Категория;
 		Запчасть2.Количество = Convert.ToInt32(this.nud_NumЗап.Value);
+		Запчасть2.Марка_Авто = Запчастьtmp.Марка_Авто;
+		Запчасть2.Модель_Авто = Запчастьtmp.Модель_Авто;
 		Запчасть2.Контрагент = Data.КонтрагентыList[this.cb_Поставщики.SelectedIndex].Data;
 		Data.TBL.ЗапчастиМодели2.Add(Запчасть2);
 

@@ -21,7 +21,7 @@ namespace AutoServicePlus.Pages;
 public partial class PagePartsforOrder : MetroWindow {
 
 	private int Заказ_id = 0;
-	private ObservableCollection<TBL_ЗапчастьМодель> ЗапчастиМодели = new();
+	private ObservableCollection<TBL_ЗапчастьМодель2> ЗапчастиМодели = new();
 
 	public PagePartsforOrder(int Заказ_id) {
         InitializeComponent();
