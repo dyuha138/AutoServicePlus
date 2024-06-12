@@ -1,7 +1,5 @@
 ﻿using MaterialDesignThemes.Wpf;
-
 using Org.BouncyCastle.Pqc.Crypto.Lms;
-
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,7 +26,7 @@ public partial class PageOrders : UserControl {
 
     public PageOrders() {
         InitializeComponent();
-		this.dg_Заказы.ItemsSource = Data.TBL.TBLData_Заказы;
+		this.dg_Заказы.ItemsSource = Data.TBL.Заказы;
 
 		for (int i = 0; i < Data.DB.СтатусыList.Count; i++) {
 			this.cb_Статусы.Items.Add(Data.DB.СтатусыList[i].Статус);
@@ -53,10 +51,10 @@ public partial class PageOrders : UserControl {
 			ResTbl = DB.SQLQuery($"SELECT Ord.id, Ord.Дата, Ст.Статус, Сотр.Фамилия, Сотр.Имя, Сотр.Отчество FROM AutoServicePlus.Заказы Ord\r\nLEFT JOIN AutoServicePlus.Статусы Ст ON Ord.Статус_id = Ст.id\r\nLEFT JOIN AutoServicePlus.Сотрудники Сотр ON Ord.Сотрудник_id = Сотр.id\r\nWHERE Ord.id LIKE '%{this.e_Search.Text}%' OR Ст.Статус LIKE '%{this.e_Search.Text}%' OR Сотр.Фамилия LIKE '%{this.e_Search.Text}%' OR Сотр.Имя LIKE '%{this.e_Search.Text}%' OR Сотр.Отчество LIKE '%{this.e_Search.Text}%'\r\nORDER BY Ord.Дата DESC;");
 		}
 
-		Data.TBL.TBLData_Заказы.Clear();
+		Data.TBL.Заказы.Clear();
 		if (ResTbl != null) {
 			while (ResTbl.NextRow()) {
-				Data.TBL.TBLData_Заказы.Add(new(ResTbl.GetInt(0), TechFuncs.UnixToDate(ResTbl.GetInt(1)), ResTbl.GetStr(2), ResTbl.GetStr(3), ResTbl.GetStr(4), ResTbl.GetStr(5)));
+				Data.TBL.Заказы.Add(new(ResTbl.GetInt(0), TechFuncs.UnixToDate(ResTbl.GetInt(1)), ResTbl.GetStr(2), ResTbl.GetStr(3), ResTbl.GetStr(4), ResTbl.GetStr(5)));
 			}
 		}
 		this.dg_Заказы.Items.Refresh();
@@ -117,7 +115,7 @@ public partial class PageOrders : UserControl {
 			TBL_Заказ Заказ = (TBL_Заказ)this.dg_Заказы.SelectedItem;
 			int статid = Data.DB.СтатусыList[this.cb_Статусы.SelectedIndex].id;
 			if (статусid != статid) {
-				Data.TBL.TBLData_Заказы[Data.TBL.TBLData_Заказы.ToList().FindIndex(x => x.id == Заказ.id)].Статус = Data.DB.СтатусыList.Find(x => x.id == статid).Статус;
+				Data.TBL.Заказы[Data.TBL.Заказы.ToList().FindIndex(x => x.id == Заказ.id)].Статус = Data.DB.СтатусыList.Find(x => x.id == статid).Статус;
 				DB.DB_Заказы.StatusUpdate(Заказ.id, статid);
 				UpdateTable();
 			}
@@ -162,10 +160,14 @@ public partial class PageOrders : UserControl {
 
 	private void dg_Заказы_DoubleClick(object sender, MouseButtonEventArgs e) {
 		TBL_Заказ Заказ = (TBL_Заказ)this.dg_Заказы.SelectedItem;
-		if (this.dg_Заказы.SelectedIndex != -1 && Data.MainWin.PagePartsforOrder == null) {
-			Data.MainWin.PagePartsforOrder = new(Заказ.id);
-			Data.MainWin.PagePartsforOrder.Show();
+		if (Заказ != null) {
+			Pages.PagePartsforOrder форма = new(Заказ.id);
+			форма.Show();
 		}
+		//if (this.dg_Заказы.SelectedIndex != -1 && Data.MainWin.PagePartsforOrder == null) {
+			//Data.MainWin.PagePartsforOrder =  new(Заказ.id);
+			//Data.MainWin.PagePartsforOrder.Show();
+		//}
 	}
 
 	private void e_Search_Changed(object sender, TextChangedEventArgs e) {

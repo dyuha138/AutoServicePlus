@@ -10,11 +10,11 @@
       d:DesignHeight="450" d:DesignWidth="800" FontFamily="/Twidibot;component/media/fonts/#Gilroy Light">
 
     <Grid Background="{DynamicResource Color_Dark}">
-        <DataGrid x:Name="dg_Tbl" Style="{DynamicResource DGdef}" IsReadOnly="True" Margin="130,35,10,115"/>
+        <DataGrid x:Name="dg_Склад" Style="{DynamicResource DGdef}" MouseDoubleClick="dg_Склад_MouseDoubleClick" IsReadOnly="True" Margin="130,35,10,115"/>
         <TextBox x:Name="e_Search" Style="{DynamicResource TBdef}" Margin="130,5,270,0" materialDesign:HintAssist.Hint="Поиск" VerticalAlignment="Top"/>
-        <Button x:Name="b_Done" Style="{DynamicResource Bdef}" IsEnabled="False" Content="Подтвердить отгрузку" HorizontalAlignment="Left" Margin="130,0,0,80" Background="{StaticResource Color_Green}" Height="29" VerticalAlignment="Bottom"/>
-        <Button x:Name="b_Add" Style="{DynamicResource Bdef}" Content="Добавить к заказу" HorizontalAlignment="Left" Margin="330,0,0,80" Background="{StaticResource Color_Orange}" Height="29" VerticalAlignment="Bottom"/>
-        <Button x:Name="b_Edit" Style="{DynamicResource Bdef}" IsEnabled="False" Content="Изменить" HorizontalAlignment="Left" Margin="499,0,0,80" Height="29" VerticalAlignment="Bottom"/>
+        <Button x:Name="b_OpenReq" Style="{DynamicResource Bdef}" IsEnabled="False" Content="Открыть заявку" HorizontalAlignment="Left" Margin="130,0,0,80" Background="{StaticResource Color_Green}" Height="29" VerticalAlignment="Bottom"/>
+        <Button x:Name="b_Add" Style="{DynamicResource Bdef}" Content="Добавить к заказу" HorizontalAlignment="Left" Margin="275,0,0,80" Background="{StaticResource Color_Orange}" Height="29" VerticalAlignment="Bottom"/>
+        <Button x:Name="b_Edit" Style="{DynamicResource Bdef}" IsEnabled="False" Content="Изменить" HorizontalAlignment="Left" Margin="442,0,0,80" Height="29" VerticalAlignment="Bottom"/>
         <Button x:Name="b_Save" Style="{DynamicResource Bdef}" Visibility="Hidden" HorizontalAlignment="Left" Margin="502,413,0,0" VerticalAlignment="Top" Background="{StaticResource Color_Green}" Height="28" Width="28" Padding="0,0,0,0">
             <Image Source="/media/icons/Check.png" Height="20" Width="20"/>
         </Button>

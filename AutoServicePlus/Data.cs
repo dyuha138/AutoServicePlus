@@ -97,10 +97,11 @@ public class Data {
 
 
 	public static class TBL {
-		public static ObservableCollection<TBL_Заказ> TBLData_Заказы = new();
-		public static ObservableCollection<TBL_ЗапчастьМодель> TBLData_ЗапчастиМодель = new();
-		public static ObservableCollection<TBL_ЗапчастьМодель> TBLData_ЗапчастиМодель2 = new();
-		public static ObservableCollection<TBL_Запчасть> TBLData_Запчасти = new();
+		public static ObservableCollection<TBL_Заказ> Заказы = new();
+		public static ObservableCollection<TBL_ЗапчастьМодель> ЗапчастиМодели = new();
+		public static ObservableCollection<TBL_ЗапчастьМодель> ЗапчастиМодели2 = new();
+		public static ObservableCollection<TBL_Запчасть> Запчасти = new();
+		public static ObservableCollection<TBL_Склад> Склад = new();
 	}
 
 

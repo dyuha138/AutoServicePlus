@@ -54,13 +54,13 @@ public class TBL_ЗапчастьМодель : INotifyPropertyChanged {
 	public int id { get; set; }
 	public string Название { get; set; }
 	public string Категория { get; set; }
-	public string Количество { get; set; }
+	public int Количество { get; set; }
 	public string Марка_Авто { get; set; }
 	public string Модель_Авто { get; set; }
 	public string Контрагент { get; set; }
 
 	public TBL_ЗапчастьМодель() { }
-	public TBL_ЗапчастьМодель(int id, string Название, string Категория, string Количество, string Марка_Авто, string Модель_Авто, string Контрагент) {
+	public TBL_ЗапчастьМодель(int id, string Название, string Категория, int Количество, string Марка_Авто, string Модель_Авто, string Контрагент) {
 		this.id = id;
 		this.Название = Название;
 		this.Категория = Категория;
@@ -89,6 +89,48 @@ public class TBL_Запчасть : INotifyPropertyChanged {
 		this.Название = Название;
 		this.Категория = Категория;
 		this.Идентификатор = Идентификатор;
+	}
+
+	public event PropertyChangedEventHandler PropertyChanged;
+	protected virtual void OnPropertyChanged(string propertyName) {
+		PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+	}
+}
+
+
+public class TBL_ЗапчастьМини : INotifyPropertyChanged {
+	public int id { get; set; }
+	public string Идентификатор { get; set; }
+
+	public TBL_ЗапчастьМини() { }
+	public TBL_ЗапчастьМини(int id, string Идентификатор) {
+		this.id = id;
+		this.Идентификатор = Идентификатор;
+	}
+
+	public event PropertyChangedEventHandler PropertyChanged;
+	protected virtual void OnPropertyChanged(string propertyName) {
+		PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+	}
+}
+
+
+public class TBL_Склад : INotifyPropertyChanged {
+	public int id { get; set; }
+	public string Название { get; set; }
+	public string Категория { get; set; }
+	public int Количество { get; set; }
+	public string Марка_Авто { get; set; }
+	public string Модель_Авто { get; set; }
+
+	public TBL_Склад() { }
+	public TBL_Склад(int id, string Название, string Категория, int Количество, string Марка_Авто, string Модель_Авто) {
+		this.id = id;
+		this.Название = Название;
+		this.Категория = Категория;
+		this.Количество = Количество;
+		this.Марка_Авто = Марка_Авто;
+		this.Модель_Авто = Модель_Авто;
 	}
 
 	public event PropertyChangedEventHandler PropertyChanged;

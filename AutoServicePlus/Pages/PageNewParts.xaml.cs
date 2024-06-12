@@ -26,8 +26,8 @@ public partial class PageNewParts : UserControl {
 
 	public PageNewParts(int Заказ_id) {
         InitializeComponent();
-        this.dg_Запчасти.ItemsSource = Data.TBL.TBLData_Запчасти;
-		this.dg_ЗапчастиЗаказ.ItemsSource = Data.TBL.TBLData_ЗапчастиМодель;
+        this.dg_Запчасти.ItemsSource = Data.TBL.Запчасти;
+		this.dg_ЗапчастиЗаказ.ItemsSource = Data.TBL.ЗапчастиМодели;
 		this.Заказ_id = Заказ_id;
 		UpdateTable_Зак();
     }
@@ -40,10 +40,10 @@ public partial class PageNewParts : UserControl {
 
 	private void UpdateTable_Зак() {
 		SQLResultTable ResTbl = DB.SQLQuery($"SELECT Parts.id, Parts.Название, Cat.Название, OrdPart.Количество, Marks.Марка, Cars.Модель, Конт.Название FROM AutoServicePlus.ЗапчастиМодели Parts\r\nLEFT JOIN AutoServicePlus.КатегорииЗап Cat ON Parts.Категория_id = Cat.id\r\nLEFT JOIN AutoServicePlus.АвтомобильЗапчасть AutoPart ON AutoPart.Запчасть_id = Parts.id\r\nLEFT JOIN AutoServicePlus.Автомобили Cars ON AutoPart.Автомобиль_id = Cars.id\r\nLEFT JOIN AutoServicePlus.МаркиАвто Marks ON Cars.Марка_id = Marks.id\r\nINNER JOIN AutoServicePlus.ЗаказЗапчасть OrdPart ON OrdPart.Запчасть_id = Parts.id\r\nLEFT JOIN AutoServicePlus.Контрагенты Конт ON OrdPart.Контрагент_id = Конт.id\r\nWHERE OrdPart.Заказ_id = {this.Заказ_id} AND (Parts.Название LIKE '%{this.e_Search.Text}%' OR Cat.Название LIKE '%{this.e_Search.Text}%' OR Marks.Марка LIKE '%{this.e_Search.Text}%' OR Cars.Модель LIKE '%{this.e_Search.Text}%' OR Конт.Название LIKE '%{this.e_Search.Text}%');");
-		Data.TBL.TBLData_ЗапчастиМодель.Clear();
+		Data.TBL.ЗапчастиМодели.Clear();
 		if (ResTbl != null) {
 			while (ResTbl.NextRow()) {
-				Data.TBL.TBLData_ЗапчастиМодель.Add(new(ResTbl.GetInt(0), ResTbl.GetStr(1), ResTbl.GetStr(2), ResTbl.GetStr(3), ResTbl.GetStr(4), ResTbl.GetStr(5), ResTbl.GetStr(6)));
+				Data.TBL.ЗапчастиМодели.Add(new(ResTbl.GetInt(0), ResTbl.GetStr(1), ResTbl.GetStr(2), ResTbl.GetInt(3), ResTbl.GetStr(4), ResTbl.GetStr(5), ResTbl.GetStr(6)));
 			}
 		}
 		this.dg_ЗапчастиЗаказ.Items.Refresh();
@@ -118,16 +118,16 @@ public partial class PageNewParts : UserControl {
 		TBL_ЗапчастьМодель ЗапчастьМодельTBL = (TBL_ЗапчастьМодель)this.dg_ЗапчастиЗаказ.SelectedItem;
 		//DBM_ЗапчастьМодель ЗапчастьМодель = DB.DB_ЗапчастиМодели.Find(ЗапчастьМодельTBL.id);
 
-		if (DB.DB_Запчасти.isExists(this.e_Идентификатор.Text) == 0 && Data.TBL.TBLData_Запчасти.ToList().FindIndex(x => x.Идентификатор == this.e_Идентификатор.Text) == -1) {
+		if (DB.DB_Запчасти.isExists(this.e_Идентификатор.Text) == 0 && Data.TBL.Запчасти.ToList().FindIndex(x => x.Идентификатор == this.e_Идентификатор.Text) == -1) {
 			Data.DB.TMP_Запчасти.Add(new(0, ЗапчастьМодельTBL.id, this.e_Идентификатор.Text));
-			Data.TBL.TBLData_Запчасти.Add(new(0, ЗапчастьМодельTBL.Название, ЗапчастьМодельTBL.Категория, this.e_Идентификатор.Text));
+			Data.TBL.Запчасти.Add(new(0, ЗапчастьМодельTBL.Название, ЗапчастьМодельTBL.Категория, this.e_Идентификатор.Text));
 
-			int колво = Convert.ToInt32(Data.TBL.TBLData_ЗапчастиМодель[this.dg_ЗапчастиЗаказ.SelectedIndex].Количество);
+			int колво = Data.TBL.ЗапчастиМодели[this.dg_ЗапчастиЗаказ.SelectedIndex].Количество;
 			if (колво == 1) {
-				Data.TBL.TBLData_ЗапчастиМодель.RemoveAt(this.dg_ЗапчастиЗаказ.SelectedIndex);
+				Data.TBL.ЗапчастиМодели.RemoveAt(this.dg_ЗапчастиЗаказ.SelectedIndex);
 				this.dg_ЗапчастиЗаказ.SelectedIndex = -1;
 			} else {
-				Data.TBL.TBLData_ЗапчастиМодель[this.dg_ЗапчастиЗаказ.SelectedIndex].Количество = (колво - 1).ToString();
+				Data.TBL.ЗапчастиМодели[this.dg_ЗапчастиЗаказ.SelectedIndex].Количество = колво - 1;
 			}
 
 			UpdateTable_Зап();
@@ -136,7 +136,7 @@ public partial class PageNewParts : UserControl {
 			//this.e_Идентификатор.Visibility = Visibility.Hidden;
 			//this.g_minibut.Visibility = Visibility.Hidden;
 			this.b_Clear.IsEnabled = true;
-			if (Data.TBL.TBLData_ЗапчастиМодель.Count == 0) {
+			if (Data.TBL.ЗапчастиМодели.Count == 0) {
 				this.b_Done.IsEnabled = true;
 				this.e_Идентификатор.Visibility = Visibility.Hidden;
 				this.g_minibut.Visibility = Visibility.Hidden;
@@ -175,9 +175,9 @@ public partial class PageNewParts : UserControl {
 	private void b_Edit_Click(object sender, RoutedEventArgs e) {
 		if (isOrdEdit) {
 			isOrdEdit = false;
-			if (Data.TBL.TBLData_Запчасти.ToList().FindIndex(x => x.Идентификатор == this.e_Идентификатор.Text) == -1) {
+			if (Data.TBL.Запчасти.ToList().FindIndex(x => x.Идентификатор == this.e_Идентификатор.Text) == -1) {
 				Data.DB.TMP_Запчасти[this.dg_Запчасти.SelectedIndex].Идентификатор = this.e_ИдентификаторEdit.Text;
-				Data.TBL.TBLData_Запчасти[this.dg_Запчасти.SelectedIndex].Идентификатор = this.e_ИдентификаторEdit.Text;
+				Data.TBL.Запчасти[this.dg_Запчасти.SelectedIndex].Идентификатор = this.e_ИдентификаторEdit.Text;
 				UpdateTable_Зап();
 				this.l_Out.Content = "";
 				AnimateButtons(false);
@@ -193,7 +193,7 @@ public partial class PageNewParts : UserControl {
 
 	private void b_Clear_Click(object sender, RoutedEventArgs e) {
 		if (Data.DB.TMP_Запчасти != null) {
-			Data.TBL.TBLData_Запчасти.Clear();
+			Data.TBL.Запчасти.Clear();
 			Data.DB.TMP_Запчасти.Clear();
 			this.b_Clear.IsEnabled = false;
 			this.b_Done.IsEnabled = false;
@@ -207,12 +207,12 @@ public partial class PageNewParts : UserControl {
 	}
 
 	private void b_Del_Click(object sender, RoutedEventArgs e) {
-		int indexзапмод = Data.TBL.TBLData_ЗапчастиМодель.ToList().FindIndex(x => x.Название == ((TBL_Запчасть)this.dg_Запчасти.SelectedItem).Название);
-		int колво = Convert.ToInt32(Data.TBL.TBLData_ЗапчастиМодель[indexзапмод].Количество);
-		Data.TBL.TBLData_ЗапчастиМодель[indexзапмод].Количество = (++колво).ToString();
+		int indexзапмод = Data.TBL.ЗапчастиМодели.ToList().FindIndex(x => x.Название == ((TBL_Запчасть)this.dg_Запчасти.SelectedItem).Название);
+		int колво = Convert.ToInt32(Data.TBL.ЗапчастиМодели[indexзапмод].Количество);
+		Data.TBL.ЗапчастиМодели[indexзапмод].Количество = ++колво;
 
 		Data.DB.TMP_Запчасти.RemoveAt(this.dg_Запчасти.SelectedIndex);
-		Data.TBL.TBLData_Запчасти.RemoveAt(this.dg_Запчасти.SelectedIndex);
+		Data.TBL.Запчасти.RemoveAt(this.dg_Запчасти.SelectedIndex);
 		UpdateTable_Зап();
 		this.dg_ЗапчастиЗаказ.Items.Refresh();
 		this.dg_Запчасти.SelectedIndex = -1;

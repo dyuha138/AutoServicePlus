@@ -1,0 +1,33 @@
+﻿<mah:MetroWindow x:Class="AutoServicePlus.Pages.PagePartsStore"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:AutoServicePlus.Pages"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+             mc:Ignorable="d" 
+             Title="Хранимые запчасти" Height="400" Width="350" Loaded="_Loaded" Closed="_Closed" WindowStartupLocation="CenterScreen" FontFamily="/Twidibot;component/media/fonts/#Gilroy Light">
+
+    <Window.BorderBrush>
+        <SolidColorBrush Color="{StaticResource ColorCon_Dark}"/>
+    </Window.BorderBrush>
+    <Window.Foreground>
+        <SolidColorBrush Color="{StaticResource ColorCon_White}"/>
+    </Window.Foreground>
+    <Window.Background>
+        <SolidColorBrush Color="#FF333333"/>
+    </Window.Background>
+
+
+    <Grid Background="{DynamicResource Color_Dark}">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="200*"/>
+            <ColumnDefinition Width="300*"/>
+            <ColumnDefinition Width="200*"/>
+        </Grid.ColumnDefinitions>
+        <DataGrid x:Name="dg_Запчасти" Style="{DynamicResource DGdef}" Margin="10,39,10,24" Grid.ColumnSpan="3"/>
+        <TextBox x:Name="e_Search" Style="{DynamicResource TBdef}" TextChanged="e_Search_TextChanged" Margin="1,10,1,0" materialDesign:HintAssist.Hint="Поиск" VerticalAlignment="Top" Grid.Column="1"/>
+
+    </Grid>
+</mah:MetroWindow>

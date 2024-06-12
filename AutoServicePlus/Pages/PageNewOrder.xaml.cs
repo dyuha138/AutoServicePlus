@@ -27,8 +27,8 @@ public partial class PageNewOrder : UserControl {
 	public PageNewOrder() {
         InitializeComponent();
 		Data.PropertiesChange.WinHeight = 343;
-		this.dg_Запчасти.ItemsSource = Data.TBL.TBLData_ЗапчастиМодель;
-		this.dg_Заказ.ItemsSource = Data.TBL.TBLData_ЗапчастиМодель2;
+		this.dg_Запчасти.ItemsSource = Data.TBL.ЗапчастиМодели;
+		this.dg_Заказ.ItemsSource = Data.TBL.ЗапчастиМодели2;
 
 		for (int i = 0; i < Data.КатегорииList.Count; i++) {
 			this.cb_Категории.Items.Add(Data.КатегорииList[i].Data);
@@ -59,7 +59,7 @@ public partial class PageNewOrder : UserControl {
 	private void UpdateTable_Зап() {
 		SQLResultTable ResTbl = null;
 		bool edit = false;
-		string sql = "SELECT Зап.id, Зап.Название, Кат.Название, 0, Marks.Марка, Cars.Модель, 0 FROM AutoServicePlus.Запчасти Зап\r\nINNER JOIN AutoServicePlus.КатегорииЗап Кат ON Зап.Категория_id = Кат.id\r\nLEFT JOIN AutoServicePlus.АвтомобильЗапчасть AutoPart ON AutoPart.Запчасть_id = Зап.id\r\nLEFT JOIN AutoServicePlus.Автомобили Cars ON AutoPart.Автомобиль_id = Cars.id\r\nLEFT JOIN AutoServicePlus.МаркиАвто Marks ON Cars.Марка_id = Marks.id";
+		string sql = "SELECT Зап.id, Зап.Название, Кат.Название, 0, Marks.Марка, Cars.Модель, 0 FROM AutoServicePlus.ЗапчастиМодели Зап\r\nINNER JOIN AutoServicePlus.КатегорииЗап Кат ON Зап.Категория_id = Кат.id\r\nLEFT JOIN AutoServicePlus.АвтомобильЗапчасть AutoPart ON AutoPart.Запчасть_id = Зап.id\r\nLEFT JOIN AutoServicePlus.Автомобили Cars ON AutoPart.Автомобиль_id = Cars.id\r\nLEFT JOIN AutoServicePlus.МаркиАвто Marks ON Cars.Марка_id = Marks.id;";
 
 		if (cb_Категории.SelectedIndex != -1 && cb_Марки.SelectedIndex != -1) {
 			sql += $"\r\nWHERE Зап.Категория_id = {this.Категорияid} AND Cars.Марка_id = {this.Маркаid}";
@@ -79,11 +79,11 @@ public partial class PageNewOrder : UserControl {
 		}
 
 		ResTbl = DB.SQLQuery(sql);
-		Data.TBL.TBLData_ЗапчастиМодель.Clear();
+		Data.TBL.ЗапчастиМодели.Clear();
 
 		if (ResTbl != null) {
 			while (ResTbl.NextRow()) {
-				Data.TBL.TBLData_ЗапчастиМодель.Add(new(ResTbl.GetInt(0), ResTbl.GetStr(1), ResTbl.GetStr(2), ResTbl.GetStr(3), ResTbl.GetStr(4), ResTbl.GetStr(5), ResTbl.GetStr(6)));
+				Data.TBL.ЗапчастиМодели.Add(new(ResTbl.GetInt(0), ResTbl.GetStr(1), ResTbl.GetStr(2), ResTbl.GetInt(3), ResTbl.GetStr(4), ResTbl.GetStr(5), ResTbl.GetStr(6)));
 			}
 		}
 		this.dg_Запчасти.Items.Refresh();
@@ -151,10 +151,10 @@ public partial class PageNewOrder : UserControl {
 		}
 
 		TBL_ЗапчастьМодель Запчасть = (TBL_ЗапчастьМодель)this.dg_Запчасти.SelectedItem;
-		TBL_ЗапчастьМодель Запчасть2 = Data.TBL.TBLData_ЗапчастиМодель.ToList().Find(x => x.id == Запчасть.id);
-		Запчасть2.Количество = this.nud_NumЗап.Value.ToString();
+		TBL_ЗапчастьМодель Запчасть2 = Data.TBL.ЗапчастиМодели.ToList().Find(x => x.id == Запчасть.id);
+		Запчасть2.Количество = Convert.ToInt32(this.nud_NumЗап.Value);
 		Запчасть2.Контрагент = Data.КонтрагентыList[this.cb_Поставщики.SelectedIndex].Data;
-		Data.TBL.TBLData_ЗапчастиМодель2.Add(Запчасть2);
+		Data.TBL.ЗапчастиМодели2.Add(Запчасть2);
 
 		Data.DB.TMP_Заказ.Запчасти.Add(new(Запчасть.id, Convert.ToInt32(Запчасть2.Количество), Data.КонтрагентыList[this.cb_Поставщики.SelectedIndex].id));
 
@@ -178,7 +178,7 @@ public partial class PageNewOrder : UserControl {
 		DB.DB_Заказы.Add(Data.DB.TMP_Заказ);
 		Data.DB.TMP_Заказ = null;
 		Data.MainWin.Dispatcher.Invoke(() => { Data.MainWin.HambMenu.Content = Data.MainWin.PageOrders; });
-		Data.TBL.TBLData_ЗапчастиМодель2.Clear();
+		Data.TBL.ЗапчастиМодели2.Clear();
 		UpdateTable_Зак();
 	}
 
@@ -187,7 +187,7 @@ public partial class PageNewOrder : UserControl {
 		if (isOrdEdit) {
 			isOrdEdit = false;
 			Data.DB.TMP_Заказ.Запчасти[this.dg_Заказ.SelectedIndex].Количество = Convert.ToInt32(this.nud_NumЗаказ.Value);
-			Data.TBL.TBLData_ЗапчастиМодель2[this.dg_Заказ.SelectedIndex].Количество = this.nud_NumЗаказ.Value.ToString();
+			Data.TBL.ЗапчастиМодели2[this.dg_Заказ.SelectedIndex].Количество = Convert.ToInt32(this.nud_NumЗаказ.Value);
 			UpdateTable_Зак();
 			AnimateButtons(false);
 		} else {
@@ -205,7 +205,7 @@ public partial class PageNewOrder : UserControl {
 
 	private void b_Clear_Click(object sender, RoutedEventArgs e) {
 		if (Data.DB.TMP_Заказ != null) {
-			Data.TBL.TBLData_ЗапчастиМодель2.Clear();
+			Data.TBL.ЗапчастиМодели2.Clear();
 			Data.DB.TMP_Заказ.Запчасти.Clear();
 			this.b_Clear.IsEnabled = false;
 			this.b_Done.IsEnabled = false;
@@ -217,7 +217,7 @@ public partial class PageNewOrder : UserControl {
 
 	private void b_Del_Click(object sender, RoutedEventArgs e) {
 		Data.DB.TMP_Заказ.Запчасти.RemoveAt(this.dg_Заказ.SelectedIndex);
-		Data.TBL.TBLData_ЗапчастиМодель2.RemoveAt(this.dg_Заказ.SelectedIndex);
+		Data.TBL.ЗапчастиМодели2.RemoveAt(this.dg_Заказ.SelectedIndex);
 		UpdateTable_Зак();
 		this.dg_Запчасти.SelectedIndex = -1;
 		this.b_Del.IsEnabled = false;

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -18,11 +19,15 @@ namespace AutoServicePlus.Pages;
 
 
 public partial class PagePartsforOrder : MetroWindow {
+
 	private int Заказ_id = 0;
-    public PagePartsforOrder(int Заказ_id) {
+	private ObservableCollection<TBL_ЗапчастьМодель> ЗапчастиМодели = new();
+
+	public PagePartsforOrder(int Заказ_id) {
         InitializeComponent();
-        this.dg_Запчасти.ItemsSource = Data.TBL.TBLData_ЗапчастиМодель;
+        this.dg_Запчасти.ItemsSource = this.ЗапчастиМодели;
 		this.Заказ_id = Заказ_id;
+		this.Title += " №" + Заказ_id;
 		UpdateTable();
     }
 
@@ -32,18 +37,17 @@ public partial class PagePartsforOrder : MetroWindow {
 
 
 	private void UpdateTable() {
-		SQLResultTable ResTbl = DB.SQLQuery($"SELECT Parts.id, Parts.Название, Cat.Название, OrdPart.Количество, Marks.Марка, Cars.Модель, Конт.Название FROM AutoServicePlus.ЗапчастиМодели Parts\r\nLEFT JOIN AutoServicePlus.КатегорииЗап Cat ON Parts.Категория_id = Cat.id\r\nLEFT JOIN AutoServicePlus.АвтомобильЗапчасть AutoPart ON AutoPart.Запчасть_id = Parts.id\r\nLEFT JOIN AutoServicePlus.Автомобили Cars ON AutoPart.Автомобиль_id = Cars.id\r\nLEFT JOIN AutoServicePlus.МаркиАвто Marks ON Cars.Марка_id = Marks.id\r\nINNER JOIN AutoServicePlus.ЗаказЗапчасть OrdPart ON OrdPart.Запчасть_id = Parts.id\r\nLEFT JOIN AutoServicePlus.Контрагенты Конт ON OrdPart.Контрагент_id = Конт.id\r\nWHERE OrdPart.Заказ_id = {this.Заказ_id} AND (Parts.Название LIKE '%{this.e_Search.Text}%' OR Cat.Название LIKE '%{this.e_Search.Text}%' OR Marks.Марка LIKE '%{this.e_Search.Text}%' OR Cars.Модель LIKE '%{this.e_Search.Text}%' OR Конт.Название LIKE '%{this.e_Search.Text}%');");
-		Data.TBL.TBLData_ЗапчастиМодель.Clear();
+		SQLResultTable ResTbl = DB.SQLQuery($"SELECT ЗапМ.id, ЗапМ.Название, Кат.Название, ЗакЗап.Количество, Марки.Марка, Авто.Модель, Конт.Название FROM AutoServicePlus.ЗапчастиМодели ЗапМ\r\nLEFT JOIN AutoServicePlus.КатегорииЗап Кат ON ЗапМ.Категория_id = Кат.id\r\nLEFT JOIN AutoServicePlus.АвтомобильЗапчасть АвтоЗап ON АвтоЗап.Запчасть_id = ЗапМ.id\r\nLEFT JOIN AutoServicePlus.Автомобили Авто ON АвтоЗап.Автомобиль_id = Авто.id\r\nLEFT JOIN AutoServicePlus.МаркиАвто Марки ON Авто.Марка_id = Марки.id\r\nINNER JOIN AutoServicePlus.ЗаказЗапчасть ЗакЗап ON ЗакЗап.Запчасть_id = ЗапМ.id\r\nLEFT JOIN AutoServicePlus.Контрагенты Конт ON ЗакЗап.Контрагент_id = Конт.id\r\nWHERE ЗакЗап.Заказ_id = {this.Заказ_id} AND (ЗапМ.Название LIKE '%{this.e_Search.Text}%' OR Кат.Название LIKE '%{this.e_Search.Text}%' OR Марки.Марка LIKE '%{this.e_Search.Text}%' OR Авто.Модель LIKE '%{this.e_Search.Text}%' OR Конт.Название LIKE '%{this.e_Search.Text}%');");
 		if (ResTbl != null) {
 			while (ResTbl.NextRow()) {
-				Data.TBL.TBLData_ЗапчастиМодель.Add(new(ResTbl.GetInt(0), ResTbl.GetStr(1), ResTbl.GetStr(2), ResTbl.GetStr(3), ResTbl.GetStr(4), ResTbl.GetStr(5), ResTbl.GetStr(6)));
+				this.ЗапчастиМодели.Add(new(ResTbl.GetInt(0), ResTbl.GetStr(1), ResTbl.GetStr(2), ResTbl.GetInt(3), ResTbl.GetStr(4), ResTbl.GetStr(5), ResTbl.GetStr(6)));
 			}
 		}
 		this.dg_Запчасти.Items.Refresh();
 	}
 
 	private void _Closed(object sender, EventArgs e) {
-		Data.MainWin.PagePartsforOrder = null;
+		//Data.MainWin.PagePartsforOrder = null;
 	}
 
 	private void e_Search_TextChanged(object sender, TextChangedEventArgs e) {

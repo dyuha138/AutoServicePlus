@@ -19,10 +19,11 @@ public partial class MainWindow : MetroWindow {
 	public Pages.PageStorage PageStorage = null;
 	public Pages.PageOrders PageOrders = null;
 	public Pages.PageNewOrder PageNewOrder = null;
-	public Pages.PagePartsforOrder PagePartsforOrder = null;
+	//public Pages.PagePartsforOrder PagePartsforOrder = null;
 	public Pages.PageRequests PageRequests = null;
 	public Pages.PageNewRequest PageNewRequest = null;
 	public Pages.PageNewParts PageNewParts = null;
+	//public Pages.PagePartsStore PagePartsStore = null;
 	public Pages.PageAbout PageAbout = null;
 	//public Pages.PageDB PageDB = null;
 

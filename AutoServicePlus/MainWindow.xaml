@@ -7,7 +7,7 @@
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:mah="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
         mc:Ignorable="d"
-        Title="" Height="450" Width="750" MinHeight="250" MinWidth="600" WindowStartupLocation="CenterScreen" WindowTitleBrush="#FFE5801C" FontFamily="/AutoServicePlus;component/media/fonts/#Gilroy Light">
+        Title="Автосервис+" Height="450" Width="750" MinHeight="250" MinWidth="600" WindowStartupLocation="CenterScreen" WindowTitleBrush="#FFE5801C" FontFamily="/AutoServicePlus;component/media/fonts/#Gilroy Light">
 
     <Window.BorderBrush>
         <SolidColorBrush Color="{DynamicResource ColorCon_Dark}"/>
