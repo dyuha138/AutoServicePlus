@@ -139,6 +139,7 @@ public partial class PageOrders : UserControl {
 		if (this.dg_Заказы.SelectedIndex == -1) {
 			this.b_Cancel.IsEnabled = false;
 			this.b_Edit.IsEnabled = false;
+			this.b_AddParts.IsEnabled = false;
 		} else {
 			TBL_Заказ Заказ = (TBL_Заказ)this.dg_Заказы.SelectedItem;
 			if (Заказ.Статус == "Оформление" || Заказ.Статус == "Оформлен" || Заказ.Статус == "В пути") {
