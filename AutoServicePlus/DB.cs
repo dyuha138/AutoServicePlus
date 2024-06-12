@@ -169,6 +169,15 @@ class DB {
 			}
 		}
 
+		public static int GetLastAgent(int Запчасть_id) {
+			SQLResultTable R = DB.SQLQuery($"SELECT ЗакЗап.Контрагент_id FROM AutoServicePlus.ЗаказЗапчасть ЗакЗап \r\nINNER JOIN AutoServicePlus.ЗапчастиМодели ЗакМ ON ЗакЗап.Запчасть_id = ЗакМ.id\r\nWHERE ЗакМ.id = {Запчасть_id}\r\nORDER BY ЗакЗап.id DESC\r\nLIMIT 1;");
+			if (R != null) {
+				R.NextRow();
+				return R.GetInt(0);
+			}
+			return 0;
+		}
+
 		public static void UpdateListfromTable() {
 			SQLResultTable R = null;
 			SQLResultTable R2 = null;

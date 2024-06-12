@@ -278,4 +278,8 @@ public partial class PageNewOrder : UserControl {
 		this.cb_Поставщики.Visibility = Visibility.Visible;
 		this.g_minibut.Visibility = Visibility.Visible;
 	}
+
+	private void b_Cancel_Click(object sender, RoutedEventArgs e) {
+
+	}
 }

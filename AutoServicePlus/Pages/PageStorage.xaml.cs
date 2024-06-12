@@ -64,4 +64,36 @@ public partial class PageStorage : UserControl {
 	private void dp_Date_SelectedDateChanged(object sender, SelectionChangedEventArgs e) {
 		UpdateTable();
 	}
+
+	private void b_AddOrder_Click(object sender, RoutedEventArgs e) {
+		DBM_Заказ.ЗапчастьМодель ЗапчастьМодель = null;
+		TBL_Склад Запчасть = (TBL_Склад)this.dg_Склад.SelectedItem;
+		TBL_ЗапчастьМодель2 Запчасть2 = new();
+		int запindex = 0;
+
+		if (Data.DB.TMP_Заказ == null) {
+			Data.DB.TMP_Заказ = new(0, TechFuncs.GetUnixTime(), 7, TechFuncs.ПолучитьАйдиВхода(), new());
+		}
+			запindex = Data.DB.TMP_Заказ.Запчасти.FindIndex(x => x.id == Запчасть.id);
+			//ЗапчастьМодель = Data.DB.TMP_Заказ.Запчасти[запindex];
+
+		if (запindex == -1) {
+			int контid = DB.DB_Заказы.GetLastAgent(Запчасть.id);
+			Запчасть2.id = Запчасть.id;
+			Запчасть2.Название = Запчасть.Название;
+			Запчасть2.Категория = Запчасть.Категория;
+			Запчасть2.Количество = 1;
+			Запчасть2.Марка_Авто = Запчасть.Марка_Авто;
+			Запчасть2.Модель_Авто = Запчасть.Модель_Авто;
+			Запчасть2.Контрагент = Data.КонтрагентыList.Find(x => x.id == контid).Data;
+			Data.TBL.ЗапчастиМодели2.Add(Запчасть2);
+			Data.DB.TMP_Заказ.Запчасти.Add(new(Запчасть.id, 1, контid));
+		} else {
+			Data.TBL.ЗапчастиМодели2[Data.TBL.ЗапчастиМодели2.ToList().FindIndex(x => x.Название == Запчасть.Название)].Количество++;
+			Data.DB.TMP_Заказ.Запчасти[запindex].Количество++;
+
+		}
+
+		
+	}
 }
