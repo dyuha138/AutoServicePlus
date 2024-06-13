@@ -25,7 +25,7 @@
                 <Image Source="/media/icons/Cancel.png" Height="20" Width="20"/>
             </Button>
         </Grid>
-        <ComboBox x:Name="cb_Статусы" Style="{DynamicResource CBdef}" Visibility="Hidden" HorizontalAlignment="Left" Margin="370,0,0,48" Width="120" Height="28" VerticalAlignment="Bottom"/>
-        <Button x:Name="b_AddParts" Style="{DynamicResource Bdef}" IsEnabled="False" Content="Добавить запчасти" HorizontalAlignment="Left" Margin="130,0,0,10" Height="28" VerticalAlignment="Bottom" Click="b_AddParts_Click"/>
+        <ComboBox x:Name="cb_Статусы" Style="{DynamicResource CBdef}" Visibility="Hidden" HorizontalAlignment="Left" Margin="370,0,0,48" Width="120" Height="28" VerticalAlignment="Bottom" materialDesign:HintAssist.Hint="Статус"/>
+        <Button x:Name="b_AddParts" Style="{DynamicResource Bdef}" IsEnabled="False" Content="Произвести приёмку" HorizontalAlignment="Left" Margin="130,0,0,10" Height="28" VerticalAlignment="Bottom" Click="b_AddParts_Click"/>
     </Grid>
 </UserControl>

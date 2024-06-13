@@ -28,16 +28,14 @@ public partial class PageNewOrder : UserControl {
         InitializeComponent();
 		Data.PropertiesChange.WinHeight = 343;
 		this.dg_Запчасти.ItemsSource = Data.TBL.ЗапчастиМодели;
-		this.dg_Заказ.ItemsSource = Data.TBL.ЗапчастиМодели2;
+		this.dg_Заказ.ItemsSource = Data.TBL.ЗапчастиМоделиЗак;
 
 		for (int i = 0; i < Data.КатегорииList.Count; i++) {
 			this.cb_Категории.Items.Add(Data.КатегорииList[i].Data);
 		}
-
 		for (int i = 0; i < Data.МаркиАвтоList.Count; i++) {
 			this.cb_Марки.Items.Add(Data.МаркиАвтоList[i].Data);
 		}
-
 		for (int i = 0; i < Data.КонтрагентыList.Count; i++) {
 			this.cb_Поставщики.Items.Add(Data.КонтрагентыList[i].Data);
 		}
@@ -53,6 +51,11 @@ public partial class PageNewOrder : UserControl {
 		this.dg_Заказ.Columns[5].Visibility = Visibility.Hidden;
 		UpdateTable_Зап();
 		UpdateTable_Зак();
+
+		if (Data.TBL.ЗапчастиМоделиЗак.Count > 0) {
+			this.b_Clear.IsEnabled = true;
+			this.b_Done.IsEnabled = true;
+		}
 	}
 
 
@@ -145,24 +148,48 @@ public partial class PageNewOrder : UserControl {
 		});
 	}
 
+	private void b_Edit_Click(object sender, RoutedEventArgs e) {
+		if (isOrdEdit) {
+			isOrdEdit = false;
+			Data.DB.TMP_Заказ.Запчасти[this.dg_Заказ.SelectedIndex].Количество = Convert.ToInt32(this.nud_NumЗаказ.Value);
+			Data.TBL.ЗапчастиМоделиЗак[this.dg_Заказ.SelectedIndex].Количество = Convert.ToInt32(this.nud_NumЗаказ.Value);
+			UpdateTable_Зак();
+			AnimateButtons(false);
+		} else {
+			isOrdEdit = true;
+			this.nud_NumЗаказ.Value = Convert.ToInt32(Data.DB.TMP_Заказ.Запчасти[this.dg_Заказ.SelectedIndex].Количество);
+			AnimateButtons(true);
+		}
+	}
+
+
 	private void b_Addmini_Click(object sender, RoutedEventArgs e) {
+		DBM_Заказ.ЗапчастьМодель ЗапчастьМодель = null;
+		TBL_ЗапчастьМодель Запчасть = (TBL_ЗапчастьМодель)this.dg_Запчасти.SelectedItem;
+		TBL_ЗапчастьМодель2 Запчасть2 = new();
+		int запindex = 0;
+
 		if (Data.DB.TMP_Заказ == null) {
 			Data.DB.TMP_Заказ = new(0, TechFuncs.GetUnixTime(), 7, TechFuncs.ПолучитьАйдиВхода(), new());
 		}
+		запindex = Data.DB.TMP_Заказ.Запчасти.FindIndex(x => x.id == Запчасть.id && x.Контрагент_id == Data.КонтрагентыList[this.cb_Поставщики.SelectedIndex].id);
+		
 
-		TBL_ЗапчастьМодель Запчасть = (TBL_ЗапчастьМодель)this.dg_Запчасти.SelectedItem;
-		TBL_ЗапчастьМодель Запчастьtmp = Data.TBL.ЗапчастиМодели.ToList().Find(x => x.id == Запчасть.id);
-		TBL_ЗапчастьМодель2 Запчасть2 = new();
-		Запчасть2.id = Запчастьtmp.id;
-		Запчасть2.Название = Запчастьtmp.Название;
-		Запчасть2.Категория = Запчастьtmp.Категория;
-		Запчасть2.Количество = Convert.ToInt32(this.nud_NumЗап.Value);
-		Запчасть2.Марка_Авто = Запчастьtmp.Марка_Авто;
-		Запчасть2.Модель_Авто = Запчастьtmp.Модель_Авто;
-		Запчасть2.Контрагент = Data.КонтрагентыList[this.cb_Поставщики.SelectedIndex].Data;
-		Data.TBL.ЗапчастиМодели2.Add(Запчасть2);
+		if (запindex == -1) {
+			Запчасть2.id = Запчасть.id;
+			Запчасть2.Название = Запчасть.Название;
+			Запчасть2.Категория = Запчасть.Категория;
+			Запчасть2.Количество = Convert.ToInt32(this.nud_NumЗап.Value);
+			Запчасть2.Марка_Авто = Запчасть.Марка_Авто;
+			Запчасть2.Модель_Авто = Запчасть.Модель_Авто;
+			Запчасть2.Контрагент = Data.КонтрагентыList.Find(x => x.id == Data.КонтрагентыList[this.cb_Поставщики.SelectedIndex].id).Data;
+			Data.TBL.ЗапчастиМоделиЗак.Add(Запчасть2);
+			Data.DB.TMP_Заказ.Запчасти.Add(new(Запчасть.id, 1, Data.КонтрагентыList[this.cb_Поставщики.SelectedIndex].id));
+		} else {
+			Data.TBL.ЗапчастиМоделиЗак[Data.TBL.ЗапчастиМоделиЗак.ToList().FindIndex(x => x.Название == Запчасть.Название && x.Контрагент == (string)this.cb_Поставщики.SelectedItem)].Количество += Convert.ToInt32(this.nud_NumЗап.Value);
+			Data.DB.TMP_Заказ.Запчасти[запindex].Количество += Convert.ToInt32(this.nud_NumЗап.Value);
 
-		Data.DB.TMP_Заказ.Запчасти.Add(new(Запчасть.id, Convert.ToInt32(Запчасть2.Количество), Data.КонтрагентыList[this.cb_Поставщики.SelectedIndex].id));
+		}
 
 		this.dg_Запчасти.SelectedIndex = -1;
 		this.nud_NumЗап.Visibility = Visibility.Hidden;
@@ -171,6 +198,7 @@ public partial class PageNewOrder : UserControl {
 		this.b_Clear.IsEnabled = true;
 		this.b_Done.IsEnabled = true;
 		//this.b_Add.IsEnabled = false;
+		UpdateTable_Зак();
 	}
 
 	private void b_Cancelmini_Click(object sender, RoutedEventArgs e) {
@@ -184,24 +212,10 @@ public partial class PageNewOrder : UserControl {
 		DB.DB_Заказы.Add(Data.DB.TMP_Заказ);
 		Data.DB.TMP_Заказ = null;
 		Data.MainWin.Dispatcher.Invoke(() => { Data.MainWin.HambMenu.Content = Data.MainWin.PageOrders; });
-		Data.TBL.ЗапчастиМодели2.Clear();
+		Data.TBL.ЗапчастиМоделиЗак.Clear();
 		UpdateTable_Зак();
 	}
-
 	
-	private void b_Edit_Click(object sender, RoutedEventArgs e) {
-		if (isOrdEdit) {
-			isOrdEdit = false;
-			Data.DB.TMP_Заказ.Запчасти[this.dg_Заказ.SelectedIndex].Количество = Convert.ToInt32(this.nud_NumЗаказ.Value);
-			Data.TBL.ЗапчастиМодели2[this.dg_Заказ.SelectedIndex].Количество = Convert.ToInt32(this.nud_NumЗаказ.Value);
-			UpdateTable_Зак();
-			AnimateButtons(false);
-		} else {
-			isOrdEdit = true;
-			this.nud_NumЗаказ.Value = Convert.ToInt32(Data.DB.TMP_Заказ.Запчасти[this.dg_Заказ.SelectedIndex].Количество);
-			AnimateButtons(true);
-		}
-	}
 
 	private void b_Exit_Click(object sender, RoutedEventArgs e) {
 		Data.MainWin.Dispatcher.Invoke(() => {
@@ -211,7 +225,7 @@ public partial class PageNewOrder : UserControl {
 
 	private void b_Clear_Click(object sender, RoutedEventArgs e) {
 		if (Data.DB.TMP_Заказ != null) {
-			Data.TBL.ЗапчастиМодели2.Clear();
+			Data.TBL.ЗапчастиМоделиЗак.Clear();
 			Data.DB.TMP_Заказ.Запчасти.Clear();
 			this.b_Clear.IsEnabled = false;
 			this.b_Done.IsEnabled = false;
@@ -223,7 +237,7 @@ public partial class PageNewOrder : UserControl {
 
 	private void b_Del_Click(object sender, RoutedEventArgs e) {
 		Data.DB.TMP_Заказ.Запчасти.RemoveAt(this.dg_Заказ.SelectedIndex);
-		Data.TBL.ЗапчастиМодели2.RemoveAt(this.dg_Заказ.SelectedIndex);
+		Data.TBL.ЗапчастиМоделиЗак.RemoveAt(this.dg_Заказ.SelectedIndex);
 		UpdateTable_Зак();
 		this.dg_Запчасти.SelectedIndex = -1;
 		this.b_Del.IsEnabled = false;

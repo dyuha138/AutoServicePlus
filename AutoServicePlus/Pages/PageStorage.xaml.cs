@@ -48,6 +48,16 @@ public partial class PageStorage : UserControl {
 		UpdateTable();
 	}
 
+	private void dg_Склад_SelectionChanged(object sender, SelectionChangedEventArgs e) {
+		if (dg_Склад.SelectedIndex == -1) {
+			this.b_AddReq.IsEnabled = false;
+			this.b_AddOrder.IsEnabled = false;
+		} else {
+			this.b_AddReq.IsEnabled = true;
+			this.b_AddOrder.IsEnabled = true;
+		}
+	}
+
 	private void dg_Склад_MouseDoubleClick(object sender, MouseButtonEventArgs e) {
 		TBL_Склад Склад = (TBL_Склад)this.dg_Склад.SelectedItem;
 		if (Склад != null) {
@@ -86,14 +96,31 @@ public partial class PageStorage : UserControl {
 			Запчасть2.Марка_Авто = Запчасть.Марка_Авто;
 			Запчасть2.Модель_Авто = Запчасть.Модель_Авто;
 			Запчасть2.Контрагент = Data.КонтрагентыList.Find(x => x.id == контid).Data;
-			Data.TBL.ЗапчастиМодели2.Add(Запчасть2);
+			Data.TBL.ЗапчастиМоделиЗак.Add(Запчасть2);
 			Data.DB.TMP_Заказ.Запчасти.Add(new(Запчасть.id, 1, контid));
 		} else {
-			Data.TBL.ЗапчастиМодели2[Data.TBL.ЗапчастиМодели2.ToList().FindIndex(x => x.Название == Запчасть.Название)].Количество++;
+			Data.TBL.ЗапчастиМоделиЗак[Data.TBL.ЗапчастиМоделиЗак.ToList().FindIndex(x => x.Название == Запчасть.Название)].Количество++;
 			Data.DB.TMP_Заказ.Запчасти[запindex].Количество++;
 
 		}
-
-		
 	}
+
+	private void b_AddReq_Click(object sender, RoutedEventArgs e) {
+		//TBL_Склад Запчастьtmp = (TBL_Склад)this.dg_Запчасти.SelectedItem;
+		//TBL_Запчасть Запчасть = new();
+
+		//if (Data.DB.TMP_Заявка == null) {
+		//	Data.DB.TMP_Заявка = new(0, TechFuncs.GetUnixTime(), 7, TechFuncs.ПолучитьАйдиВхода(), new());
+		//}
+
+		//Запчасть.id = Запчастьtmp.id;
+		//Запчасть.Название = Запчастьtmp.Название;
+		//Запчасть.Категория = Запчастьtmp.Категория;
+		//Запчасть.Идентификатор = (string)this.cb_Запчасти.SelectedItem;
+		//Data.TBL.ЗапчастиМоделиЗая.Add(Запчасть);
+		//Data.DB.TMP_Заявка.Запчасти.Add(new(Data.ЗапчастиList[this.cb_Запчасти.SelectedIndex].id));
+
+		//Data.TBL.Склад[Запчастьtmp.id].Количество--;
+	}
+	
 }

@@ -27,7 +27,7 @@ public partial class PageNewParts : UserControl {
 	public PageNewParts(int Заказ_id) {
         InitializeComponent();
         this.dg_Запчасти.ItemsSource = Data.TBL.Запчасти;
-		this.dg_ЗапчастиЗаказ.ItemsSource = Data.TBL.ЗапчастиМодели2;
+		this.dg_ЗапчастиЗаказ.ItemsSource = Data.TBL.ЗапчастиМоделиЗак;
 		this.Заказ_id = Заказ_id;
 		UpdateTable_Зак();
     }
@@ -40,10 +40,10 @@ public partial class PageNewParts : UserControl {
 
 	private void UpdateTable_Зак() {
 		SQLResultTable ResTbl = DB.SQLQuery($"SELECT Parts.id, Parts.Название, Cat.Название, OrdPart.Количество, Marks.Марка, Cars.Модель, Конт.Название FROM AutoServicePlus.ЗапчастиМодели Parts\r\nLEFT JOIN AutoServicePlus.КатегорииЗап Cat ON Parts.Категория_id = Cat.id\r\nLEFT JOIN AutoServicePlus.АвтомобильЗапчасть AutoPart ON AutoPart.Запчасть_id = Parts.id\r\nLEFT JOIN AutoServicePlus.Автомобили Cars ON AutoPart.Автомобиль_id = Cars.id\r\nLEFT JOIN AutoServicePlus.МаркиАвто Marks ON Cars.Марка_id = Marks.id\r\nINNER JOIN AutoServicePlus.ЗаказЗапчасть OrdPart ON OrdPart.Запчасть_id = Parts.id\r\nLEFT JOIN AutoServicePlus.Контрагенты Конт ON OrdPart.Контрагент_id = Конт.id\r\nWHERE OrdPart.Заказ_id = {this.Заказ_id} AND (Parts.Название LIKE '%{this.e_Search.Text}%' OR Cat.Название LIKE '%{this.e_Search.Text}%' OR Marks.Марка LIKE '%{this.e_Search.Text}%' OR Cars.Модель LIKE '%{this.e_Search.Text}%' OR Конт.Название LIKE '%{this.e_Search.Text}%');");
-		Data.TBL.ЗапчастиМодели2.Clear();
+		Data.TBL.ЗапчастиМоделиЗак.Clear();
 		if (ResTbl != null) {
 			while (ResTbl.NextRow()) {
-				Data.TBL.ЗапчастиМодели2.Add(new(ResTbl.GetInt(0), ResTbl.GetStr(1), ResTbl.GetStr(2), ResTbl.GetInt(3), ResTbl.GetStr(4), ResTbl.GetStr(5), ResTbl.GetStr(6)));
+				Data.TBL.ЗапчастиМоделиЗак.Add(new(ResTbl.GetInt(0), ResTbl.GetStr(1), ResTbl.GetStr(2), ResTbl.GetInt(3), ResTbl.GetStr(4), ResTbl.GetStr(5), ResTbl.GetStr(6)));
 			}
 		}
 		this.dg_ЗапчастиЗаказ.Items.Refresh();
@@ -122,12 +122,12 @@ public partial class PageNewParts : UserControl {
 			Data.DB.TMP_Запчасти.Add(new(0, ЗапчастьМодельTBL.id, this.e_Идентификатор.Text));
 			Data.TBL.Запчасти.Add(new(0, ЗапчастьМодельTBL.Название, ЗапчастьМодельTBL.Категория, this.e_Идентификатор.Text));
 
-			int колво = Data.TBL.ЗапчастиМодели2[this.dg_ЗапчастиЗаказ.SelectedIndex].Количество;
+			int колво = Data.TBL.ЗапчастиМоделиЗак[this.dg_ЗапчастиЗаказ.SelectedIndex].Количество;
 			if (колво == 1) {
-				Data.TBL.ЗапчастиМодели2.RemoveAt(this.dg_ЗапчастиЗаказ.SelectedIndex);
+				Data.TBL.ЗапчастиМоделиЗак.RemoveAt(this.dg_ЗапчастиЗаказ.SelectedIndex);
 				this.dg_ЗапчастиЗаказ.SelectedIndex = -1;
 			} else {
-				Data.TBL.ЗапчастиМодели2[this.dg_ЗапчастиЗаказ.SelectedIndex].Количество = колво - 1;
+				Data.TBL.ЗапчастиМоделиЗак[this.dg_ЗапчастиЗаказ.SelectedIndex].Количество = колво - 1;
 			}
 
 			UpdateTable_Зап();
@@ -136,7 +136,7 @@ public partial class PageNewParts : UserControl {
 			//this.e_Идентификатор.Visibility = Visibility.Hidden;
 			//this.g_minibut.Visibility = Visibility.Hidden;
 			this.b_Clear.IsEnabled = true;
-			if (Data.TBL.ЗапчастиМодели2.Count == 0) {
+			if (Data.TBL.ЗапчастиМоделиЗак.Count == 0) {
 				this.b_Done.IsEnabled = true;
 				this.e_Идентификатор.Visibility = Visibility.Hidden;
 				this.g_minibut.Visibility = Visibility.Hidden;
@@ -207,10 +207,10 @@ public partial class PageNewParts : UserControl {
 	}
 
 	private void b_Del_Click(object sender, RoutedEventArgs e) {
-		int indexзапмод = Data.TBL.ЗапчастиМодели2.ToList().FindIndex(x => x.Название == ((TBL_Запчасть)this.dg_Запчасти.SelectedItem).Название);
+		int indexзапмод = Data.TBL.ЗапчастиМоделиЗак.ToList().FindIndex(x => x.Название == ((TBL_Запчасть)this.dg_Запчасти.SelectedItem).Название);
 		if (indexзапмод == -1) {
-			int колво = Convert.ToInt32(Data.TBL.ЗапчастиМодели2[indexзапмод].Количество);
-			Data.TBL.ЗапчастиМодели2[indexзапмод].Количество = ++колво;
+			int колво = Convert.ToInt32(Data.TBL.ЗапчастиМоделиЗак[indexзапмод].Количество);
+			Data.TBL.ЗапчастиМоделиЗак[indexзапмод].Количество = ++колво;
 		} else {
 
 		}

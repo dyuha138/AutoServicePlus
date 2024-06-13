@@ -163,6 +163,26 @@ public class TBL_Склад : INotifyPropertyChanged {
 }
 
 
+public class TBL_Заявка : INotifyPropertyChanged {
+	public int id { get; set; }
+	public string Дата { get; set; }
+	public string Статус { get; set; }
+	public string Сотрудник { get; set; }
+
+	public TBL_Заявка() { }
+	public TBL_Заявка(int id, string Дата, string Статус, string Сотр_Фам, string Сотр_Имя, string Сотр_Отч) {
+		this.id = id;
+		this.Дата = Дата;
+		this.Статус = Статус;
+		this.Сотрудник = $"{Сотр_Фам} {Сотр_Имя[0]}. {Сотр_Отч[0]}.";
+	}
+
+	public event PropertyChangedEventHandler PropertyChanged;
+	protected virtual void OnPropertyChanged(string propertyName) {
+		PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+	}
+}
+
 
 
 public class DBM_Заказ {
@@ -194,6 +214,34 @@ public class DBM_Заказ {
 		this.Запчасти = Запчасти;
 	}
 }
+
+
+public class DBM_Заявка {
+	public class Запчасть {
+		public int id { get; set; }
+
+		public Запчасть() { }
+		public Запчасть(int id) {
+			this.id = id;
+		}
+	}
+
+	public int id { get; set; }
+	public long Дата { get; set; }
+	public int Статус_id { get; set; }
+	public int Сотрудник_id { get; set; }
+	public List<Запчасть> Запчасти { get; set; }
+
+	public DBM_Заявка() { }
+	public DBM_Заявка(int id, long Дата, int Статус_id, int Сотрудник_id, List<Запчасть> Запчасти) {
+		this.id = id;
+		this.Дата = Дата;
+		this.Статус_id = Статус_id;
+		this.Сотрудник_id = Сотрудник_id;
+		this.Запчасти = Запчасти;
+	}
+}
+
 
 public class DBMtmp_ЗаказЗапчасть {
 	public int Заказ_id { get; set; }
