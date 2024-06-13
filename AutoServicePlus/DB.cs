@@ -388,8 +388,17 @@ class DB {
 			return null;
 		}
 
-		public static TBL_Запчасть GetFirstfromModelid(int Модель_id) {
-			SQLResultTable R = DB.SQLQuery($"WITH Рег AS (SELECT Запчасть_id, Статус_id, ROW_NUMBER() OVER (PARTITION BY Запчасть_id ORDER BY Дата DESC) AS rn\r\nFROM AutoServicePlus.РегистрЗапчастей)\r\nSELECT Зап.id, ЗапМ.Название, Кат.Название, Зап.Идентификатор FROM AutoServicePlus.Запчасти Зап\r\nLEFT JOIN AutoServicePlus.ЗапчастиМодели ЗапМ ON Зап.Модель_id = ЗапМ.id\r\nLEFT JOIN AutoServicePlus.КатегорииЗап Кат ON ЗапМ.Категория_id = Кат.id\r\nINNER JOIN Рег ON Зап.id = Рег.Запчасть_id AND Рег.rn = 1\r\nWHERE Рег.Статус_id = 2 AND Зап.Модель_id = {Модель_id}\r\nLIMIT 1;;");
+		public static TBL_Запчасть GetFirstfromModelid(int Модель_id, List<int> запid) {
+			StringBuilder sb = new();
+			sb.Append($"WITH Рег AS (SELECT Запчасть_id, Статус_id, ROW_NUMBER() OVER (PARTITION BY Запчасть_id ORDER BY Дата DESC) AS rn\r\nFROM AutoServicePlus.РегистрЗапчастей)\r\nSELECT Зап.id, ЗапМ.Название, Кат.Название, Зап.Идентификатор FROM AutoServicePlus.Запчасти Зап\r\nLEFT JOIN AutoServicePlus.ЗапчастиМодели ЗапМ ON Зап.Модель_id = ЗапМ.id\r\nLEFT JOIN AutoServicePlus.КатегорииЗап Кат ON ЗапМ.Категория_id = Кат.id\r\nINNER JOIN Рег ON Зап.id = Рег.Запчасть_id AND Рег.rn = 1\r\nWHERE Рег.Статус_id = 2 AND Зап.Модель_id = {Модель_id}");
+			if (запid != null && запid.Count > 0) {
+				for (int i = 0; i < запid.Count; i++) {
+					sb.Append($" AND Зап.id != {запid[i]}");
+				}
+			}
+			sb.Append("\r\nLIMIT 1;");
+			
+			SQLResultTable R = DB.SQLQuery(sb.ToString());
 			if (R != null) {
 				R.NextRow();
 				return new(R.GetInt(0), R.GetStr(1), R.GetStr(2), R.GetStr(3));

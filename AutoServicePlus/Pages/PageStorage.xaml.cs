@@ -87,7 +87,7 @@ public partial class PageStorage : UserControl {
 	}
 
 	private void b_AddOrder_Click(object sender, RoutedEventArgs e) {
-		DBM_Заказ.ЗапчастьМодель ЗапчастьМодель = null;
+		//DBM_Заказ.ЗапчастьМодель ЗапчастьМодель = null;
 		TBL_Склад Запчасть = (TBL_Склад)this.dg_Склад.SelectedItem;
 		TBL_ЗапчастьМодель2 Запчасть2 = new();
 		int запindex = 0;
@@ -95,8 +95,9 @@ public partial class PageStorage : UserControl {
 		if (Data.DB.TMP_Заказ == null) {
 			Data.DB.TMP_Заказ = new(0, TechFuncs.GetUnixTime(), 7, TechFuncs.ПолучитьАйдиВхода(), new());
 		}
-			запindex = Data.DB.TMP_Заказ.Запчасти.FindIndex(x => x.id == Запчасть.id);
-			//ЗапчастьМодель = Data.DB.TMP_Заказ.Запчасти[запindex];
+		запindex = Data.DB.TMP_Заказ.Запчасти.FindIndex(x => x.id == Запчасть.id);
+		//ЗапчастьМодель = Data.DB.TMP_Заказ.Запчасти[запindex];
+
 
 		if (запindex == -1) {
 			int контid = DB.DB_Заказы.GetLastAgent(Запчасть.id);
@@ -112,27 +113,34 @@ public partial class PageStorage : UserControl {
 		} else {
 			Data.TBL.ЗапчастиМоделиЗак[Data.TBL.ЗапчастиМоделиЗак.ToList().FindIndex(x => x.Название == Запчасть.Название)].Количество++;
 			Data.DB.TMP_Заказ.Запчасти[запindex].Количество++;
-
 		}
+		UpdateTable();
 	}
 
 	private void b_AddReq_Click(object sender, RoutedEventArgs e) {
-		TBL_Запчасть Запчастьtmp = DB.DB_Запчасти.GetFirstfromModelid(((TBL_Склад)this.dg_Склад.SelectedItem).id);
-		//TBL_Запчасть Запчасть = new();
+		if (((TBL_Склад)this.dg_Склад.SelectedItem).Количество != 0) {
+			if (Data.DB.TMP_Заявка == null) {
+				Data.DB.TMP_Заявка = new(0, TechFuncs.GetUnixTime(), 7, TechFuncs.ПолучитьАйдиВхода(), new());
+			}
 
-		if (Data.DB.TMP_Заявка == null) {
-			Data.DB.TMP_Заявка = new(0, TechFuncs.GetUnixTime(), 7, TechFuncs.ПолучитьАйдиВхода(), new());
+			List<int> запid = new();
+			for (int i = 0; i < Data.DB.TMP_Заявка.Запчасти.Count; i++) {
+				запid.Add(Data.DB.TMP_Заявка.Запчасти[i].id);
+			}
+
+			TBL_Запчасть Запчастьtmp = DB.DB_Запчасти.GetFirstfromModelid(((TBL_Склад)this.dg_Склад.SelectedItem).id, запid);
+			//TBL_Запчасть Запчасть = new();
+
+			//Запчасть.id = Запчастьtmp.id;
+			//Запчасть.Название = Запчастьtmp.Название;
+			//Запчасть.Категория = Запчастьtmp.Категория;
+			//Запчасть.Идентификатор = Запчастьtmp.Идентификатор;
+			Data.TBL.ЗапчастиМоделиЗая.Add(Запчастьtmp);
+			Data.DB.TMP_Заявка.Запчасти.Add(new(Запчастьtmp.id, ((TBL_Склад)this.dg_Склад.SelectedItem).id));
+
+			Data.TBL.Склад[Data.TBL.Склад.ToList().FindIndex(x => x.id == ((TBL_Склад)this.dg_Склад.SelectedItem).id)].Количество--;
+			UpdateTable();
 		}
-
-		//Запчасть.id = Запчастьtmp.id;
-		//Запчасть.Название = Запчастьtmp.Название;
-		//Запчасть.Категория = Запчастьtmp.Категория;
-		//Запчасть.Идентификатор = Запчастьtmp.Идентификатор;
-		Data.TBL.ЗапчастиМоделиЗая.Add(Запчастьtmp);
-		Data.DB.TMP_Заявка.Запчасти.Add(new(Запчастьtmp.id, ((TBL_Склад)this.dg_Склад.SelectedItem).id));
-
-		Data.TBL.Склад[Data.TBL.Склад.ToList().FindIndex(x => x.id == ((TBL_Склад)this.dg_Склад.SelectedItem).id)].Количество--;
-		UpdateTable();
 	}
 
 }
