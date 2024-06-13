@@ -30,6 +30,7 @@ public partial class PageNewParts : UserControl {
 		this.dg_ЗапчастиЗаказ.ItemsSource = Data.TBL.ЗапчастиМоделиЗак;
 		this.Заказ_id = Заказ_id;
 		UpdateTable_Зак();
+		Data.MainWin.Title = "Автосервис+: Оформление прихода запчастей";
     }
 
 	private void _Loaded(object sender, RoutedEventArgs e) {
@@ -46,6 +47,16 @@ public partial class PageNewParts : UserControl {
 				Data.TBL.ЗапчастиМоделиЗак.Add(new(ResTbl.GetInt(0), ResTbl.GetStr(1), ResTbl.GetStr(2), ResTbl.GetInt(3), ResTbl.GetStr(4), ResTbl.GetStr(5), ResTbl.GetStr(6)));
 			}
 		}
+
+		//if (Data.DB.TMP_Запчасти != null) {
+		//	for (int i = 0; i < Data.TBL.Склад.Count; i++) {
+		//		List<DBM_Заявка.Запчасть> Запчасти = Data.DB.TMP_Запчасти.FindAll(x => x.Модель_id == Data.TBL.Склад[i].id);
+		//		if (Запчасти.Count != 0) {
+		//			Data.TBL.Склад[i].Количество -= Запчасти.Count;
+		//		}
+		//	}
+		//}
+
 		this.dg_ЗапчастиЗаказ.Items.Refresh();
 	}
 
@@ -115,7 +126,7 @@ public partial class PageNewParts : UserControl {
 			Data.DB.TMP_Запчасти = new();
 		}
 
-		TBL_ЗапчастьМодель ЗапчастьМодельTBL = (TBL_ЗапчастьМодель)this.dg_ЗапчастиЗаказ.SelectedItem;
+		TBL_ЗапчастьМодель2 ЗапчастьМодельTBL = (TBL_ЗапчастьМодель2)this.dg_ЗапчастиЗаказ.SelectedItem;
 		//DBM_ЗапчастьМодель ЗапчастьМодель = DB.DB_ЗапчастиМодели.Find(ЗапчастьМодельTBL.id);
 
 		if (DB.DB_Запчасти.isExists(this.e_Идентификатор.Text) == 0 && Data.TBL.Запчасти.ToList().FindIndex(x => x.Идентификатор == this.e_Идентификатор.Text) == -1) {
@@ -208,14 +219,13 @@ public partial class PageNewParts : UserControl {
 
 	private void b_Del_Click(object sender, RoutedEventArgs e) {
 		int indexзапмод = Data.TBL.ЗапчастиМоделиЗак.ToList().FindIndex(x => x.Название == ((TBL_Запчасть)this.dg_Запчасти.SelectedItem).Название);
-		if (indexзапмод == -1) {
+		if (indexзапмод != -1) {
 			int колво = Convert.ToInt32(Data.TBL.ЗапчастиМоделиЗак[indexзапмод].Количество);
 			Data.TBL.ЗапчастиМоделиЗак[indexзапмод].Количество = ++колво;
 		} else {
 
+			//Data.TBL.ЗапчастиМоделиЗак.Add(new(Data.DB.TMP_Запчасти[indexзапмод].Модель_id, Data.TBL.ЗапчастиМодели))
 		}
-
-
 
 		Data.DB.TMP_Запчасти.RemoveAt(this.dg_Запчасти.SelectedIndex);
 		Data.TBL.Запчасти.RemoveAt(this.dg_Запчасти.SelectedIndex);
