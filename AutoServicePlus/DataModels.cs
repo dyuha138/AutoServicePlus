@@ -137,6 +137,24 @@ public class TBL_ЗапчастьМини : INotifyPropertyChanged {
 	}
 }
 
+public class TBL_ЗапчастьМиниПлюс : INotifyPropertyChanged {
+	public int id { get; set; }
+	public string Идентификатор { get; set; }
+	public string Статус { get; set; }
+
+	public TBL_ЗапчастьМиниПлюс() { }
+	public TBL_ЗапчастьМиниПлюс(int id, string Идентификатор, string Статус) {
+		this.id = id;
+		this.Идентификатор = Идентификатор;
+		this.Статус = Статус;
+	}
+
+	public event PropertyChangedEventHandler PropertyChanged;
+	protected virtual void OnPropertyChanged(string propertyName) {
+		PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+	}
+}
+
 
 public class TBL_Склад : INotifyPropertyChanged {
 	public int id { get; set; }
@@ -219,10 +237,12 @@ public class DBM_Заказ {
 public class DBM_Заявка {
 	public class Запчасть {
 		public int id { get; set; }
+		public int Модель_id { get; set; }
 
 		public Запчасть() { }
-		public Запчасть(int id) {
+		public Запчасть(int id, int Модель_id) {
 			this.id = id;
+			this.Модель_id = Модель_id;
 		}
 	}
 

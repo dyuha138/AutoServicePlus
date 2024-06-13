@@ -41,58 +41,6 @@ public partial class PageNewRequest : UserControl {
 		}
 	}
 
-	//private void b_Edit_Click(object sender, RoutedEventArgs e) {
-	//	Task.Factory.StartNew(() => {
-	//		int hetbl = 0;
-	//		this.Dispatcher.Invoke(() => { hetbl = Convert.ToInt32(this.dg_Заявка.ActualHeight); });
-
-	//		if (isReqEdit) {
-	//			isReqEdit = false;
-	//			int he = 90;
-	//			int he2 = 105;
-	//			this.Dispatcher.Invoke(() => { this.nud_NumЗаявка.Visibility = Visibility.Hidden; });
-	//			Task.Factory.StartNew(() => {
-	//				while (he > 49) {
-	//					this.Dispatcher.Invoke(() => { this.b_Del.Margin = new(0, he, 8, 0); });
-	//					Thread.Sleep(7);
-	//					he--;
-	//				}
-	//			});
-	//			if (isClearMoved) {
-	//				isClearMoved = false;
-	//				Task.Factory.StartNew(() => {
-	//					while (he2 > 7) {
-	//						this.Dispatcher.Invoke(() => { this.b_Clear.Margin = new(0, 0, he2, 5); });
-	//						Thread.Sleep(3);
-	//						he2--;
-	//					}
-	//				});
-	//			}
-	//		} else {
-	//			isReqEdit = true;
-	//			int he = 50;
-	//			int he2 = 8;
-	//			Task.Factory.StartNew(() => {
-	//				while (he < 91) {
-	//					this.Dispatcher.Invoke(() => { this.b_Del.Margin = new(0, he, 8, 0); });
-	//					Thread.Sleep(7);
-	//					he++;
-	//				}
-	//				this.Dispatcher.Invoke(() => { this.nud_NumЗаявка.Visibility = Visibility.Visible; });
-	//			});
-	//			if (hetbl < 152) {
-	//				isClearMoved = true;
-	//				Task.Factory.StartNew(() => {
-	//					while (he2 < 106) {
-	//						this.Dispatcher.Invoke(() => { this.b_Clear.Margin = new(0, 0, he2, 5); });
-	//						Thread.Sleep(3);
-	//						he2++;
-	//					}
-	//				});
-	//			}
-	//		}
-	//	});
-	//}
 
 	private void _Loaded(object sender, RoutedEventArgs e) {
 		//this.dg_Заказ.Columns[0].Visibility = Visibility.Hidden;
@@ -114,7 +62,6 @@ public partial class PageNewRequest : UserControl {
 	private void UpdateTable_Зап() {
 		SQLResultTable ResTbl = null;
 		bool edit = false;
-		//string sql = "SELECT Зап.id, Зап.Название, Кат.Название, Марки.Марка, Авто.Модель FROM AutoServicePlus.ЗапчастиМодели Зап\r\nINNER JOIN AutoServicePlus.КатегорииЗап Кат ON Зап.Категория_id = Кат.id\r\nLEFT JOIN AutoServicePlus.АвтомобильЗапчасть АвтоЗап ON АвтоЗап.Запчасть_id = Зап.id\r\nLEFT JOIN AutoServicePlus.Автомобили Авто ON АвтоЗап.Автомобиль_id = Авто.id\r\nLEFT JOIN AutoServicePlus.МаркиАвто Марки ON Авто.Марка_id = Марки.id";
 		string sql = "SELECT ЗапМ.id, ЗапМ.Название, Кат.Название, COUNT(Зап.id), Марки.Марка, Авто.Модель FROM AutoServicePlus.ЗапчастиМодели ЗапМ\r\nINNER JOIN AutoServicePlus.Запчасти Зап ON Зап.Модель_id = ЗапМ.id\r\nINNER JOIN AutoServicePlus.КатегорииЗап Кат ON ЗапМ.Категория_id = Кат.id\r\nLEFT JOIN AutoServicePlus.АвтомобильЗапчасть АвтоЗап ON АвтоЗап.Запчасть_id = Зап.id\r\nLEFT JOIN AutoServicePlus.Автомобили Авто ON АвтоЗап.Автомобиль_id = Авто.id\r\nLEFT JOIN AutoServicePlus.МаркиАвто Марки ON Авто.Марка_id = Марки.id";
 
 		if (this.cb_Категории.SelectedIndex != -1 && this.cb_Марки.SelectedIndex != -1) {
@@ -144,6 +91,16 @@ public partial class PageNewRequest : UserControl {
 				Data.TBL.Склад.Add(new(ResTbl.GetInt(0), ResTbl.GetStr(1), ResTbl.GetStr(2), ResTbl.GetInt(3), ResTbl.GetStr(4), ResTbl.GetStr(5)));
 			}
 		}
+
+		if (Data.DB.TMP_Заявка != null) {
+			for (int i = 0; i < Data.TBL.Склад.Count; i++) {
+				List<DBM_Заявка.Запчасть> Запчасти = Data.DB.TMP_Заявка.Запчасти.FindAll(x => x.Модель_id == Data.TBL.Склад[i].id);
+				if (Запчасти.Count != 0) {
+					Data.TBL.Склад[i].Количество -= Запчасти.Count;
+				}
+			}
+		}
+
 		this.dg_Запчасти.Items.Refresh();
 	}
 
@@ -232,7 +189,7 @@ public partial class PageNewRequest : UserControl {
 		Запчасть.Категория = Запчастьtmp.Категория;
 		Запчасть.Идентификатор = (string)this.cb_Запчасти.SelectedItem;
 		Data.TBL.ЗапчастиМоделиЗая.Add(Запчасть);
-		Data.DB.TMP_Заявка.Запчасти.Add(new(запid));
+		Data.DB.TMP_Заявка.Запчасти.Add(new(запid, Запчастьtmp.id));
 
 		Data.TBL.Склад[Data.TBL.Склад.ToList().FindIndex(x => x.id == ((TBL_Склад)this.dg_Запчасти.SelectedItem).id)].Количество --;
 
@@ -250,7 +207,8 @@ public partial class PageNewRequest : UserControl {
 
 	private void b_Cancelmini_Click(object sender, RoutedEventArgs e) {
 		this.dg_Запчасти.SelectedIndex = -1;
-		this.nud_NumЗаявка.Visibility = Visibility.Hidden;
+		//this.nud_NumЗаявка.Visibility = Visibility.Hidden;
+		this.cb_Запчасти.Visibility = Visibility.Hidden;
 		this.g_minibut.Visibility = Visibility.Hidden;
 	}
 

@@ -195,7 +195,6 @@ class DB {
 			SQLResultTable R = DB.SQLQuery($"INSERT INTO Заявки (Дата, Статус_id, Сотрудник_id) VALUES ({l.Дата}, {l.Статус_id}, {l.Сотрудник_id}); SELECT LAST_INSERT_ID();");
 			R.NextRow();
 			//Data.DB.ЗаявкиList.Add(new(R.GetInt(0), l.Дата, l.Статус_id, l.Сотрудник_id, l.Запчасти));
-
 			int idl = R.GetInt(0);
 
 			StringBuilder sb = new();
@@ -248,9 +247,9 @@ class DB {
 				while (R.NextRow()) {
 					Data.DB.ЗаявкиList.Add(new(R.GetInt(0), R.GetLong(1), R.GetInt(2), R.GetInt(3), new()));
 
-					R2 = DB.SQLQuery($"SELECT Запчасть_id FROM ЗаявкаЗапчасть WHERE Заявка_id = {R.GetInt(0)};");
+					R2 = DB.SQLQuery($"SELECT Запчасть_id, Модель_id FROM ЗаявкаЗапчасть WHERE Заявка_id = {R.GetInt(0)};");
 					while (R2.NextRow()) {
-						Data.DB.ЗаявкиList[R.RowRead].Запчасти.Add(new(R2.GetInt(0)));
+						Data.DB.ЗаявкиList[R.RowRead].Запчасти.Add(new(R2.GetInt(0), R2.GetInt(1)));
 					}
 				}
 			}

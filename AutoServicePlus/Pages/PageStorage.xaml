@@ -11,7 +11,7 @@
 
     <Grid Background="{DynamicResource Color_Dark}">
         <DataGrid x:Name="dg_Склад" Style="{DynamicResource DGdef}" MouseDoubleClick="dg_Склад_MouseDoubleClick" IsReadOnly="True" Margin="130,35,10,115" SelectionChanged="dg_Склад_SelectionChanged"/>
-        <TextBox x:Name="e_Search" Style="{DynamicResource TBdef}" Margin="130,5,270,0" materialDesign:HintAssist.Hint="Поиск" VerticalAlignment="Top"/>
+        <TextBox x:Name="e_Search" Style="{DynamicResource TBdef}" TextChanged="e_Search_Changed" Margin="130,5,270,0" materialDesign:HintAssist.Hint="Поиск" VerticalAlignment="Top"/>
         <Button x:Name="b_AddReq" Style="{DynamicResource Bdef}" IsEnabled="False" Content="Добавить к заявке" HorizontalAlignment="Left" Margin="130,0,0,80" Height="29" VerticalAlignment="Bottom" Click="b_AddReq_Click"/>
         <Button x:Name="b_AddOrder" Style="{DynamicResource Bdef}" IsEnabled="False" Content="Добавить к заказу" HorizontalAlignment="Left" Margin="297,0,0,80" Height="29" VerticalAlignment="Bottom" Click="b_AddOrder_Click"/>
         <Button x:Name="b_Edit" Style="{DynamicResource Bdef}" Visibility="Hidden" IsEnabled="False" Content="Изменить" HorizontalAlignment="Left" Margin="442,0,0,80" Height="29" VerticalAlignment="Bottom"/>
