@@ -26,6 +26,9 @@ public partial class PageRequests : UserControl {
 		//Data.PropertiesChange.WinHeight = 190;
 		this.dg_Заявки.ItemsSource = Data.TBL.Заявки;
 
+		for (int i = 0; i < Data.DB.СтатусыList.Count; i++) {
+			this.cb_Статусы.Items.Add(Data.DB.СтатусыList[i].Статус);
+		}
 	}
 
 	private void _Loaded(object sender, RoutedEventArgs e) {
@@ -104,7 +107,7 @@ public partial class PageRequests : UserControl {
 			isOrdEdit = true;
 
 			TBL_Заявка Заявка = (TBL_Заявка)this.dg_Заявки.SelectedItem;
-			this.статусid = Data.DB.ЗаказыList.Find(x => x.id == Заявка.id).Статус_id;
+			this.статусid = Data.DB.ЗаявкиList.Find(x => x.id == Заявка.id).Статус_id;
 			this.cb_Статусы.SelectedIndex = Data.DB.СтатусыList.FindIndex(x => x.id == this.статусid);
 			AnimateButtons(true);
 		}
@@ -146,6 +149,13 @@ public partial class PageRequests : UserControl {
 	}
 
 	private void dp_Date_SelectedDateChanged(object sender, SelectionChangedEventArgs e) {
+		UpdateTable();
+	}
+
+	private void b_Cancel_Click_1(object sender, RoutedEventArgs e) {
+		TBL_Заявка Заявка = (TBL_Заявка)this.dg_Заявки.SelectedItem;
+		Data.TBL.Заявки[Data.TBL.Заявки.ToList().FindIndex(x => x.id == Заявка.id)].Статус = Data.DB.СтатусыList.Find(x => x.id == 16).Статус;
+		DB.DB_Заявки.StatusUpdate(Заявка.id, 16);
 		UpdateTable();
 	}
 }

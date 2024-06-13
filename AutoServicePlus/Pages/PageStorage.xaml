@@ -22,7 +22,7 @@
             <Image Source="/media/icons/Cancel.png" Height="20" Width="20"/>
         </Button>
         <mah:NumericUpDown x:Name="nud_Num" Style="{DynamicResource NUDdef}" Visibility="Hidden" HorizontalAlignment="Left" Margin="487,382,0,0" materialDesign:HintAssist.Hint="Количество" Width="121" BorderBrush="{StaticResource Color_Orange}" />
-        <Button Style="{DynamicResource Bdef}" Content="Отчёт о наличии на складе" HorizontalAlignment="Left" Margin="130,0,0,36" Background="{StaticResource Color_Orange}" Height="32" VerticalAlignment="Bottom"/>
+        <Button Style="{DynamicResource Bdef}" IsEnabled="False" Content="Отчёт о наличии на складе" HorizontalAlignment="Left" Margin="130,0,0,36" Background="{StaticResource Color_Orange}" Height="32" VerticalAlignment="Bottom"/>
 
     </Grid>
 </UserControl>

@@ -56,8 +56,8 @@ class DB {
 			}
 		}
 		//Ev_Status?.Invoke(this, new Twident_Msg("Загрузка данных..."));
-		//DB_Заказы.UpdateListfromTable();
-		//DB_Заявки.UpdateListfromTable();
+		DB_Заказы.UpdateListfromTable();
+		DB_Заявки.UpdateListfromTable();
 		DB_Статусы.UpdateListfromTable();
 		DB_Сотрудники.UpdateListfromTable();
 
@@ -247,7 +247,7 @@ class DB {
 				while (R.NextRow()) {
 					Data.DB.ЗаявкиList.Add(new(R.GetInt(0), R.GetLong(1), R.GetInt(2), R.GetInt(3), new()));
 
-					R2 = DB.SQLQuery($"SELECT Запчасть_id, Модель_id FROM ЗаявкаЗапчасть WHERE Заявка_id = {R.GetInt(0)};");
+					R2 = DB.SQLQuery($"SELECT ЗаяЗап.Запчасть_id, Зап.Модель_id FROM ЗаявкаЗапчасть ЗаяЗап\r\nINNER JOIN AutoServicePlus.Запчасти Зап ON ЗаяЗап.Запчасть_id = Зап.id\r\nWHERE ЗаяЗап.Заявка_id = {R.GetInt(0)};");
 					while (R2.NextRow()) {
 						Data.DB.ЗаявкиList[R.RowRead].Запчасти.Add(new(R2.GetInt(0), R2.GetInt(1)));
 					}
@@ -366,6 +366,16 @@ class DB {
 			return 0;
 		}
 
+		public static bool isRequired(int Запчасть_id) {
+			SQLResultTable R = DB.SQLQuery($"WITH Рег AS (SELECT Запчасть_id, Статус_id, ROW_NUMBER() OVER (PARTITION BY Запчасть_id ORDER BY Дата DESC) AS rn\r\n    FROM AutoServicePlus.РегистрЗапчастей)\r\nSELECT Зап.id, ЗапМ.Название, Кат.Название, Зап.Идентификатор FROM AutoServicePlus.Запчасти Зап\r\nLEFT JOIN AutoServicePlus.ЗапчастиМодели ЗапМ ON Зап.Модель_id = ЗапМ.id\r\nLEFT JOIN AutoServicePlus.КатегорииЗап Кат ON ЗапМ.Категория_id = Кат.id\r\nINNER JOIN Рег ON Зап.id = Рег.Запчасть_id AND Рег.rn = 1\r\nWHERE Рег.Статус_id = 2 AND Зап.id = {Запчасть_id};");
+			if (R != null) {
+				//R.NextRow();
+				//return R.GetInt(0);
+				return false;
+			}
+			return true;
+		}
+
 		public static List<DBM_Запчасть> GetListfromModelid(int Модель_id) {
 			List<DBM_Запчасть> l = new();
 			SQLResultTable R = DB.SQLQuery($"SELECT * FROM Запчасти WHERE Модель_id = {Модель_id};");
@@ -374,6 +384,15 @@ class DB {
 					l.Add(new(R.GetInt(0), R.GetInt(1), R.GetStr(2)));
 				}
 				return l;
+			}
+			return null;
+		}
+
+		public static TBL_Запчасть GetFirstfromModelid(int Модель_id) {
+			SQLResultTable R = DB.SQLQuery($"WITH Рег AS (SELECT Запчасть_id, Статус_id, ROW_NUMBER() OVER (PARTITION BY Запчасть_id ORDER BY Дата DESC) AS rn\r\nFROM AutoServicePlus.РегистрЗапчастей)\r\nSELECT Зап.id, ЗапМ.Название, Кат.Название, Зап.Идентификатор FROM AutoServicePlus.Запчасти Зап\r\nLEFT JOIN AutoServicePlus.ЗапчастиМодели ЗапМ ON Зап.Модель_id = ЗапМ.id\r\nLEFT JOIN AutoServicePlus.КатегорииЗап Кат ON ЗапМ.Категория_id = Кат.id\r\nINNER JOIN Рег ON Зап.id = Рег.Запчасть_id AND Рег.rn = 1\r\nWHERE Рег.Статус_id = 2 AND Зап.Модель_id = {Модель_id}\r\nLIMIT 1;;");
+			if (R != null) {
+				R.NextRow();
+				return new(R.GetInt(0), R.GetStr(1), R.GetStr(2), R.GetStr(3));
 			}
 			return null;
 		}

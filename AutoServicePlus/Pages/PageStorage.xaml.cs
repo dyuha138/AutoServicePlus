@@ -41,6 +41,16 @@ public partial class PageStorage : UserControl {
 				Data.TBL.Склад.Add(new(ResTbl.GetInt(0), ResTbl.GetStr(1), ResTbl.GetStr(2), ResTbl.GetInt(3), ResTbl.GetStr(4), ResTbl.GetStr(5)));
 			}
 		}
+
+		if (Data.DB.TMP_Заявка != null) {
+			for (int i = 0; i < Data.TBL.Склад.Count; i++) {
+				List<DBM_Заявка.Запчасть> Запчасти = Data.DB.TMP_Заявка.Запчасти.FindAll(x => x.Модель_id == Data.TBL.Склад[i].id);
+				if (Запчасти.Count != 0) {
+					Data.TBL.Склад[i].Количество -= Запчасти.Count;
+				}
+			}
+		}
+
 		this.dg_Склад.Items.Refresh();
 	}
 
@@ -107,21 +117,22 @@ public partial class PageStorage : UserControl {
 	}
 
 	private void b_AddReq_Click(object sender, RoutedEventArgs e) {
-		//TBL_Склад Запчастьtmp = (TBL_Склад)this.dg_Запчасти.SelectedItem;
+		TBL_Запчасть Запчастьtmp = DB.DB_Запчасти.GetFirstfromModelid(((TBL_Склад)this.dg_Склад.SelectedItem).id);
 		//TBL_Запчасть Запчасть = new();
 
-		//if (Data.DB.TMP_Заявка == null) {
-		//	Data.DB.TMP_Заявка = new(0, TechFuncs.GetUnixTime(), 7, TechFuncs.ПолучитьАйдиВхода(), new());
-		//}
+		if (Data.DB.TMP_Заявка == null) {
+			Data.DB.TMP_Заявка = new(0, TechFuncs.GetUnixTime(), 7, TechFuncs.ПолучитьАйдиВхода(), new());
+		}
 
 		//Запчасть.id = Запчастьtmp.id;
 		//Запчасть.Название = Запчастьtmp.Название;
 		//Запчасть.Категория = Запчастьtmp.Категория;
-		//Запчасть.Идентификатор = (string)this.cb_Запчасти.SelectedItem;
-		//Data.TBL.ЗапчастиМоделиЗая.Add(Запчасть);
-		//Data.DB.TMP_Заявка.Запчасти.Add(new(Data.ЗапчастиList[this.cb_Запчасти.SelectedIndex].id));
+		//Запчасть.Идентификатор = Запчастьtmp.Идентификатор;
+		Data.TBL.ЗапчастиМоделиЗая.Add(Запчастьtmp);
+		Data.DB.TMP_Заявка.Запчасти.Add(new(Запчастьtmp.id, ((TBL_Склад)this.dg_Склад.SelectedItem).id));
 
-		//Data.TBL.Склад[Запчастьtmp.id].Количество--;
+		Data.TBL.Склад[Data.TBL.Склад.ToList().FindIndex(x => x.id == ((TBL_Склад)this.dg_Склад.SelectedItem).id)].Количество--;
+		UpdateTable();
 	}
-	
+
 }

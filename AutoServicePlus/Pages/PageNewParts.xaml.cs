@@ -165,7 +165,7 @@ public partial class PageNewParts : UserControl {
 			DB.DB_РегистрЗапчастей.Add(new(0, запid, udate, 2, logid));
 		}
 		Data.DB.TMP_Запчасти.Clear();
-		DB.DB_Заказы.StatusUpdate(this.Заказ_id, 8);
+		DB.DB_Заказы.StatusUpdate(this.Заказ_id, 2);
 
 		Data.MainWin.HambMenu.Content = Data.MainWin.PageOrders;
 		Data.MainWin.PageNewParts = null;

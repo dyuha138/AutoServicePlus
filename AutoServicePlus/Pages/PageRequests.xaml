@@ -11,11 +11,11 @@
     
     <Grid Background="{DynamicResource Color_Dark}">
         <DataGrid x:Name="dg_Заявки" Style="{DynamicResource DGdef}" Margin="130,35,10,69" SelectionChanged="dg_Заявки_SelectionChanged" MouseDoubleClick="dg_Заявки_DoubleClick"/>
-        <TextBox x:Name="e_Search" Style="{DynamicResource TBdef}" Margin="130,5,270,0" materialDesign:HintAssist.Hint="Поиск" VerticalAlignment="Top"/>
+        <TextBox x:Name="e_Search" Style="{DynamicResource TBdef}" TextChanged="e_Search_Changed" Margin="130,5,270,0" materialDesign:HintAssist.Hint="Поиск" VerticalAlignment="Top"/>
         <DatePicker x:Name="dp_Date" Style="{DynamicResource DPdef}" SelectedDateChanged="dp_Date_SelectedDateChanged" materialDesign:HintAssist.Hint="Дата" Margin="0,5,105,0" VerticalAlignment="Top" Height="22" HorizontalAlignment="Right" Width="153"/>
-        <Button x:Name="b_Cancel" Style="{DynamicResource Bdef_red}" IsEnabled="False" Content="Отмена заявки" HorizontalAlignment="Left" Margin="377,0,0,35" Height="29" VerticalAlignment="Bottom"/>
+        <Button x:Name="b_Cancel" Style="{DynamicResource Bdef_red}" IsEnabled="False" Content="Отмена заявки" HorizontalAlignment="Left" Margin="377,0,0,35" Height="29" VerticalAlignment="Bottom" Click="b_Cancel_Click_1"/>
         <Button x:Name="b_Add" Style="{DynamicResource Bdef}" Content="Создать заявку" HorizontalAlignment="Left" Margin="130,0,0,35" Height="29" VerticalAlignment="Bottom" FontSize="16" Click="b_Add_Click"/>
-        <Button x:Name="b_Edit" Style="{DynamicResource Bdef}" IsEnabled="True" Content="Изменить" HorizontalAlignment="Left" Margin="270,0,0,35" Height="29" VerticalAlignment="Bottom" Click="b_Edit_Click"/>
+        <Button x:Name="b_Edit" Style="{DynamicResource Bdef}" IsEnabled="False" Content="Изменить" HorizontalAlignment="Left" Margin="270,0,0,35" Height="29" VerticalAlignment="Bottom" Click="b_Edit_Click"/>
         <Button x:Name="b_Done" Style="{DynamicResource Bdef_green}" Visibility="Hidden" HorizontalAlignment="Left" Margin="263,0,0,10" Background="{StaticResource Color_Green}" Width="28" Padding="0,0,0,0" Height="28" VerticalAlignment="Bottom">
             <Image Source="/media/icons/Check.png" Height="20" Width="20"/>
         </Button>

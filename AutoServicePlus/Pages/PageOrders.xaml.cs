@@ -131,7 +131,10 @@ public partial class PageOrders : UserControl {
 	}
 
 	private void b_Cancel_Click(object sender, RoutedEventArgs e) {
-		
+		TBL_Заказ Заказ = (TBL_Заказ)this.dg_Заказы.SelectedItem;
+		Data.TBL.Заказы[Data.TBL.Заказы.ToList().FindIndex(x => x.id == Заказ.id)].Статус = Data.DB.СтатусыList.Find(x => x.id == 16).Статус;
+		DB.DB_Заказы.StatusUpdate(Заказ.id, 16);
+		UpdateTable();
 	}
 
 

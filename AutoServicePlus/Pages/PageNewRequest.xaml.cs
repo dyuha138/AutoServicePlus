@@ -62,26 +62,26 @@ public partial class PageNewRequest : UserControl {
 	private void UpdateTable_Зап() {
 		SQLResultTable ResTbl = null;
 		bool edit = false;
-		string sql = "SELECT ЗапМ.id, ЗапМ.Название, Кат.Название, COUNT(Зап.id), Марки.Марка, Авто.Модель FROM AutoServicePlus.ЗапчастиМодели ЗапМ\r\nINNER JOIN AutoServicePlus.Запчасти Зап ON Зап.Модель_id = ЗапМ.id\r\nINNER JOIN AutoServicePlus.КатегорииЗап Кат ON ЗапМ.Категория_id = Кат.id\r\nLEFT JOIN AutoServicePlus.АвтомобильЗапчасть АвтоЗап ON АвтоЗап.Запчасть_id = Зап.id\r\nLEFT JOIN AutoServicePlus.Автомобили Авто ON АвтоЗап.Автомобиль_id = Авто.id\r\nLEFT JOIN AutoServicePlus.МаркиАвто Марки ON Авто.Марка_id = Марки.id";
+		string sql = "WITH Рег AS (SELECT Запчасть_id, Статус_id, ROW_NUMBER() OVER (PARTITION BY Запчасть_id ORDER BY Дата DESC) AS rn\r\n    FROM AutoServicePlus.РегистрЗапчастей)\r\nSELECT ЗапМ.id, ЗапМ.Название, Кат.Название, COUNT(Зап.id), Марки.Марка, Авто.Модель FROM AutoServicePlus.ЗапчастиМодели ЗапМ\r\nINNER JOIN AutoServicePlus.Запчасти Зап ON Зап.Модель_id = ЗапМ.id\r\nINNER JOIN AutoServicePlus.КатегорииЗап Кат ON ЗапМ.Категория_id = Кат.id\r\nLEFT JOIN AutoServicePlus.АвтомобильЗапчасть АвтоЗап ON АвтоЗап.Запчасть_id = Зап.id\r\nLEFT JOIN AutoServicePlus.Автомобили Авто ON АвтоЗап.Автомобиль_id = Авто.id\r\nLEFT JOIN AutoServicePlus.МаркиАвто Марки ON Авто.Марка_id = Марки.id\r\nINNER JOIN Рег ON Зап.id = Рег.Запчасть_id AND Рег.rn = 1\r\nWHERE Рег.Статус_id = 2 AND ";
 
 		if (this.cb_Категории.SelectedIndex != -1 && this.cb_Марки.SelectedIndex != -1) {
-			sql += $"\r\nWHERE ЗапМ.Категория_id = {this.Категорияid} AND Авто.Марка_id = {this.Маркаid}";
+			sql += $"ЗапМ.Категория_id = {this.Категорияid} AND Авто.Марка_id = {this.Маркаid}";
 			edit = true;
 		} else if (cb_Категории.SelectedIndex != -1) {
-			sql += $"\r\nWHERE ЗапМ.Категория_id = {this.Категорияid}";
+			sql += $"ЗапМ.Категория_id = {this.Категорияid}";
 			edit = true;
 		} else if (cb_Марки.SelectedIndex != -1) {
-			sql += $"\r\nWHERE Авто.Марка_id = {this.Маркаid}";
+			sql += $"Авто.Марка_id = {this.Маркаid}";
 			edit = true;
 		}
 
 		if (edit) {
 			sql += $" AND ЗапМ.Название LIKE '%{this.e_Search.Text}%';";
 		} else {
-			sql += $"\r\nWHERE ЗапМ.Название LIKE '%{this.e_Search.Text}%'";
+			sql += $"ЗапМ.Название LIKE '%{this.e_Search.Text}%'";
 		}
 
-		sql += "GROUP BY ЗапМ.id, Марки.id, Авто.id;";
+		sql += "\r\nGROUP BY ЗапМ.id, Марки.id, Авто.id;";
 
 		ResTbl = DB.SQLQuery(sql);
 		Data.TBL.Склад.Clear();
@@ -285,7 +285,7 @@ public partial class PageNewRequest : UserControl {
 		Data.ЗапчастиList.Clear();
 		this.cb_Запчасти.Items.Clear();
 		for (int i = 0; i < запlist.Count; i++) {
-			if (Data.DB.TMP_Заявка == null || Data.DB.TMP_Заявка.Запчасти.FindIndex(x => x.id == запlist[i].id) == -1) {
+			if ((Data.DB.TMP_Заявка == null || Data.DB.TMP_Заявка.Запчасти.FindIndex(x => x.id == запlist[i].id) == -1) && !DB.DB_Запчасти.isRequired(запlist[i].id)) {
 				Data.ЗапчастиList.Add(new(запlist[i].id, запlist[i].Идентификатор));
 				this.cb_Запчасти.Items.Add(запlist[i].Идентификатор);
 			}
