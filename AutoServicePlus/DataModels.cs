@@ -121,6 +121,31 @@ public class TBL_Запчасть : INotifyPropertyChanged {
 }
 
 
+public class TBL_ЗапчастьЗаявка : INotifyPropertyChanged {
+	public int id { get; set; }
+	public string Название { get; set; }
+	public string Категория { get; set; }
+	public string Идентификатор { get; set; }
+	public string Марка_Авто { get; set; }
+	public string Модель_Авто { get; set; }
+
+	public TBL_ЗапчастьЗаявка() { }
+	public TBL_ЗапчастьЗаявка(int id, string Название, string Категория, string Идентификатор, string Марка_Авто, string Модель_Авто) {
+		this.id = id;
+		this.Название = Название;
+		this.Категория = Категория;
+		this.Идентификатор = Идентификатор;
+		this.Марка_Авто = Марка_Авто;
+		this.Модель_Авто = Модель_Авто;
+	}
+
+	public event PropertyChangedEventHandler PropertyChanged;
+	protected virtual void OnPropertyChanged(string propertyName) {
+		PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+	}
+}
+
+
 public class TBL_ЗапчастьМини : INotifyPropertyChanged {
 	public int id { get; set; }
 	public string Идентификатор { get; set; }

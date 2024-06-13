@@ -21,7 +21,7 @@ namespace AutoServicePlus.Pages;
 public partial class PagePartsforReq : MetroWindow {
 
 	private int Заявка_id = 0;
-	private ObservableCollection<TBL_ЗапчастьМодель2> ЗапчастиМодели = new();
+	private ObservableCollection<TBL_ЗапчастьЗаявка> ЗапчастиМодели = new();
 
 	public PagePartsforReq(int Заявка_id) {
         InitializeComponent();
@@ -37,11 +37,11 @@ public partial class PagePartsforReq : MetroWindow {
 
 
 	private void UpdateTable() {
-		SQLResultTable ResTbl = DB.SQLQuery($"SELECT ЗапМ.id, ЗапМ.Название, Кат.Название, ЗакЗап.Количество, Марки.Марка, Авто.Модель, Конт.Название FROM AutoServicePlus.ЗапчастиМодели ЗапМ\r\nLEFT JOIN AutoServicePlus.КатегорииЗап Кат ON ЗапМ.Категория_id = Кат.id\r\nLEFT JOIN AutoServicePlus.АвтомобильЗапчасть АвтоЗап ON АвтоЗап.Запчасть_id = ЗапМ.id\r\nLEFT JOIN AutoServicePlus.Автомобили Авто ON АвтоЗап.Автомобиль_id = Авто.id\r\nLEFT JOIN AutoServicePlus.МаркиАвто Марки ON Авто.Марка_id = Марки.id\r\nINNER JOIN AutoServicePlus.ЗаявкаЗапчасть ЗаяЗап ON ЗаяЗап.Запчасть_id = ЗапМ.id\r\nWHERE ЗаяЗап.Заказ_id = {this.Заявка_id} AND (ЗапМ.Название LIKE '%{this.e_Search.Text}%' OR Кат.Название LIKE '%{this.e_Search.Text}%' OR Марки.Марка LIKE '%{this.e_Search.Text}%' OR Авто.Модель LIKE '%{this.e_Search.Text}%');");
+		SQLResultTable ResTbl = DB.SQLQuery($"SELECT Зап.id, ЗапМ.Название, Кат.Название, Зап.Идентификатор, Марки.Марка, Авто.Модель FROM AutoServicePlus.Запчасти Зап\r\nLEFT JOIN AutoServicePlus.ЗапчастиМодели ЗапМ ON Зап.Модель_id = ЗапМ.id\r\nLEFT JOIN AutoServicePlus.КатегорииЗап Кат ON ЗапМ.Категория_id = Кат.id\r\nLEFT JOIN AutoServicePlus.АвтомобильЗапчасть АвтоЗап ON АвтоЗап.Запчасть_id = ЗапМ.id\r\nLEFT JOIN AutoServicePlus.Автомобили Авто ON АвтоЗап.Автомобиль_id = Авто.id\r\nLEFT JOIN AutoServicePlus.МаркиАвто Марки ON Авто.Марка_id = Марки.id\r\nINNER JOIN AutoServicePlus.ЗаявкаЗапчасть ЗаяЗап ON ЗаяЗап.Запчасть_id = Зап.id\r\nWHERE ЗаяЗап.Заявка_id = 1 AND (ЗапМ.Название LIKE '%{this.e_Search.Text}%' OR Кат.Название LIKE '%{this.e_Search.Text}%' OR Марки.Марка LIKE '%{this.e_Search.Text}%' OR Авто.Модель LIKE '%{this.e_Search.Text}%');");
 		this.ЗапчастиМодели.Clear();
 		if (ResTbl != null) {
 			while (ResTbl.NextRow()) {
-				this.ЗапчастиМодели.Add(new(ResTbl.GetInt(0), ResTbl.GetStr(1), ResTbl.GetStr(2), ResTbl.GetInt(3), ResTbl.GetStr(4), ResTbl.GetStr(5), ResTbl.GetStr(6)));
+				this.ЗапчастиМодели.Add(new(ResTbl.GetInt(0), ResTbl.GetStr(1), ResTbl.GetStr(2), ResTbl.GetStr(3), ResTbl.GetStr(4), ResTbl.GetStr(5)));
 			}
 		}
 		this.dg_Запчасти.Items.Refresh();

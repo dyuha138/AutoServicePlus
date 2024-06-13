@@ -103,27 +103,6 @@ public partial class PageNewOrder : UserControl {
 			this.Dispatcher.Invoke(() => { hetbl = Convert.ToInt32(this.dg_Заказ.ActualHeight); });
 
 			if (Open) {
-				int he = 90;
-				int he2 = 105;
-				this.Dispatcher.Invoke(() => { this.nud_NumЗаказ.Visibility = Visibility.Hidden; });
-				Task.Factory.StartNew(() => {
-					while (he > 49) {
-						this.Dispatcher.Invoke(() => { this.b_Del.Margin = new(0, he, 8, 0); });
-						Thread.Sleep(7);
-						he--;
-					}
-				});
-				if (isClearMoved) {
-					isClearMoved = false;
-					Task.Factory.StartNew(() => {
-						while (he2 > 7) {
-							this.Dispatcher.Invoke(() => { this.b_Clear.Margin = new(0, 0, he2, 5); });
-							Thread.Sleep(3);
-							he2--;
-						}
-					});
-				}
-			} else {
 				int he = 50;
 				int he2 = 8;
 				Task.Factory.StartNew(() => {
@@ -141,6 +120,27 @@ public partial class PageNewOrder : UserControl {
 							this.Dispatcher.Invoke(() => { this.b_Clear.Margin = new(0, 0, he2, 5); });
 							Thread.Sleep(3);
 							he2++;
+						}
+					});
+				}
+			} else {
+				int he = 90;
+				int he2 = 105;
+				this.Dispatcher.Invoke(() => { this.nud_NumЗаказ.Visibility = Visibility.Hidden; });
+				Task.Factory.StartNew(() => {
+					while (he > 49) {
+						this.Dispatcher.Invoke(() => { this.b_Del.Margin = new(0, he, 8, 0); });
+						Thread.Sleep(7);
+						he--;
+					}
+				});
+				if (isClearMoved) {
+					isClearMoved = false;
+					Task.Factory.StartNew(() => {
+						while (he2 > 7) {
+							this.Dispatcher.Invoke(() => { this.b_Clear.Margin = new(0, 0, he2, 5); });
+							Thread.Sleep(3);
+							he2--;
 						}
 					});
 				}
@@ -243,10 +243,14 @@ public partial class PageNewOrder : UserControl {
 		this.b_Del.IsEnabled = false;
 		this.b_Edit.IsEnabled = false;
 
+		if (Data.DB.TMP_Заказ.Запчасти.Count == 0) {
+			this.b_Clear.IsEnabled = false;
+			this.b_Done.IsEnabled = false;
+		}
+
 		if (isOrdEdit) {
 			isOrdEdit = false;
 			AnimateButtons(false);
-			
 		}
 	}
 

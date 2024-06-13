@@ -214,6 +214,15 @@ public partial class PageNewRequest : UserControl {
 
 	private void b_Done_Click(object sender, RoutedEventArgs e) {
 		DB.DB_Заявки.Add(Data.DB.TMP_Заявка);
+		int запid = 0;
+		long udate = TechFuncs.GetUnixTime();
+		int logid = TechFuncs.ПолучитьАйдиВхода();
+
+		for (int i = 0; i < Data.DB.TMP_Заявка.Запчасти.Count; i++) {
+			запid = Data.DB.TMP_Заявка.Запчасти[i].id;
+			DB.DB_РегистрЗапчастей.Add(new(0, запid, udate, 3, logid));
+		}
+
 		Data.DB.TMP_Заявка = null;
 		Data.TBL.ЗапчастиМоделиЗая.Clear();
 		Data.MainWin.Dispatcher.Invoke(() => { Data.MainWin.HambMenu.Content = Data.MainWin.PageRequests; });
@@ -239,8 +248,12 @@ public partial class PageNewRequest : UserControl {
 			this.b_Done.IsEnabled = false;
 			this.b_Edit.IsEnabled = false;
 			this.b_Del.IsEnabled = false;
+			this.cb_Запчасти.Visibility = Visibility.Hidden;
+			this.g_minibut.Visibility = Visibility.Hidden;
 			UpdateTable_Зая();
 			UpdateTable_Зап();
+			this.cb_Запчасти.Items.Clear();
+			//FillЗапчасти();
 		}
 	}
 
@@ -254,6 +267,12 @@ public partial class PageNewRequest : UserControl {
 		this.dg_Заявка.SelectedIndex = -1;
 		this.b_Del.IsEnabled = false;
 		this.b_Edit.IsEnabled = false;
+		FillЗапчасти();
+
+		if (Data.DB.TMP_Заявка.Запчасти.Count == 0) {
+			this.b_Clear.IsEnabled = false;
+			this.b_Done.IsEnabled = false;
+		}
 
 		if (isReqEdit) {
 			isReqEdit = false;

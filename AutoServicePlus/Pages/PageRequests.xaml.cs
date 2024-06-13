@@ -41,9 +41,9 @@ public partial class PageRequests : UserControl {
 		if (this.dp_Date.SelectedDate != null) {
 			unixtime = TechFuncs.DateToUnix(this.dp_Date.SelectedDate.Value).ToString();
 			unixtime2 = (Convert.ToInt32(unixtime) + 86400).ToString();
-			ResTbl = DB.SQLQuery($"SELECT Зая.id, Зая.Дата, Ст.Статус, Сотр.Фамилия, Сотр.Имя, Сотр.Отчество FROM AutoServicePlus.Заявки Ord\r\nLEFT JOIN AutoServicePlus.Статусы Ст ON Зая.Статус_id = Ст.id\r\nLEFT JOIN AutoServicePlus.Сотрудники Сотр ON Зая.Сотрудник_id = Сотр.id\r\nWHERE (Зая.id LIKE '%{this.e_Search.Text}%' OR Ст.Статус LIKE '%{this.e_Search.Text}%' OR Сотр.Фамилия LIKE '%{this.e_Search.Text}%' OR Сотр.Имя LIKE '%{this.e_Search.Text}%' OR Сотр.Отчество LIKE '%{this.e_Search.Text}%') AND (Зая.Дата >= '{unixtime}' AND Зая.Дата <= '{unixtime2}')\r\nORDER BY Зая.Дата DESC;");
+			ResTbl = DB.SQLQuery($"SELECT Зая.id, Зая.Дата, Ст.Статус, Сотр.Фамилия, Сотр.Имя, Сотр.Отчество FROM AutoServicePlus.Заявки Зая\r\nLEFT JOIN AutoServicePlus.Статусы Ст ON Зая.Статус_id = Ст.id\r\nLEFT JOIN AutoServicePlus.Сотрудники Сотр ON Зая.Сотрудник_id = Сотр.id\r\nWHERE (Зая.id LIKE '%{this.e_Search.Text}%' OR Ст.Статус LIKE '%{this.e_Search.Text}%' OR Сотр.Фамилия LIKE '%{this.e_Search.Text}%' OR Сотр.Имя LIKE '%{this.e_Search.Text}%' OR Сотр.Отчество LIKE '%{this.e_Search.Text}%') AND (Зая.Дата >= '{unixtime}' AND Зая.Дата <= '{unixtime2}')\r\nORDER BY Зая.Дата DESC;");
 		} else {
-			ResTbl = DB.SQLQuery($"SELECT Зая.id, Зая.Дата, Ст.Статус, Сотр.Фамилия, Сотр.Имя, Сотр.Отчество FROM AutoServicePlus.Заяки Ord\r\nLEFT JOIN AutoServicePlus.Статусы Ст ON Зая.Статус_id = Ст.id\r\nLEFT JOIN AutoServicePlus.Сотрудники Сотр ON Зая.Сотрудник_id = Сотр.id\r\nWHERE Зая.id LIKE '%{this.e_Search.Text}%' OR Ст.Статус LIKE '%{this.e_Search.Text}%' OR Сотр.Фамилия LIKE '%{this.e_Search.Text}%' OR Сотр.Имя LIKE '%{this.e_Search.Text}%' OR Сотр.Отчество LIKE '%{this.e_Search.Text}%'\r\nORDER BY Зая.Дата DESC;");
+			ResTbl = DB.SQLQuery($"SELECT Зая.id, Зая.Дата, Ст.Статус, Сотр.Фамилия, Сотр.Имя, Сотр.Отчество FROM AutoServicePlus.Заявки Зая\r\nLEFT JOIN AutoServicePlus.Статусы Ст ON Зая.Статус_id = Ст.id\r\nLEFT JOIN AutoServicePlus.Сотрудники Сотр ON Зая.Сотрудник_id = Сотр.id\r\nWHERE Зая.id LIKE '%{this.e_Search.Text}%' OR Ст.Статус LIKE '%{this.e_Search.Text}%' OR Сотр.Фамилия LIKE '%{this.e_Search.Text}%' OR Сотр.Имя LIKE '%{this.e_Search.Text}%' OR Сотр.Отчество LIKE '%{this.e_Search.Text}%'\r\nORDER BY Зая.Дата DESC;");
 		}
 
 		Data.TBL.Заявки.Clear();
@@ -136,7 +136,7 @@ public partial class PageRequests : UserControl {
 	private void dg_Заявки_DoubleClick(object sender, MouseButtonEventArgs e) {
 		TBL_Заявка Заявка = (TBL_Заявка)this.dg_Заявки.SelectedItem;
 		if (Заявка != null) {
-			Pages.PagePartsforOrder форма = new(Заявка.id);
+			Pages.PagePartsforReq форма = new(Заявка.id);
 			форма.Show();
 		}
 	}

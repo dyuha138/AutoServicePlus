@@ -162,7 +162,7 @@ public partial class PageNewParts : UserControl {
 		int запid = 0;
 		for (int i = 0; i < Data.DB.TMP_Запчасти.Count; i++) {
 			запid = DB.DB_Запчасти.Add(Data.DB.TMP_Запчасти[i]);
-			DB.DB_РегистрЗапчастей.Add(new(0, запid, udate, 15, logid));
+			DB.DB_РегистрЗапчастей.Add(new(0, запid, udate, 2, logid));
 		}
 		Data.DB.TMP_Запчасти.Clear();
 		DB.DB_Заказы.StatusUpdate(this.Заказ_id, 8);
