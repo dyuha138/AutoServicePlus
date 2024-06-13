@@ -97,4 +97,10 @@ public partial class MainWindow : MetroWindow {
 			break;
 		}
 	}
+
+	private void MetroWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e) {
+		DB.Close();
+		Application.Current.Shutdown();
+
+	}
 }
